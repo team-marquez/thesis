@@ -1,3 +1,12 @@
+#Go To There
+
+##Team
+
+    - Project Owner: Roman Gorelik
+    - Scrum Master: Erik Lin
+    - Team Members: Guillermo Adrian, Martin Glyer
+
+
 ##Techstack
 
 - Socket.IO
