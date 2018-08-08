@@ -4,7 +4,8 @@
   "description": "thesis",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server-dev": "nodemon index.js",
+    "react-dev": "webpack -d --watch"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,19 @@
   "bugs": {
     "url": "https://github.com/team-marquez/thesis/issues"
   },
-  "homepage": "https://github.com/team-marquez/thesis#readme"
+  "homepage": "https://github.com/team-marquez/thesis#readme",
+  "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "webpack": "^2.2.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "react": "15.5.3",
+    "react-dom": "15.5.3"
+  }
 }
