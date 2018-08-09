@@ -30,5 +30,10 @@
     "morgan": "^1.9.0",
     "react": "15.5.3",
     "react-dom": "15.5.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
