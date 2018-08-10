@@ -3,15 +3,17 @@ const axios = require('axios')
 const Nightmare = require('nightmare')
 let nightmare = new Nightmare()
 
+
+
+/////////////////////Atlas Obscura Section
 let search_url = 'https://www.atlasobscura.com/things-to-do/new-york/places?page=1';
 let dynam_url = 'https://www.atlasobscura.com/things-to-do/new-york/places?page=';
 let individualPageURL = 'https://www.atlasobscura.com/places/'
 let individualName = 'explorers club headquarters'
 
 
-/////////////////////Atlas Obscura Section
 //scrape returns a promise.  resolve to use the data
-const scrape = (url) => {
+const scrapeAtlasObscuraSearch = (url) => {
     let data = []
     return axios.get(url).then((response) => {
         let $ = cheerio.load(response.data);
@@ -26,7 +28,7 @@ const scrape = (url) => {
     })
 }
 
-const scrapeIndividualPage =(url, name) => {
+const scrapeAtlasObscuraIndividualPage =(url, name) => {
     let data = []
     let dashedName = name.split(' ').join('-')
     return axios.get(url + dashedName).then((response) => {
@@ -46,10 +48,13 @@ const scrapeIndividualPage =(url, name) => {
         return data
     })
 }
-// let check = scrape(search_url)
-// check.then((data) => console.log(data))
-// let check2 = scrapeIndividualPage(individualPageURL, individualName)
-// check2.then((data) => console.log(data))
+
+//////uncomment below to run the scrape of the pages
+
+// let atlasObscuraSearchCheck = scrapeAtlasObscuraSearch(search_url)
+// atlasObscuraSearchCheck.then((data) => console.log(data))
+// let atlasObscuraIndividualCheck  = scrapeAtlasObscuraIndividualPage(individualPageURL, individualName)
+// atlasObscuraIndividualCheck.then((data) => console.log(data))
 
 const scrapeTenPages = (dynamicURL, cb) => {
     let allData = [];
@@ -62,7 +67,7 @@ const scrapeTenPages = (dynamicURL, cb) => {
     cb(null, allData)
 }
 
-// let check = scrapeTenPages(dynam_url, (err, data) => {
+// let scrapeTenPagesCheck = scrapeTenPages(dynam_url, (err, data) => {
 //     console.log(data)
 //     return data
 // })
@@ -89,11 +94,12 @@ const timeOutListScrape = (url) => {
     })
 }
 
-let timeOutCheck = timeOutListScrape(listURL)
-timeOutCheck.then((data) => console.log(data))
+//////uncomment below function to run the scrapes
+// let timeOutCheck = timeOutListScrape(listURL)
+// timeOutCheck.then((data) => console.log(data))
 
 module.exports = {
-    scrape: scrape,
+    scrape: scrapeAtlasObscuraSearch,
     search_url: search_url,
-    scrapeIndividualPage: scrapeIndividualPage
+    scrapeIndividualPage: scrapeAtlasObscuraIndividualPage
 }
