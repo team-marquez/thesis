@@ -9,7 +9,7 @@ let individualPageURL = 'https://www.atlasobscura.com/places/'
 let individualName = 'explorers club headquarters'
 
 
-
+/////////////////////Atlas Obscura Section
 //scrape returns a promise.  resolve to use the data
 const scrape = (url) => {
     let data = []
@@ -67,6 +67,30 @@ const scrapeTenPages = (dynamicURL, cb) => {
 //     return data
 // })
 
+
+//////TIME OUT NEW YORK SECTION////////
+const listURL = 'https://www.timeout.com/newyork/restaurants/100-best-new-york-restaurants'
+const shortTimeOutURL = 'https://www.timeout.com/newyork/restaurants/'
+
+const timeOutListScrape = (url) => {
+    let data = []
+    return axios.get(url).then((response) => {
+        let $ = cheerio.load(response.data);
+        $('.listCard').each((index, element) => {
+            let item = {};
+            item.name = $(element).find('.card-title a').text().trim()
+            item.cuisine = $(element).find('.category').text().trim().split(', ')[1]
+            item.img = $(element).find('.image_wrapper img').attr('src')
+            item.description = $(element).find('.js-card-description').children().first().text()
+            item.whyGo = $(element).find('.js-card-description').children().last().text()
+            data.push(item)
+        })
+        return data
+    })
+}
+
+let timeOutCheck = timeOutListScrape(listURL)
+timeOutCheck.then((data) => console.log(data))
 
 module.exports = {
     scrape: scrape,
