@@ -2,33 +2,13 @@ const cheerio = require('cheerio')
 const axios = require('axios')
 const Nightmare = require('nightmare')
 let nightmare = new Nightmare()
-// const $ = require('jquery')
 
 let search_url = 'https://www.atlasobscura.com/things-to-do/new-york/places?page=1';
-// let scrape =/* ignore coverage */ (url) => {
-//     nightmare.goto(url)
-//              .wait(2000)
-//              .evaluate(/* ignore coverage */function() {
-//                  let scrapedData = []
-//                  console.log('inside eval')
-//                  $('.index-card-wrap').each(function() {
-//                      item = {};
-//                      item['name'] = $(this).find('.content-card-title').text()
-//                      console.log(item)
-//                      scrapedData.push(item)
-//                  })
-//                  console.log(scrapedData)
-//                  return scrapedData
-//              })
-//              .end()
-//              .then((results) => {
-//                  return results
-//              })
-// }
+let dynam_url = 'https://www.atlasobscura.com/things-to-do/new-york/places?page='
 
-// let check = scrape(search_url)
-// console.log(check)
 
+
+//scrape returns a promise.  resolve to use the data
 const scrape = (url) => {
     let data = []
     return axios.get(url).then((response) => {
@@ -45,6 +25,23 @@ const scrape = (url) => {
 }
 // let check = scrape(search_url).then((data) => console.log(data))
 // console.log(check)
+
+const scrapeTenPages = (dynamicURL, cb) => {
+    let allData = [];
+    for (var i = 1; i <= 10; i++) {
+        scrape(dynam_url + i).then((scrapedData) => {
+            allData.concat(scrapedData)
+            console.log(scrapedData)
+        })
+    }
+    cb(null, allData)
+}
+
+let check = scrapeTenPages(dynam_url, (err, data) => {
+    console.log(data)
+    return data
+})
+
 
 module.exports = {
     scrape: scrape,
