@@ -4,7 +4,9 @@ const Nightmare = require('nightmare')
 let nightmare = new Nightmare()
 
 let search_url = 'https://www.atlasobscura.com/things-to-do/new-york/places?page=1';
-let dynam_url = 'https://www.atlasobscura.com/things-to-do/new-york/places?page='
+let dynam_url = 'https://www.atlasobscura.com/things-to-do/new-york/places?page=';
+let individualPageURL = 'https://www.atlasobscura.com/places/'
+let individualName = 'explorers club headquarters'
 
 
 
@@ -23,8 +25,31 @@ const scrape = (url) => {
         return data
     })
 }
+
+const scrapeIndividualPage =(url, name) => {
+    let data = []
+    let dashedName = name.split(' ').join('-')
+    return axios.get(url + dashedName).then((response) => {
+        let $ = cheerio.load(response.data);
+        $('#page-content').each((index, element) => {
+            let item = {};
+            item.wantToVisit = $(element).find('.place-header-row .js-like-top-wrap .item-action-count').text()
+            item.address = $(element).find('.place-address a').text()
+            item.website = $(element).find('.url.detail-sm a').attr('href')
+            item.atlasURL = url + dashedName
+            item.descriptionLong = ''
+            $(element).find('.content-body p').each((index, element) => {
+                item.descriptionLong += $(element).text()
+            })
+            data.push(item)
+        })
+        return data
+    })
+}
 // let check = scrape(search_url).then((data) => console.log(data))
 // console.log(check)
+let check = scrapeIndividualPage(individualPageURL, individualName)
+check.then((data) => console.log(data))
 
 const scrapeTenPages = (dynamicURL, cb) => {
     let allData = [];
@@ -37,10 +62,10 @@ const scrapeTenPages = (dynamicURL, cb) => {
     cb(null, allData)
 }
 
-let check = scrapeTenPages(dynam_url, (err, data) => {
-    console.log(data)
-    return data
-})
+// let check = scrapeTenPages(dynam_url, (err, data) => {
+//     console.log(data)
+//     return data
+// })
 
 
 module.exports = {
