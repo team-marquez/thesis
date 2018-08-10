@@ -46,10 +46,10 @@ const scrapeIndividualPage =(url, name) => {
         return data
     })
 }
-// let check = scrape(search_url).then((data) => console.log(data))
-// console.log(check)
-// let check = scrapeIndividualPage(individualPageURL, individualName)
+// let check = scrape(search_url)
 // check.then((data) => console.log(data))
+// let check2 = scrapeIndividualPage(individualPageURL, individualName)
+// check2.then((data) => console.log(data))
 
 const scrapeTenPages = (dynamicURL, cb) => {
     let allData = [];
