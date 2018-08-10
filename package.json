@@ -34,15 +34,9 @@
     "express": "^4.16.3",
     "jquery": "^3.3.1",
     "morgan": "^1.9.0",
-<<<<<<< HEAD
-    "nightmare": "^3.0.1",
-    "react": "15.5.3",
-    "react-dom": "15.5.3"
-=======
     "react": "16.4.2",
     "react-dom": "16.4.2",
     "semantic-ui-react": "^0.82.2"
->>>>>>> dev
   },
   "config": {
     "commitizen": {
