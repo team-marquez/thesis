@@ -1,21 +1,33 @@
-const expect = require('chai').expect
+const chai = require('chai')
+const chaiAsPromised = require('chai-as-promised')
+chai.use(chaiAsPromised)
+const expect = chai.expect
 const { scrape, search_url } = require('./../scraper.js')
 
 describe('Scraper', () => {
     describe('Structure', () => {
-        let scrapedData = scrape(search_url)
-        // console.log(scrapedData)
         it('should be an Array', () => {
-            return expect(typeof scrapedData).to.eventually.equal('Array')
+            scrape(search_url).then((scrapedData) => {
+                expect(typeof scrapedData).to.equal('Array')
+            })
         })
 
         it('should have a length greater than 0', () => {
-            return expect(scrapedData.length).to.be.eventually.greaterThan(0)
+            scrape(search_url).then((scrapedData) => {
+                expect(scrapedData.length).to.be.greaterThan(0)
+            })
         })
 
-        it('should have a valid description', () => {
-            return expect(typeof scrapedData[0].description).to.eventually.equal('string')
-            return expect(scrapedData[0].description.length).to.eventually.be.greaterThan(0)
+        it('should have a valid string description', () => {
+            scrape(search_url).then((scrapedData) => {
+                expect(typeof scrapedData[0].description).to.equal('string')
+            })
+        })
+
+        it('should have a description', () => {
+            scrape(search_url).then((scrapedData) => {
+                expect(scrapedData[0].description.length).to.be.greaterThan(0)
+            })
         })
 
     })

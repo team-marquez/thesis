@@ -43,8 +43,8 @@ const scrape = (url) => {
         return data
     })
 }
-let check = scrape(search_url).then((data) => console.log(data))
-console.log(check)
+// let check = scrape(search_url).then((data) => console.log(data))
+// console.log(check)
 
 module.exports = {
     scrape: scrape,
