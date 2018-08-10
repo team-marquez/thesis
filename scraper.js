@@ -48,8 +48,8 @@ const scrapeIndividualPage =(url, name) => {
 }
 // let check = scrape(search_url).then((data) => console.log(data))
 // console.log(check)
-let check = scrapeIndividualPage(individualPageURL, individualName)
-check.then((data) => console.log(data))
+// let check = scrapeIndividualPage(individualPageURL, individualName)
+// check.then((data) => console.log(data))
 
 const scrapeTenPages = (dynamicURL, cb) => {
     let allData = [];
@@ -70,5 +70,6 @@ const scrapeTenPages = (dynamicURL, cb) => {
 
 module.exports = {
     scrape: scrape,
-    search_url: search_url
+    search_url: search_url,
+    scrapeIndividualPage: scrapeIndividualPage
 }

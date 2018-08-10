@@ -2,7 +2,8 @@ const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 chai.use(chaiAsPromised)
 const expect = chai.expect
-const { scrape, search_url } = require('./../scraper.js')
+const { scrape, search_url, scrapeIndividualPage } = require('./../scraper.js')
+const axios = require('axios')
 
 describe('Scraper', () => {
     describe('Structure', () => {
@@ -30,5 +31,31 @@ describe('Scraper', () => {
             })
         })
 
+    })
+})
+
+describe('Individual Page Scraper', () => {
+    describe('Structure', () => {
+        let individualPageURL = 'https://www.atlasobscura.com/places/'
+        let individualName = 'explorers club headquarters'
+        let dashedName = individualName.split(' ').join('-')
+
+        it('should have a valid Atlas Obscura website', () => {
+            axios.get(individualPageURL + dashedName).then((response) => {
+                expect(response.data).to.not.equal(404)
+            })
+        })
+
+        it('should have 5 keys', () => {
+            scrapeIndividualPage(individualPageURL, individualName).then((response) => {
+                expect(Object.keys(response).length).to.equal(5)
+            })
+        })
+
+        it('should have a valid website url', () => {
+            scrapeIndividualPage(individualPageURL, individualName).then((response) => {
+                expect(response.website).to.not.be(undefined)
+            })
+        })
     })
 })
