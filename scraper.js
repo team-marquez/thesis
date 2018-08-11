@@ -80,7 +80,7 @@ const shortTimeOutURL = 'https://www.timeout.com/newyork/restaurants/'
 const timeOutListScrape = (url) => {
     let data = []
     return axios.get(url).then((response) => {
-        let $ = cheerio.load(response.data);
+        let $ = cheerio.load(response.data)
         $('.listCard').each((index, element) => {
             let item = {};
             item.name = $(element).find('.card-title a').text().trim()
@@ -94,9 +94,38 @@ const timeOutListScrape = (url) => {
     })
 }
 
+const timeOutIndividualPageScrape = (dynamicURL, dynamicName) => {
+    let data = []
+    let dashedName = dynamicName.toLowerCase().split(' ').join('-')
+    return axios.get(dynamicURL + dashedName).then((response) => {
+        let $ = cheerio.load(response.data)
+        $('#content').each((index, element) => {
+            let item = {}
+            item.name = $(element).find('.listing__header h1').text()
+            item.cost = 0;
+            $(element).find('.listing__header ul li').each((index, el) => {
+                item.cost++
+            })
+            item.review = $(element).find('[itemprop]=reviewBody p').text()
+            item.website = $(element).find('.listing_details .lead_buttons').children().first().attr('href')
+            item.timeOutWebsite = dynamicURL + dynamicName
+            $(element).find('.listing_details tr').each((index, el) => {
+                if ($(element).children().first().text().trim() === 'Address:') {
+                    item.address = $(element).children().last().text().trim()
+                }
+            })
+            data.push(item)
+        })
+        return data
+    })
+}
+
 //////uncomment below function to run the scrapes
 // let timeOutCheck = timeOutListScrape(listURL)
 // timeOutCheck.then((data) => console.log(data))
+
+// let timeOutIndividualPageCheck = timeOutIndividualPageScrape('https://www.timeout.com/newyork/restaurants/', 'Le Bernardin')
+// timeOutIndividualPageCheck.then((data) => console.log(data))
 
 module.exports = {
     scrape: scrapeAtlasObscuraSearch,
