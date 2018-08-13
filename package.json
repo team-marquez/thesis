@@ -4,7 +4,7 @@
   "description": "thesis",
   "main": "index.js",
   "scripts": {
-    "server-dev": "nodemon server/index.js",
+    "server-dev": "nodemon server/src/index.js",
     "react-dev": "webpack -d --watch",
     "test": "mocha spec/scraper_spec.js"
   },
@@ -21,6 +21,7 @@
   "devDependencies": {
     "babel-core": "^6.23.1",
     "babel-loader": "^6.3.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.23.0",
     "webpack": "^2.7.0",
@@ -28,7 +29,12 @@
   },
   "dependencies": {
     "@axetroy/react-download": "^1.1.1",
+<<<<<<< HEAD
     "apollo-server": "^2.0.0",
+=======
+    "apollo-boost": "^0.1.13",
+    "apollo-server-express": "^2.0.0",
+>>>>>>> dev
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "chai-as-promised": "^7.1.1",
@@ -38,8 +44,15 @@
     "file-saver": "^1.3.8",
     "firebase": "^5.3.1",
     "graphql": "^0.13.2",
+<<<<<<< HEAD
+=======
+    "graphql-yoga": "^1.16.0",
+>>>>>>> dev
     "morgan": "^1.9.0",
+    "prisma-binding": "^2.1.4",
     "react": "16.4.2",
+    "react-apollo": "^2.1.11",
+    "react-beautiful-dnd": "^9.0.0",
     "react-date-range": "^0.9.4",
     "react-dom": "16.4.2",
     "react-semantic-ui-range": "^0.6.2",
