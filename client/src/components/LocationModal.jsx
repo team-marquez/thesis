@@ -44,14 +44,15 @@ class LocationModal extends React.Component {
                  </Input><br/>
                </div>
 
-               <div  style={{textAlign: 'center'}}>
+               <div style={{textAlign: 'center'}}>
                   <DateRange
-                      onInit={this.handleSelect}
-                      onChange={this.handleSelect}
-                      calendars={1}
+                    onInit={this.handleSelect}
+                    onChange={this.handleSelect}
+                    calendars={1}
                   />
                </div>
-                  <Modal.Description>
+
+                <Modal.Description>
                   <div style={{float: 'right', display: 'inline-block'}}>
                     {"Food"}
                   </div>
@@ -105,7 +106,7 @@ class LocationModal extends React.Component {
                     </div>
 
                     <div  style={{textAlign: 'right'}}>
-                      <br/><Button content='Next' icon='right arrow' labelPosition='right'/>
+                      <br/><Button content='Next' icon='right arrow' labelPosition='right' onClick = {this.props.pickTrip}/>
                     </div>
                   </Modal.Description>
                </Modal.Content>
