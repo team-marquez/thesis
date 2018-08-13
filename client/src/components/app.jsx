@@ -1,5 +1,9 @@
 import React from 'react'
 
+import LoginButton from './LoginButton.jsx'
+import LocationModal from './LocationModal.jsx'
+import Footer from './Footer.jsx'
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -11,7 +15,9 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        <p>Hello Team</p>
+        <LoginButton/>
+        <LocationModal/>
+        <Footer/>
       </div>
     )
   }
