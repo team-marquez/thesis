@@ -33,7 +33,7 @@ var typeDefs = gql`
 const resolvers = {
   Query: {
     //TODO:
-    //Check for integrity 
+    //Check for integrity (RESOLVERS)
     //Send this to the database
     //Then filter through the appropiate services
     globalQuery: (a, {request}, c,d) => console.log(request),
