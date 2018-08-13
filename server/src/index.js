@@ -42,13 +42,13 @@ const resolvers = {
 }
 
 const server = new GraphQLServer({
-  typeDefs: './server/src/schema.graphql',
+  typeDefs: './schema.graphql',
   resolvers,
   context: req => ({
     ...req,
     db: new Prisma({
-      typeDefs: './server/src/generated/prisma.graphql', // the auto-generated GraphQL schema of the Prisma API
-      endpoint: 'http://localhost:4466', // the endpoint of the Prisma API
+      typeDefs: './generated/prisma.graphql', // the auto-generated GraphQL schema of the Prisma API
+      endpoint: 'http://localhost:4466/graphql', // the endpoint of the Prisma API
       debug: true // log all GraphQL queries & mutations sent to the Prisma API
       // secret: 'mysecret123', // only needed if specified in `database/prisma.yml`
     })
