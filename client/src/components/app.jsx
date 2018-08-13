@@ -30,7 +30,7 @@ class App extends React.Component {
             <Footer/>
           </div>
         ) : (
-          <div>
+          <div style={{textAlign: 'center'}}>
             <Kamban/>
           </div>
         )}
