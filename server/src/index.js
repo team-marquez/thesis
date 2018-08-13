@@ -1,11 +1,6 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const morgan = require('morgan')
-
-const { ApolloServer, gql } = require('apollo-server-express')
 const { GraphQLServer } = require('graphql-yoga')
 const { Prisma } = require('prisma-binding')
-const { buildSchema } = require('graphql')
+const express =  require('express')
 
 /*
 var typeDefs = gql`
@@ -42,17 +37,25 @@ const resolvers = {
 }
 
 const server = new GraphQLServer({
-  typeDefs: './server/src/schema.graphql',
+  typeDefs: './schema.graphql',
   resolvers,
   context: req => ({
     ...req,
     db: new Prisma({
-      typeDefs: './server/src/generated/prisma.graphql', // the auto-generated GraphQL schema of the Prisma API
-      endpoint: 'http://localhost:4466', // the endpoint of the Prisma API
+      typeDefs: './generated/prisma.graphql', // the auto-generated GraphQL schema of the Prisma API
+      endpoint: 'http://localhost:4466/graphql', // the endpoint of the Prisma API
       debug: true // log all GraphQL queries & mutations sent to the Prisma API
       // secret: 'mysecret123', // only needed if specified in `database/prisma.yml`
     })
   })
 })
+server.express.use(express.static(__dirname + '/../../client/dist/'))
 
-server.start(() => console.log('Server is running on http://localhost:4000'))
+const options = {
+  port: 8000,
+  endpoint: '/graphql',
+  subscriptions: '/subscriptions',
+  playground: '/playground',
+}
+
+server.start(options, ({port}) => console.log('Server is running on http://localhost:'+port))
