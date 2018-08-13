@@ -120,12 +120,57 @@ const timeOutIndividualPageScrape = (dynamicURL, dynamicName) => {
     })
 }
 
+const attractionTimeOutListScrape = (url) => {
+    let data = []
+    return axios.get(url).then((response) => {
+        let $ = cheerio.load(response.data)
+        $('.listCard').each((index, element) => {
+            let item = {}
+            item.name = $(element).find('.card-title a').text().trim()
+            item.category = $(element).find('.category').text().trim()
+            item.description = $(element).find('.js-card-description').text().trim()
+            data.push(item)
+        })
+        return data
+    })
+}
+const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
+    let data = []
+    let dashedName = attractionName.toLowerCase().split(' ').join('-')
+    return axios.get(dynamicURL + dashedName).then((response) => {
+        let $ = cheerio.load(response.data)
+        $('#content').each((index, element) => {
+            item.name = $(element).find('.listing__header h1').text().split('|')[0]
+            item.borough = $(element).find('.listing__header h1').text().split('|')[1]
+            item.cost = 0;
+            $(element).find('.listing__header ul li').each((index, el) => {
+                if ($(el).hasClass('.xs-text-red')) item.cost++
+            })
+            item.review = ''
+            $(element).find('article p').each((index, el) => {
+                item.review += $(el).text() + ' '
+            })
+            item.website = $(element).find('.listing_details .lead_buttons').children().first().attr('href')
+            item.timeOutWebsite = dynamicURL + dashedName
+            $(element).find('.listing_details tr').each((index, el) => {
+                if ($(element).children().first().text().trim() === 'Address:') {
+                    item.address = $(element).children().last().text().trim()
+                }
+            })
+            data.push(item)
+        })
+        return data
+    })
+}
 //////uncomment below function to run the scrapes
 // let timeOutCheck = timeOutListScrape(listURL)
 // timeOutCheck.then((data) => console.log(data))
-
-// let timeOutIndividualPageCheck = timeOutIndividualPageScrape('https://www.timeout.com/newyork/restaurants/', 'Le Bernardin')
+// let timeOutIndividualPageCheck = timeOutIndividualPageScrape(shortTimeOutURL, 'Le Bernardin')
 // timeOutIndividualPageCheck.then((data) => console.log(data))
+// let attractionTimeOutSearchCheck = attractionTimeOutListScrape(attractionListURL)
+// attractionTimeOutSearchCheck.then((data) => console.log(data))
+// let attractionTimeOutCheck = attractionTimeOutIndividualPageScrape('shortAttractionTimeOutURL', 'Empire State Building')
+// attractionTimeOutCheck.then((data) => console.log(data))
 
 module.exports = {
     scrape: scrapeAtlasObscuraSearch,
