@@ -4,7 +4,6 @@ type Users {
   password: String!
   age: Int!
   gender: Int!
-  # trips: [Activity!]! @relation(name: "UserTrips")
 }
 
 type Activity {
@@ -16,8 +15,16 @@ type Activity {
   location: String!
   activity_level: Float!
   child_friendly: Boolean!
-  ratings: Ratings!
-  # users: [Users!]! @relation(name: "UserTrips")
+  ratings: Ratings
+}
+
+type Restaurant {
+  id: ID! @unique
+  name: String!
+  description: String!
+  cost: Float!
+  image: String!
+  location: String!
 }
 
 type Ratings {
