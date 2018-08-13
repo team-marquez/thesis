@@ -14,7 +14,7 @@ class Kamban extends React.Component {
   render () {
     return (
       <div>
-        <Grid>
+        <Grid style={{display: 'inline-block'}}>
           <Grid.Row columns={5}>
 
             {this.state.arr.map((day) => {
