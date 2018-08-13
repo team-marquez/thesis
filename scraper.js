@@ -175,5 +175,10 @@ const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
 module.exports = {
     scrape: scrapeAtlasObscuraSearch,
     search_url: search_url,
-    scrapeIndividualPage: scrapeAtlasObscuraIndividualPage
+    scrapeIndividualPage: scrapeAtlasObscuraIndividualPage,
+    attractionTimeOutIndividualPageScrape: attractionTimeOutIndividualPageScrape,
+    attractionTimeOutListScrape: attractionTimeOutListScrape,
+    timeOutIndividualPageScrape: timeOutIndividualPageScrape,
+    timeOutListScrape: timeOutListScrape,
+    scrapeTenPages: scrapeTenPages
 }
