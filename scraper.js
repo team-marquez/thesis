@@ -43,6 +43,7 @@ const scrapeAtlasObscuraIndividualPage =(url, name) => {
             $(element).find('.content-body p').each((index, element) => {
                 item.descriptionLong += $(element).text()
             })
+            item.LTScore = 0
             data.push(item)
         })
         return data
@@ -157,6 +158,7 @@ const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
                     item.address = $(element).children().last().text().trim()
                 }
             })
+            item.LTScore = 1
             data.push(item)
         })
         return data
