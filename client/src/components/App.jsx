@@ -3,7 +3,7 @@ import React from 'react'
 import LoginButton from './LoginButton.jsx'
 import LocationModal from './LocationModal.jsx'
 import Footer from './Footer.jsx'
-import Kamban from './Kamban.jsx'
+import AllDays from './AllDays.jsx'
 
 import { Query } from "react-apollo";
 import { ApolloProvider } from "react-apollo";
@@ -37,7 +37,7 @@ class App extends React.Component {
           </div>
         ) : (
           <div style={{textAlign: 'center'}}>
-            <Kamban/>
+            <AllDays/>
           </div>
         )}
       </div>
