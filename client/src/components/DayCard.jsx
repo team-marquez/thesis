@@ -35,7 +35,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? 'lightblue' : 'lightgrey',
   padding: grid,
-  width: 260,
+  width: '100%',
 });
 
 class DayCard extends React.Component {
@@ -44,7 +44,7 @@ class DayCard extends React.Component {
     this.state = {
       items: getItems(6),
     };
-    this.onDragEnd = this.onDragEnd.bind(this);
+    this.onDragEnd = this.onDragEnd.bind(this)
   }
 
   onDragEnd(result) {
@@ -69,7 +69,7 @@ class DayCard extends React.Component {
   render() {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <Droppable droppableId="droppable">
+        <Droppable droppableId='droppable'>
           {(provided, snapshot) => (
             <div
               ref={provided.innerRef}
@@ -96,7 +96,7 @@ class DayCard extends React.Component {
             </div>
           )}
         </Droppable>
-      </DragDropContext>
+        </DragDropContext>
     );
   }
 }
