@@ -35,8 +35,9 @@ Recs =
   TheHighLine: {
     name: 'The High Line',
     type: ['activity', details: {
-      categories: [cat1, cat2, cat3] //this array is a max of three cats, as floats
-    }],
+      categories: [{cat1: .56}, {cat2: .24}, {cat3: .2}] //this array is a max of three cats, as floats
+      }
+    ],
     cost: 0, // (out of 4 dollar signs)
     location: '12345 8th Ave',
     descriptionShort: 'a short description',
