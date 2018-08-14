@@ -6,4 +6,9 @@
 
 type Query {
   users: [Users!]!
+  echo(args: String): String
 }
+
+type Mutation {
+  createUsers(username: String!, password: String!, age: Int!, gender: Int!): Users
+} 

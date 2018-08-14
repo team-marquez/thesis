@@ -48,6 +48,7 @@
     "react-beautiful-dnd": "^9.0.0",
     "react-date-range": "^0.9.4",
     "react-dom": "16.4.2",
+    "watson-developer-cloud": "^3.8.0",
     "react-semantic-ui-range": "^0.6.2",
     "semantic-ui-react": "^0.82.2"
   },
