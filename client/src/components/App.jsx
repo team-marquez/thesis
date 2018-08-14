@@ -5,6 +5,12 @@ import LocationModal from './LocationModal.jsx'
 import Footer from './Footer.jsx'
 import Kamban from './Kamban.jsx'
 
+import { Query } from "react-apollo";
+import { ApolloProvider } from "react-apollo";
+import { Mutation } from "react-apollo";
+import ApolloClient from "apollo-boost";
+import gql from "graphql-tag";
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -35,6 +41,7 @@ class App extends React.Component {
           </div>
         )}
       </div>
+
     )
   }
 }

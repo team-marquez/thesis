@@ -32,9 +32,18 @@ var typeDefs = gql`
 const resolvers = {
   Query: {
     users: (_, args, context, info) => {
+      console.log(`info: ${Object.keys(context.db)}
+      `)
       return context.prisma.query.users
+    },
+    echo: (a, {args}, b , c) => {
+      console.log(args)
+      return args
     }
-  }
+    },
+    Mutation: {
+      createUsers: (a,b,c,d) => console.log(`${JSON.stringify(Object.keys(c.response.output))}`)
+    }
 }
 
 const server = new GraphQLServer({
@@ -50,14 +59,12 @@ const server = new GraphQLServer({
     })
   })
 })
-
 server.express.use(express.static(__dirname + '/../../client/dist/'))
 
 const options = {
-  port: 8000,
+  port: 4000,
   endpoint: '/graphql',
   subscriptions: '/subscriptions',
   playground: '/playground',
 }
-
 server.start(options, ({port}) => console.log('Server is running on http://localhost:'+ port))
