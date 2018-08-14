@@ -43,6 +43,7 @@ const scrapeAtlasObscuraIndividualPage =(url, name) => {
             $(element).find('.content-body p').each((index, element) => {
                 item.descriptionLong += $(element).text()
             })
+            item.LTScore = 0
             data.push(item)
         })
         return data
@@ -157,6 +158,7 @@ const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
                     item.address = $(element).children().last().text().trim()
                 }
             })
+            item.LTScore = 1
             data.push(item)
         })
         return data
@@ -175,5 +177,10 @@ const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
 module.exports = {
     scrape: scrapeAtlasObscuraSearch,
     search_url: search_url,
-    scrapeIndividualPage: scrapeAtlasObscuraIndividualPage
+    scrapeIndividualPage: scrapeAtlasObscuraIndividualPage,
+    attractionTimeOutIndividualPageScrape: attractionTimeOutIndividualPageScrape,
+    attractionTimeOutListScrape: attractionTimeOutListScrape,
+    timeOutIndividualPageScrape: timeOutIndividualPageScrape,
+    timeOutListScrape: timeOutListScrape,
+    scrapeTenPages: scrapeTenPages
 }
