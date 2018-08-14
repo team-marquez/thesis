@@ -1,6 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga')
 const { Prisma } = require('prisma-binding')
 const express =  require('express')
+const path = require('path')
 
 /*
 var typeDefs = gql`
@@ -37,18 +38,19 @@ const resolvers = {
 }
 
 const server = new GraphQLServer({
-  typeDefs: './schema.graphql',
+  typeDefs: path.join(__dirname, '/schema.graphql'),
   resolvers,
   context: req => ({
     ...req,
     db: new Prisma({
-      typeDefs: './generated/prisma.graphql', // the auto-generated GraphQL schema of the Prisma API
+      typeDefs: path.join(__dirname, '/generated/prisma.graphql'), // the auto-generated GraphQL schema of the Prisma API
       endpoint: 'http://localhost:4466/graphql', // the endpoint of the Prisma API
       debug: true // log all GraphQL queries & mutations sent to the Prisma API
       // secret: 'mysecret123', // only needed if specified in `database/prisma.yml`
     })
   })
 })
+
 server.express.use(express.static(__dirname + '/../../client/dist/'))
 
 const options = {
@@ -58,4 +60,4 @@ const options = {
   playground: '/playground',
 }
 
-server.start(options, ({port}) => console.log('Server is running on http://localhost:'+port))
+server.start(options, ({port}) => console.log('Server is running on http://localhost:'+ port))
