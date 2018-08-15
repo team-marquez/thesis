@@ -1,5 +1,5 @@
 module.exports = {
-  assemblyBoi = (recs, clientPreferences) => {
+  assemblyBoi: (recs, clientPreferences) => {
     let arrayMax = clientPreferences.pref.tripDates.length * 3
     let LTAllocation = {
       local: Math.ceil(1 - clientPreferences.pref.LT) * arrayMax,
