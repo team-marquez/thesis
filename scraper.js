@@ -18,10 +18,11 @@ const scrapeAtlasObscuraSearch = (url) => {
     return axios.get(url).then((response) => {
         let $ = cheerio.load(response.data);
         $('.index-card-wrap').each((index, element) => {
-            data[index] = {};
-            data[index]['name'] = $(element).find('.content-card-title').text()
-            data[index]['description'] = $(element).find('.js-subtitle-content').text()
-            data[index]['img'] = $(element).find('.content-card-figure img').attr('src')
+            let item = {}
+            item.name = $(element).find('.content-card-title').text()
+            item.description = $(element).find('.js-subtitle-content').text()
+            item.img = $(element).find('.js-content-card-figure img').attr('data-src')
+            data.push(item)
         })
         // console.log(data)
         return data
