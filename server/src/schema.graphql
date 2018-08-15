@@ -11,4 +11,5 @@ type Query {
 
 type Mutation {
   createUsers(username: String!, password: String!, age: Int!, gender: Int!): Users
+  createWeather(day: String!, temperature: Float!, low_uncertainty: Float!, high_uncertainty: Float!): Weather
 } 
