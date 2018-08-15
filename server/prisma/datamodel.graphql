@@ -35,7 +35,9 @@ type Ratings {
 }
 
 type Weather {
-  day: DateTime @unique
+  id: ID! @unique
+  day: String! @unique
   temperature: Float!
-  precipitation: String!
+  low_uncertainty: Float!
+  high_uncertainty: Float!
 }
