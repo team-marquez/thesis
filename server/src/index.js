@@ -6,16 +6,13 @@ const path = require('path')
 const resolvers = {
   Query: {
     users: (_, args, context, info) => {
-      console.log(`info: ${Object.keys(context.db)}
-      `)
       return context.db.query.users
     },
     echo: (a, { args }, b, c) => {
-      console.log(args)
       return args
     }
   },
-  
+
   Mutation: {
     createUsers: (_, { username, password, age, gender }, context, info) => {
       return context.db.mutation.createUsers(
@@ -25,6 +22,24 @@ const resolvers = {
             password,
             age,
             gender
+          }
+        },
+        info
+      )
+    },
+    createWeather: (
+      _,
+      { day, temperature, low_uncertainty, high_uncertainty },
+      context,
+      info
+    ) => {
+      return context.db.mutation.createWeather(
+        {
+          data: {
+            day,
+            temperature,
+            low_uncertainty,
+            high_uncertainty
           }
         },
         info
