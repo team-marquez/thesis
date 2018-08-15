@@ -53,8 +53,8 @@ const scrapeAtlasObscuraIndividualPage =(url, name) => {
 
 //////uncomment below to run the scrape of the pages
 
-let atlasObscuraSearchCheck = scrapeAtlasObscuraSearch(search_url)
-atlasObscuraSearchCheck.then((data) => console.log(data))
+// let atlasObscuraSearchCheck = scrapeAtlasObscuraSearch(search_url)
+// atlasObscuraSearchCheck.then((data) => console.log(data))
 // let atlasObscuraIndividualCheck  = scrapeAtlasObscuraIndividualPage(individualPageURL, individualName)
 // atlasObscuraIndividualCheck.then((data) => console.log(data))
 
