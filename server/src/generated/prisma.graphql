@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Mon Aug 13 2018 16:42:11 GMT-0400 (EDT)
+# timestamp: Wed Aug 15 2018 15:43:12 GMT-0400 (EDT)
 
 type Activity implements Node {
   id: ID!
@@ -415,8 +415,6 @@ type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
 }
-
-scalar DateTime
 
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
@@ -1393,10 +1391,12 @@ input UsersWhereUniqueInput {
   id: ID
 }
 
-type Weather {
-  day: DateTime
+type Weather implements Node {
+  id: ID!
+  day: String!
   temperature: Float!
-  precipitation: String!
+  low_uncertainty: Float!
+  high_uncertainty: Float!
 }
 
 """A connection to a list of items."""
@@ -1410,9 +1410,10 @@ type WeatherConnection {
 }
 
 input WeatherCreateInput {
-  day: DateTime
+  day: String!
   temperature: Float!
-  precipitation: String!
+  low_uncertainty: Float!
+  high_uncertainty: Float!
 }
 
 """An edge in a connection."""
@@ -1425,14 +1426,16 @@ type WeatherEdge {
 }
 
 enum WeatherOrderByInput {
+  id_ASC
+  id_DESC
   day_ASC
   day_DESC
   temperature_ASC
   temperature_DESC
-  precipitation_ASC
-  precipitation_DESC
-  id_ASC
-  id_DESC
+  low_uncertainty_ASC
+  low_uncertainty_DESC
+  high_uncertainty_ASC
+  high_uncertainty_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -1440,9 +1443,11 @@ enum WeatherOrderByInput {
 }
 
 type WeatherPreviousValues {
-  day: DateTime
+  id: ID!
+  day: String!
   temperature: Float!
-  precipitation: String!
+  low_uncertainty: Float!
+  high_uncertainty: Float!
 }
 
 type WeatherSubscriptionPayload {
@@ -1485,9 +1490,10 @@ input WeatherSubscriptionWhereInput {
 }
 
 input WeatherUpdateInput {
-  day: DateTime
+  day: String
   temperature: Float
-  precipitation: String
+  low_uncertainty: Float
+  high_uncertainty: Float
 }
 
 input WeatherWhereInput {
@@ -1499,28 +1505,86 @@ input WeatherWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [WeatherWhereInput!]
-  day: DateTime
+  id: ID
 
   """All values that are not equal to given value."""
-  day_not: DateTime
+  id_not: ID
 
   """All values that are contained in given list."""
-  day_in: [DateTime!]
+  id_in: [ID!]
 
   """All values that are not contained in given list."""
-  day_not_in: [DateTime!]
+  id_not_in: [ID!]
 
   """All values less than the given value."""
-  day_lt: DateTime
+  id_lt: ID
 
   """All values less than or equal the given value."""
-  day_lte: DateTime
+  id_lte: ID
 
   """All values greater than the given value."""
-  day_gt: DateTime
+  id_gt: ID
 
   """All values greater than or equal the given value."""
-  day_gte: DateTime
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  day: String
+
+  """All values that are not equal to given value."""
+  day_not: String
+
+  """All values that are contained in given list."""
+  day_in: [String!]
+
+  """All values that are not contained in given list."""
+  day_not_in: [String!]
+
+  """All values less than the given value."""
+  day_lt: String
+
+  """All values less than or equal the given value."""
+  day_lte: String
+
+  """All values greater than the given value."""
+  day_gt: String
+
+  """All values greater than or equal the given value."""
+  day_gte: String
+
+  """All values containing the given string."""
+  day_contains: String
+
+  """All values not containing the given string."""
+  day_not_contains: String
+
+  """All values starting with the given string."""
+  day_starts_with: String
+
+  """All values not starting with the given string."""
+  day_not_starts_with: String
+
+  """All values ending with the given string."""
+  day_ends_with: String
+
+  """All values not ending with the given string."""
+  day_not_ends_with: String
   temperature: Float
 
   """All values that are not equal to given value."""
@@ -1543,48 +1607,53 @@ input WeatherWhereInput {
 
   """All values greater than or equal the given value."""
   temperature_gte: Float
-  precipitation: String
+  low_uncertainty: Float
 
   """All values that are not equal to given value."""
-  precipitation_not: String
+  low_uncertainty_not: Float
 
   """All values that are contained in given list."""
-  precipitation_in: [String!]
+  low_uncertainty_in: [Float!]
 
   """All values that are not contained in given list."""
-  precipitation_not_in: [String!]
+  low_uncertainty_not_in: [Float!]
 
   """All values less than the given value."""
-  precipitation_lt: String
+  low_uncertainty_lt: Float
 
   """All values less than or equal the given value."""
-  precipitation_lte: String
+  low_uncertainty_lte: Float
 
   """All values greater than the given value."""
-  precipitation_gt: String
+  low_uncertainty_gt: Float
 
   """All values greater than or equal the given value."""
-  precipitation_gte: String
+  low_uncertainty_gte: Float
+  high_uncertainty: Float
 
-  """All values containing the given string."""
-  precipitation_contains: String
+  """All values that are not equal to given value."""
+  high_uncertainty_not: Float
 
-  """All values not containing the given string."""
-  precipitation_not_contains: String
+  """All values that are contained in given list."""
+  high_uncertainty_in: [Float!]
 
-  """All values starting with the given string."""
-  precipitation_starts_with: String
+  """All values that are not contained in given list."""
+  high_uncertainty_not_in: [Float!]
 
-  """All values not starting with the given string."""
-  precipitation_not_starts_with: String
+  """All values less than the given value."""
+  high_uncertainty_lt: Float
 
-  """All values ending with the given string."""
-  precipitation_ends_with: String
+  """All values less than or equal the given value."""
+  high_uncertainty_lte: Float
 
-  """All values not ending with the given string."""
-  precipitation_not_ends_with: String
+  """All values greater than the given value."""
+  high_uncertainty_gt: Float
+
+  """All values greater than or equal the given value."""
+  high_uncertainty_gte: Float
 }
 
 input WeatherWhereUniqueInput {
-  day: DateTime
+  id: ID
+  day: String
 }
