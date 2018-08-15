@@ -1,7 +1,7 @@
 const cheerio = require('cheerio')
 const axios = require('axios')
-const Nightmare = require('nightmare')
-let nightmare = new Nightmare()
+// const Nightmare = require('nightmare')
+// let nightmare = new Nightmare()
 
 
 
