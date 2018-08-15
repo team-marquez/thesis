@@ -9,10 +9,6 @@ module.exports = {
       indoor: Math.ceil(1 - clientPreferences.pref.IO) * arrayMax,
       outdoor: Math.ceil(clientPreferences.pref.IO) * arrayMax
     }
-    let FAllocation = {
-      indoor: 1 - clientPreferences.pref.FA,
-      outdoor: clientPreferences.pref.FA
-    }
 
     let tripOptions = {
       breakfast: [],

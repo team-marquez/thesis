@@ -1,6 +1,6 @@
 const expect = require('chai').expect
 const { assemblyBoi } = require('./../server/src/bois/assembly_boi.js')
-const { recsData, clientPreferances } = require('./assemblyDummyData.js')
+const { recsData, clientPreferances } = require('./dummyData.js')
 
 describe('Assembly Boi', () => {
 		describe('Structure', () => {
