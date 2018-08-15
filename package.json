@@ -7,7 +7,8 @@
     "server-dev": "nodemon server/src/index.js",
     "react-dev": "webpack -d --watch",
     "test": "mocha spec/scraper_spec.js",
-    "test-assembly": "mocha spec/assembly_spec.js"
+    "test-assembly": "mocha spec/assembly_spec.js",
+    "test-budget": "mocha spec/budget_spec.js"
   },
   "repository": {
     "type": "git",
