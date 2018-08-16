@@ -45,7 +45,7 @@ class Kamban extends React.Component {
   constructor (props) {
     super (props)
     this.state = {
-      arr: this.props.DATA,
+      arr: this.props.DATA || ['g', 'marty', 'romain lettuce', 'erik'],
       items: [],
     }
     this.onDragEnd = this.onDragEnd.bind(this)

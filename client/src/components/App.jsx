@@ -4,7 +4,6 @@ import LoginButton from "./LoginButton.jsx";
 import LocationModal from "./LocationModal.jsx";
 import Footer from "./Footer.jsx";
 import AllDays from "./AllDays.jsx";
-import TEST from "./TEST.jsx";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
 import { Query } from "react-apollo";
@@ -41,8 +40,8 @@ class App extends React.Component {
                 </div>
               ) : (
                 <div style={{ textAlign: "center" }}>
-                  <TEST />
-                  {/* <AllDays /> */}
+                  {/* <TEST /> */}
+                  <AllDays />
                 </div>)
             }
           }
