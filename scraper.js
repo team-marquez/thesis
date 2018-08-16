@@ -78,6 +78,8 @@ const scrapeTenPages = (dynamicURL, cb) => {
 //////TIME OUT NEW YORK SECTION////////
 const listURL = 'https://www.timeout.com/newyork/restaurants/100-best-new-york-restaurants'
 const shortTimeOutURL = 'https://www.timeout.com/newyork/restaurants/'
+const attractionListURL = 'https://www.timeout.com/newyork/attractions/new-york-attractions'
+const shortAttractionTimeOutURL = 'https://www.timeout.com/newyork/things-to-do/'
 
 const timeOutListScrape = (url) => {
     let data = []
@@ -106,14 +108,17 @@ const timeOutIndividualPageScrape = (dynamicURL, dynamicName) => {
             item.name = $(element).find('.listing__header h1').text()
             item.cost = 0;
             $(element).find('.listing__header ul li').each((index, el) => {
-                item.cost++
+                if ($(el).hasClass('xs-text-red')) item.cost++
             })
-            item.review = $(element).find('[itemprop]=reviewBody p').text()
+            $(element).find('article p').each((index, element) => {
+                item.review += $(element).text().trim() + ' '
+            })
             item.website = $(element).find('.listing_details .lead_buttons').children().first().attr('href')
             item.timeOutWebsite = dynamicURL + dynamicName
+            item.address = ''
             $(element).find('.listing_details tr').each((index, el) => {
-                if ($(element).children().first().text().trim() === 'Address:') {
-                    item.address = $(element).children().last().text().trim()
+                if ($(el).children().first().text().trim() === 'Address:') {
+                    item.address = $(el).children().last().text().trim().split('\n').join(' ')
                 }
             })
             data.push(item)
@@ -145,7 +150,7 @@ const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
             item.name = $(element).find('.listing__header h1').text().split('|')[0]
             item.borough = $(element).find('.listing__header h1').text().split('|')[1]
             item.cost = 0;
-            $(element).find('.listing__header ul li').each((index, el) => {
+            $(element).find('listing__header ul li').each((index, el) => {
                 if ($(el).hasClass('.xs-text-red')) item.cost++
             })
             item.review = ''
@@ -156,7 +161,7 @@ const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
             item.timeOutWebsite = dynamicURL + dashedName
             $(element).find('.listing_details tr').each((index, el) => {
                 if ($(element).children().first().text().trim() === 'Address:') {
-                    item.address = $(element).children().last().text().trim()
+                    item.address = $(element).children().last().text().trim().split('\n').join(' ')
                 }
             })
             item.LTScore = 1
@@ -168,11 +173,11 @@ const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
 //////uncomment below function to run the scrapes
 // let timeOutCheck = timeOutListScrape(listURL)
 // timeOutCheck.then((data) => console.log(data))
-// let timeOutIndividualPageCheck = timeOutIndividualPageScrape(shortTimeOutURL, 'Le Bernardin')
+// let timeOutIndividualPageCheck = timeOutIndividualPageScrape(shortTimeOutURL, 'Emily')
 // timeOutIndividualPageCheck.then((data) => console.log(data))
 // let attractionTimeOutSearchCheck = attractionTimeOutListScrape(attractionListURL)
 // attractionTimeOutSearchCheck.then((data) => console.log(data))
-// let attractionTimeOutCheck = attractionTimeOutIndividualPageScrape('shortAttractionTimeOutURL', 'Empire State Building')
+// let attractionTimeOutCheck = attractionTimeOutIndividualPageScrape('shortAttractionTimeOutURL', 'Frenchette')
 // attractionTimeOutCheck.then((data) => console.log(data))
 
 module.exports = {
