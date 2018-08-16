@@ -10,21 +10,30 @@ type Activity {
   id: ID! @unique
   name: String!
   description: String!
-  cost: Float!
+  cost: Float
   image: String!
-  location: String!
-  activity_level: Float!
-  child_friendly: Boolean!
+  location: String
+  source: String!
+  website: String
+  local_tourist: String!
+  indoor_outdoor: String
+  concepts: Json!
+  categories: Json!
+  child_friendly: Boolean
   ratings: Ratings
 }
 
 type Restaurant {
   id: ID! @unique
-  name: String!
-  description: String!
-  cost: Float!
+  name: String! @unique
   image: String!
-  location: String!
+  cuisine: String!
+  cost: Float!
+  description: String!
+  why_go: String!
+  location: String
+  source: String!
+  website: String
 }
 
 type Ratings {
@@ -35,7 +44,9 @@ type Ratings {
 }
 
 type Weather {
-  day: DateTime @unique
+  id: ID! @unique
+  day: String! @unique
   temperature: Float!
-  precipitation: String!
+  low_uncertainty: Float!
+  high_uncertainty: Float!
 }
