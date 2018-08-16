@@ -1,8 +1,8 @@
-import React from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import React from 'react'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 // fake data generator
-const getItems = count =>
+const getItems = (count,array) =>
   Array.from({ length: count }, (v, k) => k).map(k => ({
     id: `item-${k}`,
     content: `item ${k}`,
