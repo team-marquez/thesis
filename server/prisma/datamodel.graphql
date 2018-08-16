@@ -20,11 +20,15 @@ type Activity {
 
 type Restaurant {
   id: ID! @unique
-  name: String!
-  description: String!
-  cost: Float!
+  name: String! @unique
   image: String!
-  location: String!
+  cuisine: String!
+  cost: Float!
+  description: String!
+  why_go: String!
+  location: String
+  source: String!
+  website: String
 }
 
 type Ratings {
@@ -35,7 +39,9 @@ type Ratings {
 }
 
 type Weather {
-  day: DateTime @unique
+  id: ID! @unique
+  day: String! @unique
   temperature: Float!
-  precipitation: String!
+  low_uncertainty: Float!
+  high_uncertainty: Float!
 }
