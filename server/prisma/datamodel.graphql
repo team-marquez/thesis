@@ -20,15 +20,15 @@ type Activity {
 
 type Restaurant {
   id: ID! @unique
-  name: String!
+  name: String! @unique
   image: String!
   cuisine: String!
   cost: Float!
   description: String!
   why_go: String!
-  location: String!
+  location: String
   source: String!
-  website: String!
+  website: String
 }
 
 type Ratings {
