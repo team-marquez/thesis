@@ -44,6 +44,39 @@ const resolvers = {
         },
         info
       )
+    },
+    createRestaurant: (
+      _,
+      {
+        name,
+        image,
+        cuisine,
+        cost,
+        description,
+        why_go,
+        location,
+        source,
+        website
+      },
+      context,
+      info
+    ) => {
+      return context.db.mutation.createRestaurant(
+        {
+          data: {
+            name,
+            image,
+            cuisine,
+            cost,
+            description,
+            why_go,
+            location,
+            source,
+            website
+          }
+        },
+        info
+      )
     }
   }
 }
