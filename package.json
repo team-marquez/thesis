@@ -8,7 +8,8 @@
     "react-dev": "webpack -d --watch",
     "test": "mocha spec/scraper_spec.js",
     "test-assembly": "mocha spec/assembly_spec.js",
-    "test-budget": "mocha spec/budget_spec.js"
+    "test-budget": "mocha spec/budget_spec.js",
+    "test-weather": "mocha spec/weather_spec.js"
   },
   "repository": {
     "type": "git",
