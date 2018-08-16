@@ -1,6 +1,7 @@
 import React from 'react'
-
-import { Grid } from 'semantic-ui-react'
+import { Mutation, Query } from "react-apollo";
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { Grid, Button } from 'semantic-ui-react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 const getItems = (count, array) =>
@@ -44,9 +45,8 @@ class Kamban extends React.Component {
   constructor (props) {
     super (props)
     this.state = {
-      arr: ['Marty', 'Roman', 'Erik', 'Guillermo'],
+      arr: this.props.DATA,
       items: [],
-      open: false
     }
     this.onDragEnd = this.onDragEnd.bind(this)
     this.setItems = this.setItems.bind(this)
@@ -80,7 +80,6 @@ class Kamban extends React.Component {
   }
 
   render () {
-    const { open } = this.state
     return (
       <div>
         <Grid style={{display: 'inline-block'}}>
@@ -104,8 +103,9 @@ class Kamban extends React.Component {
                               snapshot.isDragging,
                               provided.draggableProps.style
                             )}
-                          >
+                            >
                             {item.content}
+                            <Button>'hi' </Button>
                           </div>
                         )}
                       </Draggable>

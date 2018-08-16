@@ -3,14 +3,19 @@ const { Prisma } = require('prisma-binding')
 const express = require('express')
 const path = require('path')
 
+let stuff = ["this", "actually", "worked", "wow"]
+
 const resolvers = {
   Query: {
     users: (_, args, context, info) => {
-      console.log(`info: ${Object.keys(context.db)}
-      `)
+      // console.log(`info: ${Object.keys(context.db)}
+      // `)
       return context.db.query.users
     },
     echo: (a, { args }, b, c) => {
+      return args
+    },
+    test: (a, { args }, b, c) => {
       console.log(args)
       return args
     }

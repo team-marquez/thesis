@@ -7,6 +7,7 @@
 type Query {
   users: [Users!]!
   echo(args: String): String
+  test(args: String): String
 }
 
 type Mutation {
