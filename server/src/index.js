@@ -8,6 +8,7 @@ let stuff = ["this", "actually", "worked", "wow"]
 const resolvers = {
   Query: {
     users: (_, args, context, info) => {
+<<<<<<< HEAD
       // console.log(`info: ${Object.keys(context.db)}
       // `)
       return context.db.query.users
@@ -26,10 +27,15 @@ const resolvers = {
     },
     userPrefs: (a, { args }, b, c) => {
       console.log(args)
+=======
+      return context.db.query.users
+    },
+    echo: (a, { args }, b, c) => {
+>>>>>>> dev
       return args
     }
   },
-  
+
   Mutation: {
     createUsers: (_, { username, password, age, gender }, context, info) => {
       return context.db.mutation.createUsers(
@@ -39,6 +45,57 @@ const resolvers = {
             password,
             age,
             gender
+          }
+        },
+        info
+      )
+    },
+    createWeather: (
+      _,
+      { day, temperature, low_uncertainty, high_uncertainty },
+      context,
+      info
+    ) => {
+      return context.db.mutation.createWeather(
+        {
+          data: {
+            day,
+            temperature,
+            low_uncertainty,
+            high_uncertainty
+          }
+        },
+        info
+      )
+    },
+    createRestaurant: (
+      _,
+      {
+        name,
+        image,
+        cuisine,
+        cost,
+        description,
+        why_go,
+        location,
+        source,
+        website
+      },
+      context,
+      info
+    ) => {
+      return context.db.mutation.createRestaurant(
+        {
+          data: {
+            name,
+            image,
+            cuisine,
+            cost,
+            description,
+            why_go,
+            location,
+            source,
+            website
           }
         },
         info

@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Mon Aug 13 2018 16:42:11 GMT-0400 (EDT)
+# timestamp: Thu Aug 16 2018 11:27:23 GMT-0400 (EDT)
 
 type Activity implements Node {
   id: ID!
@@ -416,8 +416,6 @@ type BatchPayload {
   count: Long!
 }
 
-scalar DateTime
-
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -756,10 +754,14 @@ input RatingsWhereUniqueInput {
 type Restaurant implements Node {
   id: ID!
   name: String!
-  description: String!
-  cost: Float!
   image: String!
-  location: String!
+  cuisine: String!
+  cost: Float!
+  description: String!
+  why_go: String!
+  location: String
+  source: String!
+  website: String
 }
 
 """A connection to a list of items."""
@@ -774,10 +776,14 @@ type RestaurantConnection {
 
 input RestaurantCreateInput {
   name: String!
-  description: String!
-  cost: Float!
   image: String!
-  location: String!
+  cuisine: String!
+  cost: Float!
+  description: String!
+  why_go: String!
+  location: String
+  source: String!
+  website: String
 }
 
 """An edge in a connection."""
@@ -794,14 +800,22 @@ enum RestaurantOrderByInput {
   id_DESC
   name_ASC
   name_DESC
-  description_ASC
-  description_DESC
-  cost_ASC
-  cost_DESC
   image_ASC
   image_DESC
+  cuisine_ASC
+  cuisine_DESC
+  cost_ASC
+  cost_DESC
+  description_ASC
+  description_DESC
+  why_go_ASC
+  why_go_DESC
   location_ASC
   location_DESC
+  source_ASC
+  source_DESC
+  website_ASC
+  website_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -811,10 +825,14 @@ enum RestaurantOrderByInput {
 type RestaurantPreviousValues {
   id: ID!
   name: String!
-  description: String!
-  cost: Float!
   image: String!
-  location: String!
+  cuisine: String!
+  cost: Float!
+  description: String!
+  why_go: String!
+  location: String
+  source: String!
+  website: String
 }
 
 type RestaurantSubscriptionPayload {
@@ -858,10 +876,14 @@ input RestaurantSubscriptionWhereInput {
 
 input RestaurantUpdateInput {
   name: String
-  description: String
-  cost: Float
   image: String
+  cuisine: String
+  cost: Float
+  description: String
+  why_go: String
   location: String
+  source: String
+  website: String
 }
 
 input RestaurantWhereInput {
@@ -953,68 +975,6 @@ input RestaurantWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  description: String
-
-  """All values that are not equal to given value."""
-  description_not: String
-
-  """All values that are contained in given list."""
-  description_in: [String!]
-
-  """All values that are not contained in given list."""
-  description_not_in: [String!]
-
-  """All values less than the given value."""
-  description_lt: String
-
-  """All values less than or equal the given value."""
-  description_lte: String
-
-  """All values greater than the given value."""
-  description_gt: String
-
-  """All values greater than or equal the given value."""
-  description_gte: String
-
-  """All values containing the given string."""
-  description_contains: String
-
-  """All values not containing the given string."""
-  description_not_contains: String
-
-  """All values starting with the given string."""
-  description_starts_with: String
-
-  """All values not starting with the given string."""
-  description_not_starts_with: String
-
-  """All values ending with the given string."""
-  description_ends_with: String
-
-  """All values not ending with the given string."""
-  description_not_ends_with: String
-  cost: Float
-
-  """All values that are not equal to given value."""
-  cost_not: Float
-
-  """All values that are contained in given list."""
-  cost_in: [Float!]
-
-  """All values that are not contained in given list."""
-  cost_not_in: [Float!]
-
-  """All values less than the given value."""
-  cost_lt: Float
-
-  """All values less than or equal the given value."""
-  cost_lte: Float
-
-  """All values greater than the given value."""
-  cost_gt: Float
-
-  """All values greater than or equal the given value."""
-  cost_gte: Float
   image: String
 
   """All values that are not equal to given value."""
@@ -1055,6 +1015,148 @@ input RestaurantWhereInput {
 
   """All values not ending with the given string."""
   image_not_ends_with: String
+  cuisine: String
+
+  """All values that are not equal to given value."""
+  cuisine_not: String
+
+  """All values that are contained in given list."""
+  cuisine_in: [String!]
+
+  """All values that are not contained in given list."""
+  cuisine_not_in: [String!]
+
+  """All values less than the given value."""
+  cuisine_lt: String
+
+  """All values less than or equal the given value."""
+  cuisine_lte: String
+
+  """All values greater than the given value."""
+  cuisine_gt: String
+
+  """All values greater than or equal the given value."""
+  cuisine_gte: String
+
+  """All values containing the given string."""
+  cuisine_contains: String
+
+  """All values not containing the given string."""
+  cuisine_not_contains: String
+
+  """All values starting with the given string."""
+  cuisine_starts_with: String
+
+  """All values not starting with the given string."""
+  cuisine_not_starts_with: String
+
+  """All values ending with the given string."""
+  cuisine_ends_with: String
+
+  """All values not ending with the given string."""
+  cuisine_not_ends_with: String
+  cost: Float
+
+  """All values that are not equal to given value."""
+  cost_not: Float
+
+  """All values that are contained in given list."""
+  cost_in: [Float!]
+
+  """All values that are not contained in given list."""
+  cost_not_in: [Float!]
+
+  """All values less than the given value."""
+  cost_lt: Float
+
+  """All values less than or equal the given value."""
+  cost_lte: Float
+
+  """All values greater than the given value."""
+  cost_gt: Float
+
+  """All values greater than or equal the given value."""
+  cost_gte: Float
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  why_go: String
+
+  """All values that are not equal to given value."""
+  why_go_not: String
+
+  """All values that are contained in given list."""
+  why_go_in: [String!]
+
+  """All values that are not contained in given list."""
+  why_go_not_in: [String!]
+
+  """All values less than the given value."""
+  why_go_lt: String
+
+  """All values less than or equal the given value."""
+  why_go_lte: String
+
+  """All values greater than the given value."""
+  why_go_gt: String
+
+  """All values greater than or equal the given value."""
+  why_go_gte: String
+
+  """All values containing the given string."""
+  why_go_contains: String
+
+  """All values not containing the given string."""
+  why_go_not_contains: String
+
+  """All values starting with the given string."""
+  why_go_starts_with: String
+
+  """All values not starting with the given string."""
+  why_go_not_starts_with: String
+
+  """All values ending with the given string."""
+  why_go_ends_with: String
+
+  """All values not ending with the given string."""
+  why_go_not_ends_with: String
   location: String
 
   """All values that are not equal to given value."""
@@ -1095,10 +1197,91 @@ input RestaurantWhereInput {
 
   """All values not ending with the given string."""
   location_not_ends_with: String
+  source: String
+
+  """All values that are not equal to given value."""
+  source_not: String
+
+  """All values that are contained in given list."""
+  source_in: [String!]
+
+  """All values that are not contained in given list."""
+  source_not_in: [String!]
+
+  """All values less than the given value."""
+  source_lt: String
+
+  """All values less than or equal the given value."""
+  source_lte: String
+
+  """All values greater than the given value."""
+  source_gt: String
+
+  """All values greater than or equal the given value."""
+  source_gte: String
+
+  """All values containing the given string."""
+  source_contains: String
+
+  """All values not containing the given string."""
+  source_not_contains: String
+
+  """All values starting with the given string."""
+  source_starts_with: String
+
+  """All values not starting with the given string."""
+  source_not_starts_with: String
+
+  """All values ending with the given string."""
+  source_ends_with: String
+
+  """All values not ending with the given string."""
+  source_not_ends_with: String
+  website: String
+
+  """All values that are not equal to given value."""
+  website_not: String
+
+  """All values that are contained in given list."""
+  website_in: [String!]
+
+  """All values that are not contained in given list."""
+  website_not_in: [String!]
+
+  """All values less than the given value."""
+  website_lt: String
+
+  """All values less than or equal the given value."""
+  website_lte: String
+
+  """All values greater than the given value."""
+  website_gt: String
+
+  """All values greater than or equal the given value."""
+  website_gte: String
+
+  """All values containing the given string."""
+  website_contains: String
+
+  """All values not containing the given string."""
+  website_not_contains: String
+
+  """All values starting with the given string."""
+  website_starts_with: String
+
+  """All values not starting with the given string."""
+  website_not_starts_with: String
+
+  """All values ending with the given string."""
+  website_ends_with: String
+
+  """All values not ending with the given string."""
+  website_not_ends_with: String
 }
 
 input RestaurantWhereUniqueInput {
   id: ID
+  name: String
 }
 
 type Subscription {
@@ -1393,10 +1576,12 @@ input UsersWhereUniqueInput {
   id: ID
 }
 
-type Weather {
-  day: DateTime
+type Weather implements Node {
+  id: ID!
+  day: String!
   temperature: Float!
-  precipitation: String!
+  low_uncertainty: Float!
+  high_uncertainty: Float!
 }
 
 """A connection to a list of items."""
@@ -1410,9 +1595,10 @@ type WeatherConnection {
 }
 
 input WeatherCreateInput {
-  day: DateTime
+  day: String!
   temperature: Float!
-  precipitation: String!
+  low_uncertainty: Float!
+  high_uncertainty: Float!
 }
 
 """An edge in a connection."""
@@ -1425,14 +1611,16 @@ type WeatherEdge {
 }
 
 enum WeatherOrderByInput {
+  id_ASC
+  id_DESC
   day_ASC
   day_DESC
   temperature_ASC
   temperature_DESC
-  precipitation_ASC
-  precipitation_DESC
-  id_ASC
-  id_DESC
+  low_uncertainty_ASC
+  low_uncertainty_DESC
+  high_uncertainty_ASC
+  high_uncertainty_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -1440,9 +1628,11 @@ enum WeatherOrderByInput {
 }
 
 type WeatherPreviousValues {
-  day: DateTime
+  id: ID!
+  day: String!
   temperature: Float!
-  precipitation: String!
+  low_uncertainty: Float!
+  high_uncertainty: Float!
 }
 
 type WeatherSubscriptionPayload {
@@ -1485,9 +1675,10 @@ input WeatherSubscriptionWhereInput {
 }
 
 input WeatherUpdateInput {
-  day: DateTime
+  day: String
   temperature: Float
-  precipitation: String
+  low_uncertainty: Float
+  high_uncertainty: Float
 }
 
 input WeatherWhereInput {
@@ -1499,28 +1690,86 @@ input WeatherWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [WeatherWhereInput!]
-  day: DateTime
+  id: ID
 
   """All values that are not equal to given value."""
-  day_not: DateTime
+  id_not: ID
 
   """All values that are contained in given list."""
-  day_in: [DateTime!]
+  id_in: [ID!]
 
   """All values that are not contained in given list."""
-  day_not_in: [DateTime!]
+  id_not_in: [ID!]
 
   """All values less than the given value."""
-  day_lt: DateTime
+  id_lt: ID
 
   """All values less than or equal the given value."""
-  day_lte: DateTime
+  id_lte: ID
 
   """All values greater than the given value."""
-  day_gt: DateTime
+  id_gt: ID
 
   """All values greater than or equal the given value."""
-  day_gte: DateTime
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  day: String
+
+  """All values that are not equal to given value."""
+  day_not: String
+
+  """All values that are contained in given list."""
+  day_in: [String!]
+
+  """All values that are not contained in given list."""
+  day_not_in: [String!]
+
+  """All values less than the given value."""
+  day_lt: String
+
+  """All values less than or equal the given value."""
+  day_lte: String
+
+  """All values greater than the given value."""
+  day_gt: String
+
+  """All values greater than or equal the given value."""
+  day_gte: String
+
+  """All values containing the given string."""
+  day_contains: String
+
+  """All values not containing the given string."""
+  day_not_contains: String
+
+  """All values starting with the given string."""
+  day_starts_with: String
+
+  """All values not starting with the given string."""
+  day_not_starts_with: String
+
+  """All values ending with the given string."""
+  day_ends_with: String
+
+  """All values not ending with the given string."""
+  day_not_ends_with: String
   temperature: Float
 
   """All values that are not equal to given value."""
@@ -1543,48 +1792,53 @@ input WeatherWhereInput {
 
   """All values greater than or equal the given value."""
   temperature_gte: Float
-  precipitation: String
+  low_uncertainty: Float
 
   """All values that are not equal to given value."""
-  precipitation_not: String
+  low_uncertainty_not: Float
 
   """All values that are contained in given list."""
-  precipitation_in: [String!]
+  low_uncertainty_in: [Float!]
 
   """All values that are not contained in given list."""
-  precipitation_not_in: [String!]
+  low_uncertainty_not_in: [Float!]
 
   """All values less than the given value."""
-  precipitation_lt: String
+  low_uncertainty_lt: Float
 
   """All values less than or equal the given value."""
-  precipitation_lte: String
+  low_uncertainty_lte: Float
 
   """All values greater than the given value."""
-  precipitation_gt: String
+  low_uncertainty_gt: Float
 
   """All values greater than or equal the given value."""
-  precipitation_gte: String
+  low_uncertainty_gte: Float
+  high_uncertainty: Float
 
-  """All values containing the given string."""
-  precipitation_contains: String
+  """All values that are not equal to given value."""
+  high_uncertainty_not: Float
 
-  """All values not containing the given string."""
-  precipitation_not_contains: String
+  """All values that are contained in given list."""
+  high_uncertainty_in: [Float!]
 
-  """All values starting with the given string."""
-  precipitation_starts_with: String
+  """All values that are not contained in given list."""
+  high_uncertainty_not_in: [Float!]
 
-  """All values not starting with the given string."""
-  precipitation_not_starts_with: String
+  """All values less than the given value."""
+  high_uncertainty_lt: Float
 
-  """All values ending with the given string."""
-  precipitation_ends_with: String
+  """All values less than or equal the given value."""
+  high_uncertainty_lte: Float
 
-  """All values not ending with the given string."""
-  precipitation_not_ends_with: String
+  """All values greater than the given value."""
+  high_uncertainty_gt: Float
+
+  """All values greater than or equal the given value."""
+  high_uncertainty_gte: Float
 }
 
 input WeatherWhereUniqueInput {
-  day: DateTime
+  id: ID
+  day: String
 }
