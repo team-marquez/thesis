@@ -12,10 +12,19 @@ const resolvers = {
       // `)
       return context.db.query.users
     },
+    food: (_, args, context, info) => {
+      // console.log(`info: ${Object.keys(context.db)}
+      // `)
+      return context.db.query.users
+    },
     echo: (a, { args }, b, c) => {
       return args
     },
     test: (a, { args }, b, c) => {
+      console.log(args)
+      return args
+    },
+    userPrefs: (a, { args }, b, c) => {
       console.log(args)
       return args
     }
