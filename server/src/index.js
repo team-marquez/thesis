@@ -12,7 +12,6 @@ const resolvers = {
       return args
     }
   },
-
   Mutation: {
     createUsers: (_, { username, password, age, gender }, context, info) => {
       return context.db.mutation.createUsers(
