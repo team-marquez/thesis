@@ -143,6 +143,10 @@ const scrapeTenPages = dynamicURL => {
 const listURL =
   'https://www.timeout.com/newyork/restaurants/100-best-new-york-restaurants'
 const shortTimeOutURL = 'https://www.timeout.com/newyork/restaurants/'
+const attractionListURL =
+  'https://www.timeout.com/newyork/attractions/new-york-attractions'
+const shortAttractionTimeOutURL =
+  'https://www.timeout.com/newyork/things-to-do/'
 
 const timeOutListScrape = url => {
   let data = []
@@ -181,7 +185,10 @@ const timeOutListScrape = url => {
 
 const timeOutIndividualPageScrape = (dynamicURL, dynamicName) => {
   let data = []
-  let dashedName = dynamicName.split(' ').join('-')
+  let dashedName = dynamicName
+    .toLowerCase()
+    .split(' ')
+    .join('-')
   return axios.get(dynamicURL + dashedName).then(response => {
     let $ = cheerio.load(response.data)
     $('#content').each((index, element) => {
@@ -193,32 +200,40 @@ const timeOutIndividualPageScrape = (dynamicURL, dynamicName) => {
       $(element)
         .find('.listing__header ul li')
         .each((index, el) => {
-          item.cost++
+          if ($(el).hasClass('xs-text-red')) item.cost++
         })
-      item.review = $(element)
-        .find('[itemprop] reviewBody p')
-        .text()
+      $(element)
+        .find('article p')
+        .each((index, element) => {
+          item.review +=
+            $(element)
+              .text()
+              .trim() + ' '
+        })
       item.website = $(element)
         .find('.listing_details .lead_buttons')
         .children()
         .first()
         .attr('href')
       item.timeOutWebsite = dynamicURL + dynamicName
+      item.address = ''
       $(element)
         .find('.listing_details tr')
         .each((index, el) => {
           if (
-            $(element)
+            $(el)
               .children()
               .first()
               .text()
               .trim() === 'Address:'
           ) {
-            item.address = $(element)
+            item.address = $(el)
               .children()
               .last()
               .text()
               .trim()
+              .split('\n')
+              .join(' ')
           }
         })
       data.push(item)
@@ -298,7 +313,7 @@ const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
         .split('|')[1]
       item.cost = 0
       $(element)
-        .find('.listing__header ul li')
+        .find('listing__header ul li')
         .each((index, el) => {
           if ($(el).hasClass('.xs-text-red')) item.cost++
         })
@@ -329,6 +344,8 @@ const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
               .last()
               .text()
               .trim()
+              .split('\n')
+              .join(' ')
           }
         })
       item.LTScore = 1
@@ -337,14 +354,298 @@ const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
     return data
   })
 }
+
+//split out of attraction center
+let timeOutMuseums = attractionName => {
+  axios
+    .get('https://www.timeout.com/newyork/museums/' + attractionName)
+    .then(response => {
+      let $ = cheerio.load(response.data)
+      $('#content').each((index, element) => {
+        let item = {}
+        item.name = attractionName.split('-').join(' ')
+        item.borough = ''
+        item.cost = 1
+        $(element)
+          .find('listing__header ul li')
+          .each((index, el) => {
+            if ($(el).hasClass('.xs-text-red')) item.cost++
+          })
+        item.review = ''
+        $(element)
+          .find('article p')
+          .each((ind, el) => {
+            item.review +=
+              $(el)
+                .text()
+                .trim() + ' '
+          })
+        item.webstie = $(element)
+          .find('.feature__article a')
+          .last()
+          .attr('href') //alt will be to go thru the H3's
+        item.timeOutWebsite =
+          'https://www.timeout.com/newyork/museums/' + attractionName
+        item.address = '' //google it?
+        item.LTScore = 1
+        item.IOScore = 0
+        data.push(item)
+      })
+    })
+}
+
+let timeOutShopping = (website, attractionName) => {
+  axios.get(website).then(response => {
+    let $ = cheerio.load(response.data)
+    $('#content').each((index, element) => {
+      let item = {}
+      item.name = attractionName.split('-').join(' ')
+      item.borough = ''
+      item.cost = 1
+      item.review = $(element)
+        .find('.feature__article p')
+        .first()
+        .text()
+        .trim()
+      item.website = $(element)
+        .find('.listing_details .lead_buttons')
+        .children()
+        .first()
+        .attr('href')
+      item.timeOutWebsite = website
+      item.address = ''
+      $(element)
+        .find('.listing_details tr')
+        .each((index, el) => {
+          if (
+            $(el)
+              .children()
+              .first()
+              .text()
+              .trim() === 'Address:'
+          ) {
+            item.address = $(el)
+              .children()
+              .last()
+              .text()
+              .trim()
+              .split('\n')
+              .join(' ')
+          }
+        })
+      item.LTScore = 1
+      item.IOScore = 0
+      data.push(item)
+    })
+  })
+}
+
+let timeOutComedy = attractionName => {
+  axios
+    .get('https://www.timeout.com/newyork/comedy/' + attractionName)
+    .then(response => {
+      let $ = cheerio.load(response.data)
+      $('#content').each((index, element) => {
+        let item = {}
+        item.name = $(element)
+          .find('.listing__header h1')
+          .text()
+        item.borough = ''
+        item.cost = 0
+        $(element)
+          .find('listing__header ul li')
+          .each((index, el) => {
+            if ($(el).hasClass('.xs-text-red')) item.cost++
+          })
+        item.review = ''
+        $(element)
+          .find('article p')
+          .each((index, el) => {
+            item.review += $(el).text() + ' '
+          })
+        item.website = $(element)
+          .find('.listing_details .lead_buttons')
+          .children()
+          .first()
+          .attr('href')
+        item.timeOutWebsite =
+          'https://www.timeout.com/newyork/comedy/' + attractionName
+        $(element)
+          .find('.listing_details tr')
+          .each((index, el) => {
+            if (
+              $(element)
+                .children()
+                .first()
+                .text()
+                .trim() === 'Address:'
+            ) {
+              item.address = $(element)
+                .children()
+                .last()
+                .text()
+                .trim()
+                .split('\n')
+                .join(' ')
+            }
+          })
+        item.LTScore = 1
+        item.IOScore = 0
+        data.push(item)
+      })
+    })
+}
+
+let timeOutSports = attractionName => {
+  axios
+    .get('https://www.timeout.com/newyork/sport-fitness/' + attractionName)
+    .then(response => {
+      let $ = cheerio.load(response.data)
+      $('#content').each((index, element) => {
+        let item = {}
+        item.name = $(element)
+          .find('.listing__header h1')
+          .text()
+        item.borough = ''
+        item.cost = 0
+        $(element)
+          .find('listing__header ul li')
+          .each((index, el) => {
+            if ($(el).hasClass('.xs-text-red')) item.cost++
+          })
+        item.review = ''
+        $(element)
+          .find('article p')
+          .each((index, el) => {
+            item.review += $(el).text() + ' '
+          })
+        item.website = $(element)
+          .find('.listing_details .lead_buttons')
+          .children()
+          .first()
+          .attr('href')
+        item.timeOutWebsite =
+          'https://www.timeout.com/newyork/comedy/' + attractionName
+        $(element)
+          .find('.listing_details tr')
+          .each((index, el) => {
+            if (
+              $(element)
+                .children()
+                .first()
+                .text()
+                .trim() === 'Address:'
+            ) {
+              item.address = $(element)
+                .children()
+                .last()
+                .text()
+                .trim()
+                .split('\n')
+                .join(' ')
+            }
+          })
+        item.LTScore = 1
+        item.IOScore = 0
+        data.push(item)
+      })
+
+      return data
+    })
+}
+
+let attractionSinglePage = website => {
+  return axios.get(website).then(response => {
+    let $ = cheerio.load(response.data)
+    let item = {}
+    $('#content').each((index, element) => {
+      item.name = $(element)
+        .find('.listing__header h1')
+        .text()
+        .split('|')[0]
+      item.borough = $(element)
+        .find('.listing__header h1')
+        .text()
+        .split('|')[1]
+      item.cost = 0
+      $(element)
+        .find('listing__header ul li')
+        .each((index, el) => {
+          if ($(el).hasClass('.xs-text-red')) item.cost++
+        })
+      item.review = ''
+      $(element)
+        .find('article p')
+        .each((index, el) => {
+          item.review += $(el).text() + ' '
+        })
+      item.website = $(element)
+        .find('.listing_details .lead_buttons')
+        .children()
+        .first()
+        .attr('href')
+      item.timeOutWebsite = website
+      $(element)
+        .find('.listing_details tr')
+        .each((index, el) => {
+          if (
+            $(element)
+              .children()
+              .first()
+              .text()
+              .trim() === 'Address:'
+          ) {
+            item.address = $(element)
+              .children()
+              .last()
+              .text()
+              .trim()
+              .split('\n')
+              .join(' ')
+          }
+        })
+      item.LTScore = 1
+      item.IOScore = Math.round(Math.random())
+    })
+    return item
+  })
+}
+
+let manualScrape = async () => {
+  let sites = [
+    'https://www.timeout.com/newyork/attractions/brooklyn-bridge-new-york-ny',
+    'https://www.timeout.com/newyork/attractions/the-statue-of-liberty-manhattan-ny',
+    'https://www.timeout.com/newyork/attractions/one-world-observatory-manhattan-ny',
+    'https://www.timeout.com/newyork/attractions/central-park-manhattan-ny',
+    'https://www.timeout.com/newyork/attractions/national-september-11-memorial-museum-financial-district-ny',
+    'https://www.timeout.com/newyork/attractions/bronx-zoo-wildlife-conservation-society-bronx-ny',
+    'https://www.timeout.com/newyork/attractions/flushing-meadows-corona-park-queens-ny',
+    'https://www.timeout.com/newyork/attractions/brooklyn-heights-and-the-brooklyn-promenade-brooklyn-ny',
+    'https://www.timeout.com/newyork/attractions/brooklyn-botanic-garden',
+    'https://www.timeout.com/newyork/attractions/coney-island-cyclone',
+    'https://www.timeout.com/newyork/attractions/union-square',
+    'https://www.timeout.com/newyork/attractions/flatiron-building',
+    'https://www.timeout.com/newyork/attractions/chrysler-building-manhattan-ny',
+    'https://www.timeout.com/newyork/attractions/st-patricks-cathedral',
+    'https://www.timeout.com/newyork/attractions/washington-square-park',
+    'https://www.timeout.com/newyork/attractions/madame-tussauds-new-york'
+  ]
+  await sites.forEach(async site => {
+    let info = await attractionSinglePage(site)
+    //whatever you want to do with the data, do it here
+  })
+}
+//uncomment checker to run manualScrape
+// let checker = manualScrape()
+
 //////uncomment below function to run the scrapes
 // let timeOutCheck = timeOutListScrape(listURL)
 // timeOutCheck.then((data) => console.log(data))
-// let timeOutIndividualPageCheck = timeOutIndividualPageScrape(shortTimeOutURL, 'Le Bernardin')
+// let timeOutIndividualPageCheck = timeOutIndividualPageScrape(shortTimeOutURL, 'Emily')
 // timeOutIndividualPageCheck.then((data) => console.log(data))
 // let attractionTimeOutSearchCheck = attractionTimeOutListScrape(attractionListURL)
 // attractionTimeOutSearchCheck.then((data) => console.log(data))
-// let attractionTimeOutCheck = attractionTimeOutIndividualPageScrape('shortAttractionTimeOutURL', 'Empire State Building')
+// let attractionTimeOutCheck = attractionTimeOutIndividualPageScrape('shortAttractionTimeOutURL', 'Frenchette')
 // attractionTimeOutCheck.then((data) => console.log(data))
 
 module.exports = {
