@@ -18,16 +18,17 @@ const scrapeAtlasObscuraSearch = url => {
   return axios.get(url).then(response => {
     let $ = cheerio.load(response.data)
     $('.index-card-wrap').each((index, element) => {
-      data[index] = {}
-      data[index]['name'] = $(element)
+      let item = {}
+      item.name = $(element)
         .find('.content-card-title')
         .text()
-      data[index]['description'] = $(element)
+      item.description = $(element)
         .find('.js-subtitle-content')
         .text()
-      data[index]['img'] = $(element)
-        .find('.content-card-figure img')
-        .attr('src')
+      item.img = $(element)
+        .find('.js-content-card-figure img')
+        .attr('data-src')
+      data.push(item)
     })
     // console.log(data)
     return data
@@ -74,27 +75,27 @@ const scrapeAtlasObscuraIndividualPage = (url, name) => {
 // let atlasObscuraSearchCheck = scrapeAtlasObscuraSearch(search_url)
 // atlasObscuraSearchCheck
 //   .then(data => {
-    // data.forEach(element => {
-    //   scrapeAtlasObscuraIndividualPage(individualPageURL, element.name)
-    //     .then(data => {
-    //       data.forEach(activity => {
-    //         var container = {}
+// data.forEach(element => {
+//   scrapeAtlasObscuraIndividualPage(individualPageURL, element.name)
+//     .then(data => {
+//       data.forEach(activity => {
+//         var container = {}
 
-    //         container.name = element.name
-    //         container.image = element.img
-    //         container.address = activity.address
-    //         container.website = activity.website
-    //         container.description = activity.description
+//         container.name = element.name
+//         container.image = element.img
+//         container.address = activity.address
+//         container.website = activity.website
+//         container.description = activity.description
 
-    //         models.addActivity(container, (err, data) => {
-    //           if (err) console.error('Error adding activity', err)
+//         models.addActivity(container, (err, data) => {
+//           if (err) console.error('Error adding activity', err)
 
-    //           console.log('Added successfully', data)
-    //         })
-    //       })
-        // })
-        // .catch(err => console.error('Error fetching from individual pages'))
-    // })
+//           console.log('Added successfully', data)
+//         })
+//       })
+// })
+// .catch(err => console.error('Error fetching from individual pages'))
+// })
 //     console.log(data);
 //   })
 //   .catch(err => console.error('Error fetching pages', err))
@@ -126,7 +127,9 @@ const scrapeTenPages = dynamicURL => {
                 })
               })
             })
-            .catch(err => console.error('Error fetching from individual pages'))
+            .catch(err =>
+              console.error('Error fetching from individual pages', err)
+            )
         })
       })
       .catch(err => console.error('Error scraping page'))
@@ -134,7 +137,7 @@ const scrapeTenPages = dynamicURL => {
 }
 
 // Uncomment to run scrape
-scrapeTenPages(dynam_url)
+// scrapeTenPages(dynam_url)
 
 //////TIME OUT NEW YORK SECTION////////
 const listURL =
@@ -171,16 +174,14 @@ const timeOutListScrape = url => {
         .text()
       data.push(item)
     })
+
     return data
   })
 }
 
 const timeOutIndividualPageScrape = (dynamicURL, dynamicName) => {
   let data = []
-  let dashedName = dynamicName
-    .toLowerCase()
-    .split(' ')
-    .join('-')
+  let dashedName = dynamicName.split(' ').join('-')
   return axios.get(dynamicURL + dashedName).then(response => {
     let $ = cheerio.load(response.data)
     $('#content').each((index, element) => {
@@ -195,7 +196,7 @@ const timeOutIndividualPageScrape = (dynamicURL, dynamicName) => {
           item.cost++
         })
       item.review = $(element)
-        .find('[itemprop]=reviewBody p')
+        .find('[itemprop] reviewBody p')
         .text()
       item.website = $(element)
         .find('.listing_details .lead_buttons')
@@ -222,9 +223,38 @@ const timeOutIndividualPageScrape = (dynamicURL, dynamicName) => {
         })
       data.push(item)
     })
+
     return data
   })
 }
+
+timeOutListScrape(listURL)
+  .then(data => {
+    data.forEach(restaurant => {
+      timeOutIndividualPageScrape(shortTimeOutURL, restaurant.name)
+        .then(result => {
+          var container = {}
+
+          container.name = restaurant.name
+          container.address = result.address
+          container.cuisine = restaurant.cuisine
+          container.image = restaurant.img
+          container.description = restaurant.description
+          container.whyGo = restaurant.whyGo
+          container.cost = result.cost
+          container.source = result.timeOutWebsite
+          container.website = result.website
+
+          console.log(container)
+        })
+        .catch(err => {
+          console.error('Error scraping individual page')
+        })
+    })
+  })
+  .catch(err => {
+    console.error('Error fetching restaurants')
+  })
 
 const attractionTimeOutListScrape = url => {
   let data = []

@@ -21,10 +21,14 @@ type Activity {
 type Restaurant {
   id: ID! @unique
   name: String!
-  description: String!
-  cost: Float!
   image: String!
+  cuisine: String!
+  cost: Float!
+  description: String!
+  why_go: String!
   location: String!
+  source: String!
+  website: String!
 }
 
 type Ratings {
