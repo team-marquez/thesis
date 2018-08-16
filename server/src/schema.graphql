@@ -8,6 +8,9 @@ type Query {
   users: [Users!]!
   echo(args: String): String
   test(args: String): String
+  weather(day: String): Weather
+  food(cost: Float): [Restaurant]
+  activities: [Activity]
 }
 
 type Mutation {

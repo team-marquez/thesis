@@ -8,31 +8,26 @@ let stuff = ["this", "actually", "worked", "wow"]
 const resolvers = {
   Query: {
     users: (_, args, context, info) => {
-<<<<<<< HEAD
-      // console.log(`info: ${Object.keys(context.db)}
-      // `)
-      return context.db.query.users
-    },
-    food: (_, args, context, info) => {
-      // console.log(`info: ${Object.keys(context.db)}
-      // `)
       return context.db.query.users
     },
     echo: (a, { args }, b, c) => {
       return args
     },
-    test: (a, { args }, b, c) => {
-      console.log(args)
-      return args
+    //TODO ACTIVITIES QUERY
+    //TODO RESTAURANTS QUERY
+    activities: (a, {cost},c,d) => {
+      console.log(d)
+      // return c.db.query.restaurants({where: {cost: cost}}, d)
+      return c.db.query.activities()
     },
-    userPrefs: (a, { args }, b, c) => {
-      console.log(args)
-=======
-      return context.db.query.users
+    food: (a, {cost},c,d) => {
+      console.log(d)
+      return c.db.query.restaurants({where: {cost: cost}}, d)
+      // return c.db.query.restaurants()
     },
-    echo: (a, { args }, b, c) => {
->>>>>>> dev
-      return args
+    weather: (a, {day},c,d) => {
+      console.log(d)
+      return c.db.query.weather({where: {day: day}}, d)
     }
   },
 
