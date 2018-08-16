@@ -4,6 +4,13 @@ const Nightmare = require('nightmare')
 const models = require('./server/temp_db/models.js')
 let nightmare = new Nightmare()
 
+const { Prisma } = require('prisma-binding')
+
+const prisma = new Prisma({
+  typeDefs: './server/src/generated/prisma.graphql',
+  endpoint: 'http://localhost:4466/'
+})
+
 /////////////////////Atlas Obscura Section
 let search_url =
   'https://www.atlasobscura.com/things-to-do/new-york/places?page=1'
@@ -243,33 +250,57 @@ const timeOutIndividualPageScrape = (dynamicURL, dynamicName) => {
   })
 }
 
-timeOutListScrape(listURL)
-  .then(data => {
-    data.forEach(restaurant => {
-      timeOutIndividualPageScrape(shortTimeOutURL, restaurant.name)
-        .then(result => {
-          var container = {}
+const mutation = `
+mutation CreateRestaurant($name: String!, $image: String!, $cuisine: String!, $cost: Float!, $description: String!, $why_go: String!, $location: String, $source: String!, $website: String) {
+    createRestaurant(data: {
+        name: $name,
+        image: $image,
+        cuisine: $cuisine,
+        cost: $cost,
+        description: $description,
+        why_go: $why_go,
+        location: $location,
+        source: $source,
+        website: $website
+    }) {
+        id
+    }
+}
+`
 
-          container.name = restaurant.name
-          container.address = result.address
-          container.cuisine = restaurant.cuisine
-          container.image = restaurant.img
-          container.description = restaurant.description
-          container.whyGo = restaurant.whyGo
-          container.cost = result.cost
-          container.source = result.timeOutWebsite
-          container.website = result.website
-
-          console.log(container)
-        })
-        .catch(err => {
-          console.error('Error scraping individual page')
-        })
-    })
-  })
-  .catch(err => {
-    console.error('Error fetching restaurants')
-  })
+// timeOutListScrape(listURL)
+//   .then(data => {
+//     data.forEach(restaurant => {
+//       timeOutIndividualPageScrape(shortTimeOutURL, restaurant.name)
+//         .then(result => {
+//           prisma.mutation
+//             .createRestaurant(
+//               {
+//                 data: {
+//                   name: restaurant.name,
+//                   image: restaurant.img,
+//                   cuisine: restaurant.cuisine,
+//                   cost: result[0].cost,
+//                   description: restaurant.description,
+//                   why_go: restaurant.whyGo,
+//                   location: result[0].address,
+//                   source: result[0].timeOutWebsite,
+//                   website: result[0].website
+//                 }
+//               },
+//               '{id}'
+//             )
+//             .then(console.log)
+//             .catch(err => console.error('Error mutating', err))
+//         })
+//         .catch(err => {
+//           console.error('Error scraping individual page')
+//         })
+//     })
+//   })
+//   .catch(err => {
+//     console.error('Error fetching restaurants')
+//   })
 
 const attractionTimeOutListScrape = url => {
   let data = []
