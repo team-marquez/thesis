@@ -10,11 +10,16 @@ type Activity {
   id: ID! @unique
   name: String!
   description: String!
-  cost: Float!
+  cost: Float
   image: String!
-  location: String!
-  activity_level: Float!
-  child_friendly: Boolean!
+  location: String
+  source: String!
+  website: String
+  local_tourist: String!
+  indoor_outdoor: String
+  concepts: Json!
+  categories: Json!
+  child_friendly: Boolean
   ratings: Ratings
 }
 

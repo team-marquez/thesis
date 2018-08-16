@@ -30,7 +30,6 @@ const resolvers = {
       return c.db.query.weather({where: {day: day}}, d)
     }
   },
-
   Mutation: {
     createUsers: (_, { username, password, age, gender }, context, info) => {
       return context.db.mutation.createUsers(

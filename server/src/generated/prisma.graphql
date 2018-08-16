@@ -1,15 +1,20 @@
 # source: http://localhost:4466
-# timestamp: Thu Aug 16 2018 11:27:23 GMT-0400 (EDT)
+# timestamp: Thu Aug 16 2018 15:15:18 GMT-0400 (EDT)
 
 type Activity implements Node {
   id: ID!
   name: String!
   description: String!
-  cost: Float!
+  cost: Float
   image: String!
-  location: String!
-  activity_level: Float!
-  child_friendly: Boolean!
+  location: String
+  source: String!
+  website: String
+  local_tourist: String!
+  indoor_outdoor: String
+  concepts: Json!
+  categories: Json!
+  child_friendly: Boolean
   ratings(where: RatingsWhereInput): Ratings
 }
 
@@ -26,11 +31,16 @@ type ActivityConnection {
 input ActivityCreateInput {
   name: String!
   description: String!
-  cost: Float!
+  cost: Float
   image: String!
-  location: String!
-  activity_level: Float!
-  child_friendly: Boolean!
+  location: String
+  source: String!
+  website: String
+  local_tourist: String!
+  indoor_outdoor: String
+  concepts: Json!
+  categories: Json!
+  child_friendly: Boolean
   ratings: RatingsCreateOneInput
 }
 
@@ -56,8 +66,18 @@ enum ActivityOrderByInput {
   image_DESC
   location_ASC
   location_DESC
-  activity_level_ASC
-  activity_level_DESC
+  source_ASC
+  source_DESC
+  website_ASC
+  website_DESC
+  local_tourist_ASC
+  local_tourist_DESC
+  indoor_outdoor_ASC
+  indoor_outdoor_DESC
+  concepts_ASC
+  concepts_DESC
+  categories_ASC
+  categories_DESC
   child_friendly_ASC
   child_friendly_DESC
   updatedAt_ASC
@@ -70,11 +90,16 @@ type ActivityPreviousValues {
   id: ID!
   name: String!
   description: String!
-  cost: Float!
+  cost: Float
   image: String!
-  location: String!
-  activity_level: Float!
-  child_friendly: Boolean!
+  location: String
+  source: String!
+  website: String
+  local_tourist: String!
+  indoor_outdoor: String
+  concepts: Json!
+  categories: Json!
+  child_friendly: Boolean
 }
 
 type ActivitySubscriptionPayload {
@@ -122,7 +147,12 @@ input ActivityUpdateInput {
   cost: Float
   image: String
   location: String
-  activity_level: Float
+  source: String
+  website: String
+  local_tourist: String
+  indoor_outdoor: String
+  concepts: Json
+  categories: Json
   child_friendly: Boolean
   ratings: RatingsUpdateOneInput
 }
@@ -358,28 +388,166 @@ input ActivityWhereInput {
 
   """All values not ending with the given string."""
   location_not_ends_with: String
-  activity_level: Float
+  source: String
 
   """All values that are not equal to given value."""
-  activity_level_not: Float
+  source_not: String
 
   """All values that are contained in given list."""
-  activity_level_in: [Float!]
+  source_in: [String!]
 
   """All values that are not contained in given list."""
-  activity_level_not_in: [Float!]
+  source_not_in: [String!]
 
   """All values less than the given value."""
-  activity_level_lt: Float
+  source_lt: String
 
   """All values less than or equal the given value."""
-  activity_level_lte: Float
+  source_lte: String
 
   """All values greater than the given value."""
-  activity_level_gt: Float
+  source_gt: String
 
   """All values greater than or equal the given value."""
-  activity_level_gte: Float
+  source_gte: String
+
+  """All values containing the given string."""
+  source_contains: String
+
+  """All values not containing the given string."""
+  source_not_contains: String
+
+  """All values starting with the given string."""
+  source_starts_with: String
+
+  """All values not starting with the given string."""
+  source_not_starts_with: String
+
+  """All values ending with the given string."""
+  source_ends_with: String
+
+  """All values not ending with the given string."""
+  source_not_ends_with: String
+  website: String
+
+  """All values that are not equal to given value."""
+  website_not: String
+
+  """All values that are contained in given list."""
+  website_in: [String!]
+
+  """All values that are not contained in given list."""
+  website_not_in: [String!]
+
+  """All values less than the given value."""
+  website_lt: String
+
+  """All values less than or equal the given value."""
+  website_lte: String
+
+  """All values greater than the given value."""
+  website_gt: String
+
+  """All values greater than or equal the given value."""
+  website_gte: String
+
+  """All values containing the given string."""
+  website_contains: String
+
+  """All values not containing the given string."""
+  website_not_contains: String
+
+  """All values starting with the given string."""
+  website_starts_with: String
+
+  """All values not starting with the given string."""
+  website_not_starts_with: String
+
+  """All values ending with the given string."""
+  website_ends_with: String
+
+  """All values not ending with the given string."""
+  website_not_ends_with: String
+  local_tourist: String
+
+  """All values that are not equal to given value."""
+  local_tourist_not: String
+
+  """All values that are contained in given list."""
+  local_tourist_in: [String!]
+
+  """All values that are not contained in given list."""
+  local_tourist_not_in: [String!]
+
+  """All values less than the given value."""
+  local_tourist_lt: String
+
+  """All values less than or equal the given value."""
+  local_tourist_lte: String
+
+  """All values greater than the given value."""
+  local_tourist_gt: String
+
+  """All values greater than or equal the given value."""
+  local_tourist_gte: String
+
+  """All values containing the given string."""
+  local_tourist_contains: String
+
+  """All values not containing the given string."""
+  local_tourist_not_contains: String
+
+  """All values starting with the given string."""
+  local_tourist_starts_with: String
+
+  """All values not starting with the given string."""
+  local_tourist_not_starts_with: String
+
+  """All values ending with the given string."""
+  local_tourist_ends_with: String
+
+  """All values not ending with the given string."""
+  local_tourist_not_ends_with: String
+  indoor_outdoor: String
+
+  """All values that are not equal to given value."""
+  indoor_outdoor_not: String
+
+  """All values that are contained in given list."""
+  indoor_outdoor_in: [String!]
+
+  """All values that are not contained in given list."""
+  indoor_outdoor_not_in: [String!]
+
+  """All values less than the given value."""
+  indoor_outdoor_lt: String
+
+  """All values less than or equal the given value."""
+  indoor_outdoor_lte: String
+
+  """All values greater than the given value."""
+  indoor_outdoor_gt: String
+
+  """All values greater than or equal the given value."""
+  indoor_outdoor_gte: String
+
+  """All values containing the given string."""
+  indoor_outdoor_contains: String
+
+  """All values not containing the given string."""
+  indoor_outdoor_not_contains: String
+
+  """All values starting with the given string."""
+  indoor_outdoor_starts_with: String
+
+  """All values not starting with the given string."""
+  indoor_outdoor_not_starts_with: String
+
+  """All values ending with the given string."""
+  indoor_outdoor_ends_with: String
+
+  """All values not ending with the given string."""
+  indoor_outdoor_not_ends_with: String
   child_friendly: Boolean
 
   """All values that are not equal to given value."""
@@ -415,6 +583,9 @@ type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
 }
+
+"""Raw JSON value"""
+scalar Json
 
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
