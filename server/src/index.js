@@ -15,13 +15,12 @@ const resolvers = {
     },
     //TODO ACTIVITIES QUERY
     //TODO RESTAURANTS QUERY
-    activities: (a, {cost},c,d) => {
-      console.log(d)
-      // return c.db.query.restaurants({where: {cost: cost}}, d)
+    activities: (a, {id},c,d) => {
+      console.log(c.db.query)
+      // return c.db.query.activity({where: {id: id}}, d)
       return c.db.query.activities()
     },
     food: (a, {cost},c,d) => {
-      console.log(d)
       return c.db.query.restaurants({where: {cost: cost}}, d)
       // return c.db.query.restaurants()
     },

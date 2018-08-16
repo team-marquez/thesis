@@ -10,7 +10,7 @@ type Query {
   test(args: String): String
   weather(day: String): Weather
   food(cost: Float): [Restaurant]
-  activities: [Activity]
+  activities(id: String): [Activity]
 }
 
 type Mutation {
