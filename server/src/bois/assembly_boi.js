@@ -10,13 +10,24 @@ module.exports = {
       outdoor: Math.ceil(clientPreferences.pref.IO) * arrayMax
     }
 
+    //dummy section for single page tests
+    if(!clientPreferences.rainArray) {
+      clientPreferences.rainArray = [0, 0, 1]
+      clientPreferences.temperatureArray = [78, 82, 65]
+      clientPreferences.pref.tripDates = ['2018-10-01, 2018-10-02, 2018-10-03']
+    }
+    //end dummy section
+
     let tripOptions = {
       breakfast: [],
       lunch: [],
       dinner: [],
       morning: [],
       afternoon: [],
-      evening: []
+      evening: [],
+      rainArray: clientPreferences.rainArray.slice(),
+      temperatureArray: clientPreferences.temperatureArray.slice(),
+      tripDates: clientPreferences.pref.tripDates.slice()
     }
 
     fillMeals = (mealType) => {
