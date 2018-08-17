@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Fri Aug 17 2018 11:10:54 GMT-0400 (EDT)
+# timestamp: Fri Aug 17 2018 14:49:36 GMT-0400 (EDT)
 
 type Activity implements Node {
   id: ID!
@@ -1753,7 +1753,8 @@ type Weather implements Node {
   avg_temp: Float!
   min_temp: Float!
   max_temp: Float!
-  precipitation: Boolean
+  snow: Float!
+  rain: Float!
 }
 
 """A connection to a list of items."""
@@ -1771,7 +1772,8 @@ input WeatherCreateInput {
   avg_temp: Float!
   min_temp: Float!
   max_temp: Float!
-  precipitation: Boolean
+  snow: Float!
+  rain: Float!
 }
 
 """An edge in a connection."""
@@ -1794,8 +1796,10 @@ enum WeatherOrderByInput {
   min_temp_DESC
   max_temp_ASC
   max_temp_DESC
-  precipitation_ASC
-  precipitation_DESC
+  snow_ASC
+  snow_DESC
+  rain_ASC
+  rain_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -1808,7 +1812,8 @@ type WeatherPreviousValues {
   avg_temp: Float!
   min_temp: Float!
   max_temp: Float!
-  precipitation: Boolean
+  snow: Float!
+  rain: Float!
 }
 
 type WeatherSubscriptionPayload {
@@ -1855,7 +1860,8 @@ input WeatherUpdateInput {
   avg_temp: Float
   min_temp: Float
   max_temp: Float
-  precipitation: Boolean
+  snow: Float
+  rain: Float
 }
 
 input WeatherWhereInput {
@@ -2013,10 +2019,50 @@ input WeatherWhereInput {
 
   """All values greater than or equal the given value."""
   max_temp_gte: Float
-  precipitation: Boolean
+  snow: Float
 
   """All values that are not equal to given value."""
-  precipitation_not: Boolean
+  snow_not: Float
+
+  """All values that are contained in given list."""
+  snow_in: [Float!]
+
+  """All values that are not contained in given list."""
+  snow_not_in: [Float!]
+
+  """All values less than the given value."""
+  snow_lt: Float
+
+  """All values less than or equal the given value."""
+  snow_lte: Float
+
+  """All values greater than the given value."""
+  snow_gt: Float
+
+  """All values greater than or equal the given value."""
+  snow_gte: Float
+  rain: Float
+
+  """All values that are not equal to given value."""
+  rain_not: Float
+
+  """All values that are contained in given list."""
+  rain_in: [Float!]
+
+  """All values that are not contained in given list."""
+  rain_not_in: [Float!]
+
+  """All values less than the given value."""
+  rain_lt: Float
+
+  """All values less than or equal the given value."""
+  rain_lte: Float
+
+  """All values greater than the given value."""
+  rain_gt: Float
+
+  """All values greater than or equal the given value."""
+  rain_gte: Float
 }
 
 input WeatherWhereUniqueInput {
