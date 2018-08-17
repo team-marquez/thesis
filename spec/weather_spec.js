@@ -4,7 +4,7 @@ const { clientPreferances } = require('./dummyData')
 
 describe('WeatherBoi', () => {
   let output = weatherBoi(clientPreferances)
-  console.log(output)
+  // console.log(output)
   
   describe('date manipulation', () => {
     it('should alter the object of dates into an array', () => {
@@ -35,11 +35,22 @@ describe('WeatherBoi', () => {
     it('should have a value for every day of the trip', () => {
       expect(output.rainArray.length).to.equal(output.pref.tripDates.length)
     })
-
+    
     it('should be populated with 0\'s or 1\'s', () => {
       output.rainArray.forEach((date) => {
         expect([0, 1].includes(date)).to.equal(true)
       })
+    })
+    
+    describe('temp array', () => {
+      it('should add a temperature array as a property to the CP', () => {
+        expect(output.hasOwnProperty('temperatureArray')).to.equal(true)
+      })
+      
+      it('should have a value for every day of the trip', () => {
+        expect(output.temperatureArray.length).to.equal(output.pref.tripDates.length)
+      })
+
     })
   })
 })

@@ -39,6 +39,21 @@ describe('Assembly Boi', () => {
 					expect(Array.isArray(output.evening)).to.equal(true)
 				})
 
+				it('should return an object with a rain array', () => {
+					expect(output.hasOwnProperty('rainArray')).to.equal(true)
+					expect(Array.isArray(output.rainArray)).to.equal(true)
+				})
+
+				it('should return an object with a temperature array', () => {
+					expect(output.hasOwnProperty('temperatureArray')).to.equal(true)
+					expect(Array.isArray(output.temperatureArray)).to.equal(true)
+				})
+
+				it('should return an object with a tripDates array', () => {
+					expect(output.hasOwnProperty('tripDates')).to.equal(true)
+					expect(Array.isArray(output.tripDates)).to.equal(true)
+				})
+				
 				it('should should have 3 items in each array for a 1 day trip', () => {
 					expect(output.breakfast.length).to.equal(9)
 					expect(output.lunch.length).to.equal(9)

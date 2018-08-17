@@ -7,7 +7,12 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 const getItems = (count, array) =>
   Array.from({ length: count }, (v, k) => k).map(k => ({
     id: `item-${k}`,
-    content: array[k],
+    content: {name: array[k].map((el) => { return (  
+      <div>
+        <h4>{el.name}</h4>
+        <h4>{el.location}</h4>
+      </div>
+    )})}
   }));
 
 // a little function to help us with reordering the result
@@ -24,18 +29,19 @@ const grid = 45;
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: 'none',
-  padding: grid * 2,
-  margin: `0 ${grid}px 0 0`,
+  padding: 0,
+  margin: 0,
 
   // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'grey',
+  background: isDragging ? 'lightgreen' : 'white',
+  border: '2px solid gray',
 
   // styles we need to apply on draggables
   ...draggableStyle,
 });
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  background: isDraggingOver ? 'white' : 'white',
   display: 'flex',
   padding: grid,
   overflow: 'auto',
@@ -45,21 +51,10 @@ class Kamban extends React.Component {
   constructor (props) {
     super (props)
     this.state = {
-      arr: this.props.DATA || ['g', 'marty', 'romain lettuce', 'erik'],
-      items: [],
+      items: getItems(this.props.days.length, this.props.days),
+      open: false
     }
     this.onDragEnd = this.onDragEnd.bind(this)
-    this.setItems = this.setItems.bind(this)
-  }
-
-  componentDidMount () {
-    this.setItems()
-  }
-
-  setItems () {
-    this.setState({
-      items: getItems(this.state.arr.length, this.state.arr)
-    })
   }
 
   onDragEnd(result) {
@@ -92,8 +87,13 @@ class Kamban extends React.Component {
                   {...provided.droppableProps}
                 >
                   {this.state.items.map((item, index) => (
-                    <div>
-                      <Draggable key={item.id} draggableId={item.id} index={index}>
+                    <div  style={{border: '2px solid gray', height: '500px', marginRight: '10px'}}>
+                      <div>
+                        {`Weather ${index + 50}`}
+                      </div>
+
+
+                      <Draggable key={item.id} draggableId={item.id} index={index} style ={{marginLeft: '10px', width: '80%'}}>
                         {(provided, snapshot) => (
                           <div
                             ref={provided.innerRef}
@@ -103,9 +103,9 @@ class Kamban extends React.Component {
                               snapshot.isDragging,
                               provided.draggableProps.style
                             )}
-                            >
-                            {item.content}
-                            <Button>'hi' </Button>
+                          >
+                            {item.content.name}
+                            {item.content.location}
                           </div>
                         )}
                       </Draggable>

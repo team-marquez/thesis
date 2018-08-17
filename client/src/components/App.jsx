@@ -32,19 +32,21 @@ class App extends React.Component {
   render() {
     return (
       <div>
-      {this.state.pickedTrip === false ? (
-                <div>
-                  <LoginButton />
-                  <LocationModal pickTrip={this.pickTrip} />
-                  <Footer />
-                </div>
-              ) : (
-                <div style={{ textAlign: "center" }}>
-                  {/* <TEST /> */}
-                  <AllDays />
-                </div>)
-            }
-          }
+        {this.state.pickedTrip === false ? (
+          <div>
+            <div style={{textAlign: 'center', marginBottom: '15px'}}>
+              <LoginButton/>  
+            </div>
+            <div style={{display: 'inline-block'}}>
+              <LocationModal pickTrip={this.pickTrip}/>
+            </div>
+            <Footer/>
+          </div>
+        ) : (
+          <div style={{textAlign: 'center'}}>
+            <AllDays/>
+          </div>
+        )}
       </div>
     );
   }

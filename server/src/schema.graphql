@@ -23,9 +23,10 @@ type Mutation {
   ): Users
   createWeather(
     day: String!
-    temperature: Float!
-    low_uncertainty: Float!
-    high_uncertainty: Float!
+    avg_temp: Float!
+    min_temp: Float!
+    max_temp: Float!
+    precipitation: Boolean
   ): Weather
   createRestaurant(
     name: String!

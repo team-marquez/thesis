@@ -22,27 +22,12 @@ let PREF_QUERY = gql`
     echo(args: $args)
   }
 `;
+
 Date.prototype.addDays = function(days) {
   var date = new Date(this.valueOf());
   date.setDate(date.getDate() + days);
   return date;
 }
-
-
-
-let DATA = {
-  user: null,
-  pref: {
-    totalBudget: null,
-    partySize: null,
-    tripDates: null,
-    LT: null,
-    IO: null,
-    FA: null,
-    kidFriendly: null
-  }
-}
-
 
 class LocationModal extends React.Component {
   constructor(props) {
@@ -245,9 +230,8 @@ class LocationModal extends React.Component {
                               IO: this.state.i_o,
                               FA: this.state.f_a,
                               kidFriendly: this.state.NSFW
-                            }) }
-                          });
-                          console.log(data)
+                            })}
+                          })
                           client.writeData({data})          
                           this.props.pickTrip()
                         }}
