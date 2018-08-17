@@ -27,7 +27,8 @@ module.exports = {
       evening: [],
       rainArray: clientPreferences.rainArray.slice(),
       temperatureArray: clientPreferences.temperatureArray.slice(),
-      tripDates: clientPreferences.pref.tripDates.slice()
+      tripDates: clientPreferences.pref.tripDates.slice(),
+      rainyActs: []
     }
 
     fillMeals = (mealType) => {
@@ -70,7 +71,7 @@ module.exports = {
 
           //finish function if max size reached
           if (tripOptions[actTime].length === arrayMax) break
-
+          
           //incrament the count based on IO/LT of activity
           currentIO === 0 ? indoorCount++ : outdoorCount++
           currentLT === 0 ? localCount++ : touristCount++
@@ -87,6 +88,16 @@ module.exports = {
         }
       }
     }
+    
+    fillRain = () => {
+      for (let act in recs) {
+        if (recs[act].type[0] === 'activity' && recs[act].IO === 0) {
+          tripOptions.rainyActs.push(recs[act])
+
+          if (tripOptions.rainyActs.length === arrayMax) break
+        }
+      }
+    }
 
     fillMeals('breakfast')
     fillMeals('lunch')
@@ -95,6 +106,11 @@ module.exports = {
     fillActs('morning')
     fillActs('afternoon')
     fillActs('evening')
+
+    //put together rainy activities, if needed
+    if (clientPreferences.rainArray.includes(1)) {
+      fillRain()
+    }
 
     return tripOptions
   }

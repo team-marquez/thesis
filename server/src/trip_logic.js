@@ -31,8 +31,8 @@ This will be a HUGE object with lots of activities and restaurants. This object,
 should look something like this:
 
 Recs = 
-{
-  TheHighLine: {
+[
+  {
     name: 'The High Line',
     type: ['activity', details: {
       categories: [{cat1: .56}, {cat2: .24}, {cat3: .2}] //this array is a max of three cats, as floats
@@ -47,7 +47,7 @@ Recs =
     LT: 1,
     IO: 1
   },
-  Grimaldis: {
+  {
     name: 'Grimaldi's Pizza',
     type: ['restaurant', details: {
       cuisine: [italian, pizza], meal: [lunch, dinner]
@@ -61,7 +61,7 @@ Recs =
     LT: 1,
     IO: 0
   }
-}
+]
 
 This object is sent to Assembly boi.
 
@@ -86,7 +86,8 @@ tripOptions = {
   evening: [ {data from recs 1}, .....],
   rainArray: [0, 1, 0, 0],
   temperatureArray: [79, 65, 75, 81],
-  tripDates: [an array of dates formatted as: 2018-11-15]
+  tripDates: [an array of dates formatted as: 2018-11-15],
+  rainyActs: []
 }
 
 those data objects are the objects from the Reccs objects above.
