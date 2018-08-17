@@ -49,5 +49,6 @@ type Weather {
   avg_temp: Float!
   min_temp: Float!
   max_temp: Float!
-  precipitation: Boolean
+  snow: Float
+  rain: Float
 }

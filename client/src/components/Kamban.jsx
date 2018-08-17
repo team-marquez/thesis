@@ -1,12 +1,20 @@
 import React from 'react'
 
-import { Grid } from 'semantic-ui-react'
+import { Grid, Image } from 'semantic-ui-react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 const getItems = (count, array) =>
-  Array.from({ length: count }, (v, k) => k).map(k => ({
-    id: `item-${k}`,
-    content: array[k],
+  Array.from({ length: count }, (v, index) => index).map(index => ({
+    id: `item-${index}`,
+    content: array[index].map((activity) => { return (  
+      <div>
+        <div>  
+          <div style={{float: 'right'}}>{activity.name}</div><br/>
+          <div style={{float: 'right'}}>{activity.cost === 0 ? 'Free' : activity.cost === 1 ? '$' : activity.cost === 2 ? '$$' : activity.cost === 3 ? '$$$' : activity.cost === 4 ? '$$$$' : null}</div>
+          <Image style={{width: '50px', height: '50px'}} src={activity.image}></Image>
+        </div> <br/>
+      </div>
+    )})
   }));
 
 // a little function to help us with reordering the result
@@ -23,18 +31,18 @@ const grid = 45;
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: 'none',
-  padding: grid * 2,
-  margin: `0 ${grid}px 0 0`,
+  padding: '10px',
+  margin: 0,
 
   // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'grey',
+  background: isDragging ? 'lightgreen' : 'white',
 
   // styles we need to apply on draggables
   ...draggableStyle,
 });
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  background: isDraggingOver ? 'white' : 'white',
   display: 'flex',
   padding: grid,
   overflow: 'auto',
@@ -44,22 +52,10 @@ class Kamban extends React.Component {
   constructor (props) {
     super (props)
     this.state = {
-      arr: ['Marty', 'Roman', 'Erik', 'Guillermo'],
-      items: [],
+      items: getItems(this.props.days.length, this.props.days),
       open: false
     }
     this.onDragEnd = this.onDragEnd.bind(this)
-    this.setItems = this.setItems.bind(this)
-  }
-
-  componentDidMount () {
-    this.setItems()
-  }
-
-  setItems () {
-    this.setState({
-      items: getItems(this.state.arr.length, this.state.arr)
-    })
   }
 
   onDragEnd(result) {
@@ -93,7 +89,13 @@ class Kamban extends React.Component {
                   {...provided.droppableProps}
                 >
                   {this.state.items.map((item, index) => (
-                    <div>
+                    <div  style={{border: '2px solid gray', height: '600px', width: '300px', marginRight: '10px', float: 'right'}}>
+                      <div>
+                        {`${index + 50} degrees`}
+                      </div>
+                      <br/>
+
+
                       <Draggable key={item.id} draggableId={item.id} index={index}>
                         {(provided, snapshot) => (
                           <div
