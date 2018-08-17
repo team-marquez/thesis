@@ -31,8 +31,12 @@ class App extends React.Component {
       <div>
         {this.state.pickedTrip === false ? (
           <div>
-            <LoginButton/>
-            <LocationModal pickTrip={this.pickTrip}/>
+            <div style={{textAlign: 'center', marginBottom: '15px'}}>
+              <LoginButton/>  
+            </div>
+            <div style={{display: 'inline-block'}}>
+              <LocationModal pickTrip={this.pickTrip}/>
+            </div>
             <Footer/>
           </div>
         ) : (
