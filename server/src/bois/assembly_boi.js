@@ -16,6 +16,7 @@ module.exports = {
       clientPreferences.temperatureArray = [78, 82, 65]
       clientPreferences.pref.tripDates = ['2018-10-01, 2018-10-02, 2018-10-03']
     }
+    //end dummy section
 
     let tripOptions = {
       breakfast: [],
