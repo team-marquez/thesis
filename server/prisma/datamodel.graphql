@@ -46,7 +46,8 @@ type Ratings {
 type Weather {
   id: ID! @unique
   day: String! @unique
-  temperature: Float!
-  low_uncertainty: Float!
-  high_uncertainty: Float!
+  avg_temp: Float!
+  min_temp: Float!
+  max_temp: Float!
+  precipitation: Boolean
 }

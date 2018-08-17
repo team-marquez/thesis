@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Thu Aug 16 2018 15:15:18 GMT-0400 (EDT)
+# timestamp: Fri Aug 17 2018 11:10:54 GMT-0400 (EDT)
 
 type Activity implements Node {
   id: ID!
@@ -1750,9 +1750,10 @@ input UsersWhereUniqueInput {
 type Weather implements Node {
   id: ID!
   day: String!
-  temperature: Float!
-  low_uncertainty: Float!
-  high_uncertainty: Float!
+  avg_temp: Float!
+  min_temp: Float!
+  max_temp: Float!
+  precipitation: Boolean
 }
 
 """A connection to a list of items."""
@@ -1767,9 +1768,10 @@ type WeatherConnection {
 
 input WeatherCreateInput {
   day: String!
-  temperature: Float!
-  low_uncertainty: Float!
-  high_uncertainty: Float!
+  avg_temp: Float!
+  min_temp: Float!
+  max_temp: Float!
+  precipitation: Boolean
 }
 
 """An edge in a connection."""
@@ -1786,12 +1788,14 @@ enum WeatherOrderByInput {
   id_DESC
   day_ASC
   day_DESC
-  temperature_ASC
-  temperature_DESC
-  low_uncertainty_ASC
-  low_uncertainty_DESC
-  high_uncertainty_ASC
-  high_uncertainty_DESC
+  avg_temp_ASC
+  avg_temp_DESC
+  min_temp_ASC
+  min_temp_DESC
+  max_temp_ASC
+  max_temp_DESC
+  precipitation_ASC
+  precipitation_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -1801,9 +1805,10 @@ enum WeatherOrderByInput {
 type WeatherPreviousValues {
   id: ID!
   day: String!
-  temperature: Float!
-  low_uncertainty: Float!
-  high_uncertainty: Float!
+  avg_temp: Float!
+  min_temp: Float!
+  max_temp: Float!
+  precipitation: Boolean
 }
 
 type WeatherSubscriptionPayload {
@@ -1847,9 +1852,10 @@ input WeatherSubscriptionWhereInput {
 
 input WeatherUpdateInput {
   day: String
-  temperature: Float
-  low_uncertainty: Float
-  high_uncertainty: Float
+  avg_temp: Float
+  min_temp: Float
+  max_temp: Float
+  precipitation: Boolean
 }
 
 input WeatherWhereInput {
@@ -1941,72 +1947,76 @@ input WeatherWhereInput {
 
   """All values not ending with the given string."""
   day_not_ends_with: String
-  temperature: Float
+  avg_temp: Float
 
   """All values that are not equal to given value."""
-  temperature_not: Float
+  avg_temp_not: Float
 
   """All values that are contained in given list."""
-  temperature_in: [Float!]
+  avg_temp_in: [Float!]
 
   """All values that are not contained in given list."""
-  temperature_not_in: [Float!]
+  avg_temp_not_in: [Float!]
 
   """All values less than the given value."""
-  temperature_lt: Float
+  avg_temp_lt: Float
 
   """All values less than or equal the given value."""
-  temperature_lte: Float
+  avg_temp_lte: Float
 
   """All values greater than the given value."""
-  temperature_gt: Float
+  avg_temp_gt: Float
 
   """All values greater than or equal the given value."""
-  temperature_gte: Float
-  low_uncertainty: Float
+  avg_temp_gte: Float
+  min_temp: Float
 
   """All values that are not equal to given value."""
-  low_uncertainty_not: Float
+  min_temp_not: Float
 
   """All values that are contained in given list."""
-  low_uncertainty_in: [Float!]
+  min_temp_in: [Float!]
 
   """All values that are not contained in given list."""
-  low_uncertainty_not_in: [Float!]
+  min_temp_not_in: [Float!]
 
   """All values less than the given value."""
-  low_uncertainty_lt: Float
+  min_temp_lt: Float
 
   """All values less than or equal the given value."""
-  low_uncertainty_lte: Float
+  min_temp_lte: Float
 
   """All values greater than the given value."""
-  low_uncertainty_gt: Float
+  min_temp_gt: Float
 
   """All values greater than or equal the given value."""
-  low_uncertainty_gte: Float
-  high_uncertainty: Float
+  min_temp_gte: Float
+  max_temp: Float
 
   """All values that are not equal to given value."""
-  high_uncertainty_not: Float
+  max_temp_not: Float
 
   """All values that are contained in given list."""
-  high_uncertainty_in: [Float!]
+  max_temp_in: [Float!]
 
   """All values that are not contained in given list."""
-  high_uncertainty_not_in: [Float!]
+  max_temp_not_in: [Float!]
 
   """All values less than the given value."""
-  high_uncertainty_lt: Float
+  max_temp_lt: Float
 
   """All values less than or equal the given value."""
-  high_uncertainty_lte: Float
+  max_temp_lte: Float
 
   """All values greater than the given value."""
-  high_uncertainty_gt: Float
+  max_temp_gt: Float
 
   """All values greater than or equal the given value."""
-  high_uncertainty_gte: Float
+  max_temp_gte: Float
+  precipitation: Boolean
+
+  """All values that are not equal to given value."""
+  precipitation_not: Boolean
 }
 
 input WeatherWhereUniqueInput {
