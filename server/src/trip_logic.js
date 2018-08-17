@@ -78,7 +78,8 @@ In the arrays below, it adds as many activity/food until the allocation for that
 tripOptions = {
   breakfast: [ {resaurant data from recs 1}, .....],
   lunch: [ {data from recs 1}, .....],
-  dinner: [ {data from recs 1}, .....],
+  dinner: [ {data from recs 1}, .....],        "indoor_outdoor": null,
+
   morning: [ {data from recs 1}, .....],
   afternoon: [ {data from recs 1}, .....],
   evening: [ {data from recs 1}, .....]

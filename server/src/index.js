@@ -1,24 +1,29 @@
 const { GraphQLServer } = require('graphql-yoga')
 const { Prisma } = require('prisma-binding')
 const express = require('express')
+const fs = require("fs");
+const fsPromises = fs.promises;
 const path = require('path')
+const shuffle = require('shuffle-array')
 
 let stuff = ["this", "actually", "worked", "wow"]
 
 const resolvers = {
   Query: {
-    users: (_, args, context, info) => {
-      return context.db.query.users
+    MVP: async (_, args, context, info) => {
+      let filehandle = await fsPromises.open('./data.json','r+')
+      let unparsed = await filehandle.readFile('utf8')
+      let parsed = JSON.parse(unparsed)
+      let random = shuffle(parsed , { 'copy': true })
+      console.log(random.slice(0,30))
+      filehandle.close()
+      //send to assembly boi or pick random stuff?
+      
     },
-    echo: (a, { args }, b, c) => {
-      return args
-    },
-    //TODO ACTIVITIES QUERY
-    //TODO RESTAURANTS QUERY
-    activities: (a, {id},c,d) => {
+    activities: (a, {IO},c,d) => {
       console.log(c.db.query)
-      // return c.db.query.activity({where: {id: id}}, d)
-      return c.db.query.activities()
+      return c.db.query.activity({where: {indoor_outdoor: IO}}, d)
+      // readFile
     },
     food: (a, {cost},c,d) => {
       return c.db.query.restaurants({where: {cost: cost}}, d)
