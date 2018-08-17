@@ -95,8 +95,6 @@ class LoginButton extends React.Component {
 
   //Firebase Auth User Login with Email/Password
   loginWithEmail () {
-    console.log('and the bigger picture', this.state)
-    console.log('just checking...', this.state.email)
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -181,7 +179,7 @@ class LoginButton extends React.Component {
                     <Icon name='at' />
                     <input onChange={(e) => {this.emailVariable(e)}}/>
                   </Input>
-                  <Input iconPosition='left' type='password' placeholder='Password' size='mini' onSubmit={this.createWithEmail}>
+                  <Input iconPosition='left' type='password' placeholder='Password' size='mini'>
                     <Icon name='key' />
                     <input 
                       onChange={(e) => {this.passwordVariable(e)}}

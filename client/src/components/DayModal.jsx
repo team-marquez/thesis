@@ -4,18 +4,19 @@ import DayCard from './DayCard.jsx'
 
 import { Modal, Icon, Button } from 'semantic-ui-react'
 
+
+
 class DayModal extends React.Component {
 	constructor (props) {
 		super (props)
 		this.state = {
-			arr: [1, 2, 3, 4]
 		}
 	}
 
 	render () {
 		return (
 			<div>
-				{this.state.arr.map((item, index) => {
+				{this.props.days.map((day, index) => {
 					return (
 						<Modal size={'fullscreen'} trigger={<Button icon labelPosition='right' style={{marginLeft: '-35px', marginTop: '10px'}}>
 								{`Display Day ${index + 1}`}
@@ -23,7 +24,7 @@ class DayModal extends React.Component {
 							</Button>}>
 							<Modal.Header style={{textAlign: 'center'}}>{`Day ${index + 1}`}</Modal.Header>
 							<Modal.Content>
-								<DayCard/>
+								<DayCard day={day}/>
 							</Modal.Content>
 						</Modal>
 					)
