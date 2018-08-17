@@ -15,7 +15,7 @@ module.exports = {
 		}
 
 		let costRanges = (amount) => {
-			if (amount === 0) return 0
+			if (amount === null) return 0
 			else if (amount > 0 && amount <= 20) return 1
 			else if (amount > 20 && amount <= 51) return 2
 			else if (amount > 50 && amount <= 99) return 3
