@@ -81,7 +81,10 @@ tripOptions = {
   dinner: [ {data from recs 1}, .....],
   morning: [ {data from recs 1}, .....],
   afternoon: [ {data from recs 1}, .....],
-  evening: [ {data from recs 1}, .....]
+  evening: [ {data from recs 1}, .....],
+  rainArray: [0, 1, 0, 0],
+  temperatureArray: [79, 65, 75, 81],
+  tripDates: [an array of dates formatted as: 2018-11-15]
 }
 
 those data objects are the objects from the Reccs objects above.
