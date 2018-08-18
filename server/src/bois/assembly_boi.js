@@ -10,13 +10,13 @@ module.exports = {
       outdoor: Math.ceil(clientPreferences.pref.IO) * arrayMax
     }
 
-    //dummy section for single page tests
-    if(!clientPreferences.rainArray) {
-      clientPreferences.rainArray = [0, 0, 1]
-      clientPreferences.temperatureArray = [78, 82, 65]
-      clientPreferences.pref.tripDates = ['2018-10-01', '2018-10-02', '2018-10-03']
-    }
-    //end dummy section
+    // //dummy section for single page tests
+    // if(!clientPreferences.rainArray) {
+    //   clientPreferences.rainArray = [0, 0, 1]
+    //   clientPreferences.temperatureArray = [78, 82, 65]
+    //   clientPreferences.pref.tripDates = ['2018-10-01', '2018-10-02', '2018-10-03']
+    // }
+    // //end dummy section
 
     let tripOptions = {
       breakfast: [],
@@ -25,8 +25,7 @@ module.exports = {
       morning: [],
       afternoon: [],
       evening: [],
-      rainArray: clientPreferences.rainArray.slice(),
-      temperatureArray: clientPreferences.temperatureArray.slice(),
+      weather: clientPreferences.weather.slice(), // 0 on days with no precipitation, 1 on days with precipitation
       tripDates: clientPreferences.pref.tripDates.slice(),
       rainyActs: []
     }
@@ -176,15 +175,16 @@ module.exports = {
     fillActs2('evening')
 
     //put together rainy activities, if needed
-    if (clientPreferences.rainArray.includes(1)) {
-      fillRain()
-    }
+    clientPreferences.weather.forEach(element => {
+      if (element.rain === 1) {
+        fillRain()
+      }
+    })
 
     //new output due to new format needed on client side. refactor post MVP
     let trueTripOptions = {
       itinerary: [],
-      rainArray: tripOptions.rainArray.slice(),
-      temperatureArray: tripOptions.temperatureArray.slice(),
+      weather: tripOptions.weather.slice(),
       tripDates: tripOptions.tripDates.slice(),
       rainyActs: tripOptions.rainyActs.slice()
     }
