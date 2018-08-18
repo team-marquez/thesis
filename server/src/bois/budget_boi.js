@@ -30,23 +30,27 @@ module.exports = {
 
 		let activitiesAsCost = costRanges(FAAllocation.activities)
 
-		for (let item in recs) {
-			let type = recs[item].type
-			let cost = recs[item].cost
+		for (let i = 0; i < recs.length; i++) {
+			let type = recs[i].type
+			let cost = recs[i].cost
 
 			//activity path
 			if (type[0] === 'activity') {
-				if (cost > activitiesAsCost) delete recs[item]
+				if (cost > activitiesAsCost) recs.splice(i, 1)
+				console.log(recs)
+				i--
 			} else {
 				//meal path
+				let arr = ['breakfast', 'lunch', 'dinner']
+				type.detail = {meal: arr}
 				let mealArr = type.detail.meal
 				
 				if (mealArr.includes('dinner')) {
-					if (cost > foodAsCost.dinner) delete recs[item]
+					if (cost > foodAsCost.dinner) recs.splice(i, 1)
 				} else if (mealArr.includes('lunch')) {
-					if (cost > foodAsCost.lunch) delete recs[item]
+					if (cost > foodAsCost.lunch) recs.splice(i, 1)
 				} else if (mealArr.includes('breakfast')) {
-					if (cost > foodAsCost.breakfast) delete recs[item]
+					if (cost > foodAsCost.breakfast) recs.splice(i, 1)
 				}
 			}
 		}

@@ -9,7 +9,7 @@ clientPreferences =
   pref: {
     totalBudget: 2250,
     partySize: 3,
-    tripDates: [07-18-2019, 07-19-2019, 07-20-2019],
+    tripDates: {startDate: '2018-11-15T0000', endDate: '2018-11-17T999}
     LT: .75,
     IO: .75,
     FA: .4,
@@ -77,6 +77,7 @@ FA = .4 => FA: {food: 60%, activity: 40%}
 
 In the arrays below, it adds as many activity/food until the allocation for that item is full
 
+//this is the old version.  see trueTripOptions below
 tripOptions = {
   breakfast: [ {resaurant data from recs 1}, .....],
   lunch: [ {data from recs 1}, .....],
@@ -88,6 +89,20 @@ tripOptions = {
   temperatureArray: [79, 65, 75, 81],
   tripDates: [an array of dates formatted as: 2018-11-15],
   rainyActs: []
+}
+
+trueTripOptions = {
+  itinerary: [
+    [{breakfast 1}, {mroning 1}, {lunch 1}, {afternoon 1}, {dinner 1}, {evening 1}],
+    [{breakfast 2}, {mroning 2}, {lunch 2}, {afternoon 2}, {dinner 2}, {evening 2}],
+    [{breakfast 3}, {mroning 3}, {lunch 3}, {afternoon 3}, {dinner 3}, {evening 3}],
+  ],
+  weather: [
+    {rain: 1, temperature: {high: 70, low: 60, avg: 65}},
+    {rain: 0, temperature: {high: 85, low: 80, avg: 84}},
+    {rain: 0, temperature: {high: 89, low: 85, avg: 88}},
+  ]
+  rainyActs: [{act1}, {act2}, {act3}]
 }
 
 those data objects are the objects from the Reccs objects above.
