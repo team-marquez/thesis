@@ -1,7 +1,10 @@
 import React from 'react'
 
-import { Grid, Image } from 'semantic-ui-react'
+import { Grid, Image, Button } from 'semantic-ui-react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { FlexyFlipCard } from 'flexy-flipcards'
+
+import Graphs from './Graphs.jsx'
 
 const getItems = (count, array) =>
   Array.from({ length: count }, (v, index) => index).map(index => ({
@@ -89,7 +92,7 @@ class Kamban extends React.Component {
                   {...provided.droppableProps}
                 >
                   {this.state.items.map((item, index) => (
-                    <div  style={{border: '2px solid gray', height: '600px', width: '300px', marginRight: '10px', float: 'right'}}>
+                    <div  style={{border: '2px solid gray', height: '700px', width: '300px', marginRight: '10px', float: 'right'}}>
                       <div>
                         {`${index + 50} degrees`}
                       </div>
@@ -107,7 +110,19 @@ class Kamban extends React.Component {
                               provided.draggableProps.style
                             )}
                           >
-                            {item.content}
+                          <FlexyFlipCard
+                              frontBackgroundColor="white"
+                              backBackgroundColor="white"
+                          >
+                              <div >
+                                <p>{item.content}</p>
+                                <Button ref='flipper'></Button>
+                              </div>
+                              <div>
+                                <Graphs></Graphs>
+                                <Button ref='flipper'></Button>
+                              </div>
+                          </FlexyFlipCard>
                           </div>
                         )}
                       </Draggable>
