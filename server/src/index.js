@@ -1,43 +1,26 @@
 const { GraphQLServer } = require("graphql-yoga");
 const { Prisma } = require("prisma-binding");
 const express = require("express");
-const fs = require("fs");
-const fsPromises = fs.promises;
 const path = require("path");
-const shuffle = require("shuffle-array");
 const assembly = require("./bois/assembly_boi.js");
+const weather = require("./bois/weather_boi.js");
+const integrity = require("./bois/integrity_boi.js");
+const budget = require("./bois/budget_boi.js");
 let stuff = ["this", "actually", "worked", "wow"];
-let moment = require('moment')
+let gen = require("../../spec/usserprefsgen");
+let rec = require("../../spec/randomrecs");
+
 const resolvers = {
   Query: {
-    MVP: async (_, { args }, context, info) => {
-      let filehandle = await fsPromises.open("./data.json", "r+");
-      let unparsed = await filehandle.readFile("utf8");
-      let parsed = JSON.parse(unparsed);
-      let random = shuffle(parsed, { copy: true });
-      let recs = random.slice(0, 50);
-      let test =  JSON.parse(
-        '{"pref": {"totalBudget":"3000","partySize":"2","tripDates":{"startDate":"2018-08-15T04:00:00.000Z", "endDate":"2018-08-19T03:59:59.999Z"},"LT":78,"IO":10,"FA":79,"kidFriendly":false}}'
-      )
-      let fixdates = trip => {
-        let start = trip.startDate.split("T")[0]; //?
-        let end = trip.endDate.split("T")[0]; //?
-        let dates = [start];
-        let current = start;
-        while (current !== end) {
-          current = moment(current)
-            .add(1, "d")
-            .format("YYYY-MM-DD");
-          dates.push(current);
-        }
-        return dates;
-      };
-      // test.tripDates = fixdates(test.tripDates);
-      console.log(
-        assembly.assemblyBoi(
-          recs,test
-        )
-      );
+    userPrefs: async (_, pref, context, info) => {
+      let recs = await rec.test();
+      // let test = { pref: JSON.parse(gen.genUserPrefs()) } //?
+      // test = budget.budgetBoi(recs, prefs)
+      console.log(pref)
+      test = weather.weatherBoi(pref)
+      test = assembly.assemblyBoi(recs, test)
+      console.log(test)
+      return JSON.stringify(test, null, 2)
     },
     activities: (a, { IO }, c, d) => {
       console.log(c.db.query);

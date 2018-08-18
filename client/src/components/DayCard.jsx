@@ -3,9 +3,9 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { Image } from 'semantic-ui-react'
 // fake data generator
 const getItems = (count,array) =>
-  Array.from({ length: count }, (v, k) => k).map(k => ({
-    id: `item-${k}`,
-    content: {image: array[k].image, name: array[k].name, cost: array[k].cost, location: array[k].location, description: array[k].descriptionLong, link: array[k].website}
+  Array.from({ length: count }, (v, activity) => activity).map(activity => ({
+    id: `item-${activity}`,
+    content: {image: array[activity].image, name: array[activity].name, cost: array[activity].cost, location: array[activity].location, description: array[activity].descriptionLong, link: array[activity].website}
   }));
 
 // a little function to help us with reordering the result
@@ -80,7 +80,7 @@ class DayCard extends React.Component {
               {this.state.items.map((item, index) => (
                 <div>
                 <p style={{textAlign: 'center'}}>{index === 0 ? 'Breakfast' : index === 1 ? 'Breakfast Activity' : index === 2 ? 'Lunch' : index === 3 ? 'Lunch Activity' : index === 4 ? 'Dinner' : index === 5 ? 'Dinner Activity' : null}</p>
-                <Draggable key={item.id} draggableId={item.id} index={index} isDropDisabled={index % 2 === 0}>
+                <Draggable key={item.id} draggableId={item.id} index={index}>
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}

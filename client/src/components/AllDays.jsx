@@ -3,6 +3,15 @@ import React from 'react'
 import Kamban from './Kamban.jsx'
 import DayModal from './DayModal.jsx'
 
+import { Query } from "react-apollo"
+import gql from "graphql-tag"
+
+// let DAY_QUERY = gql`
+// 	{
+// 		MVP @client
+// 	}
+// `
+
 let days = [[{
 	name: 'ABC Kitchen',
 	cost: 2, // (out of 4 dollar signs)
@@ -188,3 +197,15 @@ class AllDays extends React.Component {
 }
 
 export default AllDays
+
+/* <Query query={DAY_QUERY}>
+{({loading, error, data}) => {
+if (loading) return (<h1> LOADING </h1>)
+if (error) return (<h1>ERROR</h1>)
+else {
+return( 
+<div>
+	<Kamban days={data}/>
+	<DayModal days={data}/>
+</div>)}}}
+</Query> */

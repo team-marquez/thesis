@@ -5,14 +5,17 @@ import { Grid, Button } from 'semantic-ui-react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 const getItems = (count, array) =>
-  Array.from({ length: count }, (v, k) => k).map(k => ({
-    id: `item-${k}`,
-    content: {name: array[k].map((el) => { return (  
+  Array.from({ length: count }, (v, index) => index).map(index => ({
+    id: `item-${index}`,
+    content: array[index].map((activity) => { return (  
       <div>
-        <h4>{el.name}</h4>
-        <h4>{el.location}</h4>
+        <div>  
+          <div style={{float: 'right'}}>{activity.name}</div><br/>
+          <div style={{float: 'right'}}>{activity.cost === 0 ? 'Free' : activity.cost === 1 ? '$' : activity.cost === 2 ? '$$' : activity.cost === 3 ? '$$$' : activity.cost === 4 ? '$$$$' : null}</div>
+          <Image style={{width: '50px', height: '50px'}} src={activity.image}></Image>
+        </div> <br/>
       </div>
-    )})}
+    )})
   }));
 
 // a little function to help us with reordering the result
@@ -29,12 +32,11 @@ const grid = 45;
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: 'none',
-  padding: 0,
+  padding: '10px',
   margin: 0,
 
   // change background colour if dragging
   background: isDragging ? 'lightgreen' : 'white',
-  border: '2px solid gray',
 
   // styles we need to apply on draggables
   ...draggableStyle,
@@ -87,13 +89,14 @@ class Kamban extends React.Component {
                   {...provided.droppableProps}
                 >
                   {this.state.items.map((item, index) => (
-                    <div  style={{border: '2px solid gray', height: '500px', marginRight: '10px'}}>
+                    <div  style={{border: '2px solid gray', height: '600px', width: '300px', marginRight: '10px', float: 'right'}}>
                       <div>
-                        {`Weather ${index + 50}`}
+                        {`${index + 50} degrees`}
                       </div>
+                      <br/>
 
 
-                      <Draggable key={item.id} draggableId={item.id} index={index} style ={{marginLeft: '10px', width: '80%'}}>
+                      <Draggable key={item.id} draggableId={item.id} index={index}>
                         {(provided, snapshot) => (
                           <div
                             ref={provided.innerRef}
@@ -104,8 +107,7 @@ class Kamban extends React.Component {
                               provided.draggableProps.style
                             )}
                           >
-                            {item.content.name}
-                            {item.content.location}
+                            {item.content}
                           </div>
                         )}
                       </Draggable>

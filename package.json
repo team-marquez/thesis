@@ -9,7 +9,8 @@
     "test": "mocha spec/scraper_spec.js --reporter nyan",
     "test-assembly": "mocha spec/assembly_spec.js --reporter nyan",
     "test-budget": "mocha spec/budget_spec.js --reporter nyan",
-    "test-weather": "mocha spec/weather_spec.js --reporter nyan"
+    "test-weather": "mocha spec/weather_spec.js --reporter nyan",
+    "test-true" : "mocha spec/trueTrip_spec.js --reporter nyan"
   },
   "repository": {
     "type": "git",
