@@ -1,4 +1,9 @@
 const { Prisma } = require('prisma-binding')
+const path= require('path')
+const prisma = new Prisma({
+  typeDefs: path.join(__dirname, '../generated/prisma.graphql'),
+  endpoint: 'http://localhost:4466/'
+ })
 
 module.exports = {
   weatherBoi: clientPreferences => {

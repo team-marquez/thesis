@@ -14,7 +14,7 @@ const getItems = (count, array) =>
       <div>
         <div>  
           <div style={{float: 'right'}}>{activity.name}</div><br/>
-          <div style={{float: 'right'}}>{activity.cost === 0 ? 'Free' : activity.cost === 1 ? '$' : activity.cost === 2 ? '$$' : activity.cost === 3 ? '$$$' : activity.cost === 4 ? '$$$$' : null}</div>
+          <div style={{float: 'right'}}>{activity.cost === null || 0 ? 'Free' : activity.cost === 1 ? '$' : activity.cost === 2 ? '$$' : activity.cost === 3 ? '$$$' : activity.cost === 4 ? '$$$$' : null}</div>
           <Image style={{width: '50px', height: '50px'}} src={activity.image}></Image>
         </div> <br/>
       </div>
