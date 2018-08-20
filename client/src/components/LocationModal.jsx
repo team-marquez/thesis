@@ -18,8 +18,8 @@ import { ApolloConsumer } from 'react-apollo';
 
 
 let PREF_QUERY = gql`
-  query PrefQuery($args: String!){
-    echo(args: $args)
+  query PREF_QUERY($pref: Pref){
+    userPrefs(pref: $pref)
   }
 `;
 
@@ -222,15 +222,18 @@ class LocationModal extends React.Component {
                         onClick={async () => {
                           const { data } = await client.query({
                             query: PREF_QUERY,
-                            variables: { args: JSON.stringify({
+                            variables: { pref: {
                               totalBudget: this.state.budget,
                               partySize: this.state.party_size,
-                              tripDates: this.state.tripDates,
+                              tripDates: {
+                                startDate: this.state.tripDates.startDate,
+                                endDate: this.state.tripDates.endDate
+                              },
                               LT: this.state.l_t,
                               IO: this.state.i_o,
                               FA: this.state.f_a,
                               kidFriendly: this.state.NSFW
-                            })}
+                            }}
                           })
                           client.writeData({data})          
                           this.props.pickTrip()
