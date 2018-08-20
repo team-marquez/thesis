@@ -1,12 +1,7 @@
 import React from 'react'
-<<<<<<< HEAD
-
-import { Grid, Image, Button } from 'semantic-ui-react'
-=======
 import { Mutation, Query } from "react-apollo";
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { Grid, Button } from 'semantic-ui-react'
->>>>>>> merges
+import { Grid, Button, Image } from 'semantic-ui-react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { FlexyFlipCard } from 'flexy-flipcards'
 
@@ -121,11 +116,11 @@ class Kamban extends React.Component {
                           >
                               <div >
                                 <p>{item.content}</p>
-                                <Button ref='flipper'></Button>
+                                <Button ref='flipper'>STATS</Button>
                               </div>
                               <div>
-                                <Graphs></Graphs>
-                                <Button ref='flipper'></Button>
+                                {/* <Graphs></Graphs> */}
+                                <Button ref='flipper'>TRIP</Button>
                               </div>
                           </FlexyFlipCard>
                           </div>

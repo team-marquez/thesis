@@ -5,7 +5,7 @@ import { Image } from 'semantic-ui-react'
 const getItems = (count,array) =>
   Array.from({ length: count }, (v, activity) => activity).map(activity => ({
     id: `item-${activity}`,
-    content: {image: array[activity].image, name: array[activity].name, cost: array[activity].cost, location: array[activity].location, description: array[activity].descriptionLong, link: array[activity].website}
+    content: {image: array[activity].image, name: array[activity].name, cost: array[activity].cost, location: array[activity].location, description: array[activity].description, link: array[activity].website}
   }));
 
 // a little function to help us with reordering the result
