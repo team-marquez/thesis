@@ -17,7 +17,6 @@ module.exports = {
     //   clientPreferences.pref.tripDates = ['2018-10-01', '2018-10-02', '2018-10-03']
     // }
     // //end dummy section
-
     
     let tripOptions = {
       breakfast: [],
@@ -27,7 +26,7 @@ module.exports = {
       afternoon: [],
       evening: [],
       weather: clientPreferences.weather, // 0 on days with no precipitation, 1 on days with precipitation
-      tripDates: clientPreferences.pref.tripDates.slice(),
+      tripDates: clientPreferences.pref.tripDates,
       rainyActs: []
     }
 

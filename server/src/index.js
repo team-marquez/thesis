@@ -11,9 +11,9 @@ let rec = require("../../spec/randomrecs")
 const resolvers = {
   Query: {
     userPrefs: async (_, pref, context, info) => {
-      let recs = await rec.test()
-      console.log('prefs', pref)
-      test = weather.weatherBoi(pref)
+      let recs = rec.test()
+
+      test = await weather.weatherBoi(pref)
       test = assembly.assemblyBoi(recs, test)
       return JSON.stringify(test, null, 2)
     },
