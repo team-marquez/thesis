@@ -25,7 +25,7 @@ module.exports = {
       morning: [],
       afternoon: [],
       evening: [],
-      weather: clientPreferences.weather.slice(), // 0 on days with no precipitation, 1 on days with precipitation
+      weather: clientPreferences.weather, // 0 on days with no precipitation, 1 on days with precipitation
       tripDates: clientPreferences.pref.tripDates.slice(),
       rainyActs: []
     }
@@ -184,19 +184,19 @@ module.exports = {
     //new output due to new format needed on client side. refactor post MVP
     let trueTripOptions = {
       itinerary: [],
-      weather: tripOptions.weather.slice(),
-      tripDates: tripOptions.tripDates.slice(),
-      rainyActs: tripOptions.rainyActs.slice()
+      weather: clientPreferences.weather.slice(),
+      rainyActs: tripOptions.rainyActs.slice(),
+      tripDates: tripOptions.tripDates.slice()
     }
 
     let assembleItinerary = () => {
       for (let i = 0; i < trueTripOptions.tripDates.length; i++) {
         var dayArray = [];
         dayArray.push(tripOptions.breakfast[i])
-        dayArray.push(tripOptions.lunch[i])
-        dayArray.push(tripOptions.dinner[i])
         dayArray.push(tripOptions.morning[i])
+        dayArray.push(tripOptions.lunch[i])
         dayArray.push(tripOptions.afternoon[i])
+        dayArray.push(tripOptions.dinner[i])
         dayArray.push(tripOptions.evening[i])
         trueTripOptions.itinerary.push(dayArray)
       }
@@ -204,6 +204,7 @@ module.exports = {
       // console.log('in assemble', trueTripOptions.itinerary[0][0])
     }
 
+    // console.log('Trip', tripOptions)
     assembleItinerary()
 
     //old output.  keeping for tests

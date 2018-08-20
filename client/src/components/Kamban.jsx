@@ -1,12 +1,7 @@
 import React from 'react'
-<<<<<<< HEAD
-
-import { Grid, Image, Button } from 'semantic-ui-react'
-=======
 import { Mutation, Query } from "react-apollo";
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { Grid, Button } from 'semantic-ui-react'
->>>>>>> merges
+import { Grid, Button, Image } from 'semantic-ui-react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { FlexyFlipCard } from 'flexy-flipcards'
 
@@ -19,7 +14,7 @@ const getItems = (count, array) =>
       <div>
         <div>  
           <div style={{float: 'right'}}>{activity.name}</div><br/>
-          <div style={{float: 'right'}}>{activity.cost === 0 ? 'Free' : activity.cost === 1 ? '$' : activity.cost === 2 ? '$$' : activity.cost === 3 ? '$$$' : activity.cost === 4 ? '$$$$' : null}</div>
+          <div style={{float: 'right'}}>{activity.cost === null || 0 ? 'Free' : activity.cost === 1 ? '$' : activity.cost === 2 ? '$$' : activity.cost === 3 ? '$$$' : activity.cost === 4 ? '$$$$' : null}</div>
           <Image style={{width: '50px', height: '50px'}} src={activity.image}></Image>
         </div> <br/>
       </div>
@@ -121,11 +116,11 @@ class Kamban extends React.Component {
                           >
                               <div >
                                 <p>{item.content}</p>
-                                <Button ref='flipper'></Button>
+                                <Button ref='flipper'>STATS</Button>
                               </div>
                               <div>
-                                <Graphs></Graphs>
-                                <Button ref='flipper'></Button>
+                                {/* <Graphs></Graphs> */}
+                                <Button ref='flipper'>TRIP</Button>
                               </div>
                           </FlexyFlipCard>
                           </div>

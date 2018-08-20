@@ -100,9 +100,8 @@ class LocationModal extends React.Component {
                     <DateRange
                       maxDate={moment(this.state.maxDate)}
                       onChange={(changes) =>{
-                      console.log(moment(changes.startDate._d.addDays(4)))
                       this.setState({
-                        maxDate: changes.startDate._d.addDays(4),
+                        maxDate: changes.startDate._d.addDays(3),
                         tripDates: changes
                       })}}
                       calendars={1}
@@ -220,6 +219,7 @@ class LocationModal extends React.Component {
                         icon="right arrow"
                         labelPosition="right"
                         onClick={async () => {
+                          console.log('client', this.state.tripDates.endDate)
                           const { data } = await client.query({
                             query: PREF_QUERY,
                             variables: { pref: {
@@ -227,7 +227,7 @@ class LocationModal extends React.Component {
                               partySize: this.state.party_size,
                               tripDates: {
                                 startDate: this.state.tripDates.startDate,
-                                endDate: this.state.tripDates.endDate
+                                endDate: this.state.tripDates.endDate._d.addDays(-1)
                               },
                               LT: this.state.l_t,
                               IO: this.state.i_o,

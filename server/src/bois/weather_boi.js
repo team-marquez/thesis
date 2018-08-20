@@ -1,4 +1,10 @@
 const { Prisma } = require('prisma-binding')
+const path = require ('path')
+
+const prisma = new Prisma({
+  typeDefs: path.join(__dirname, '../generated/prisma.graphql'),
+  endpoint: 'http://localhost:4466/'
+ })
 
 module.exports = {
   weatherBoi: clientPreferences => {
@@ -46,14 +52,16 @@ module.exports = {
           },
           '{avg_temp, min_temp, max_temp, snow, rain}'
         )
-        .then(({ avg_temp, min_temp, max_temp, rain }) => {
+        .then((response) => {
+          var { avg_temp, min_temp, max_temp, rain } = response[0]
+
           var container = {
             avg_temp,
             min_temp,
             max_temp
           }
 
-          if (rain >= 50) {
+          if (rain >= 70) {
             container.rain = 1
             container.rain_chance = rain
           } else {
@@ -66,7 +74,7 @@ module.exports = {
         .catch(err => console.error('Error fetching weather', err))
     })
 
-    clientPreferences.temperatureArray = weather.slice()
+    clientPreferences.weather = weather.slice()
 
     return clientPreferences
   }

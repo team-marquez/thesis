@@ -99,11 +99,12 @@ trueTripOptions = {
     [{breakfast 3}, {mroning 3}, {lunch 3}, {afternoon 3}, {dinner 3}, {evening 3}],
   ],
   weather: [
-    {rain: 1, temperature: {high: 70, low: 60, avg: 65}},
-    {rain: 0, temperature: {high: 85, low: 80, avg: 84}},
-    {rain: 0, temperature: {high: 89, low: 85, avg: 88}},
-  ]
-  rainyActs: [{act1}, {act2}, {act3}]
+    {rain: 1, rain_chance: 70, max_temp: 70, min_temp: 60, avg_temp: 65},
+    {rain: 0, rain_chance: 0, max_temp: 85, min_temp: 80, avg_temp: 84},
+    {rain: 0, rain_chance: 0, max_temp: 89, min_temp: 85, avg_temp: 88},
+  ],
+  rainyActs: [{act1}, {act2}, {act3}],
+  tripDates ; [2018-11-12, 2018-11-13, 2018-11-14]
 }
 
 those data objects are the objects from the Reccs objects above.
