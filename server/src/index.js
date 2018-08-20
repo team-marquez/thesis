@@ -26,7 +26,7 @@ const resolvers = {
       // return c.db.query.restaurants()
     },
     weather: (a, { date }, c, d) => {
-      console.log('Resolver', day)
+      console.log('Resolver', date)
       return c.db.query.weather({ where: { day: date } }, d)
     }
   },

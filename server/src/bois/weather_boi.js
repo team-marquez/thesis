@@ -67,12 +67,14 @@ module.exports = {
             container.rain_chance = 0
           }
 
+          console.log('Container', container)
           weather.push(container)
         })
         .catch(err => console.error('Error fetching weather', err))
     })
 
     clientPreferences.weather = weather
+    console.log('Client Preferences', clientPreferences)
     return clientPreferences
   }
 }
