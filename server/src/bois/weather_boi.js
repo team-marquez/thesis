@@ -61,15 +61,6 @@ module.exports = {
               min_temp,
               max_temp
             }
-          }, '{avg_temp, min_temp, max_temp, snow, rain}')
-          .then(response => {
-            var { avg_temp, min_temp, max_temp, rain } = response[0]
-
-            var container = {
-              avg_temp,
-              min_temp,
-              max_temp
-            }
 
             if (rain >= 70) {
               container.rain = 1
@@ -79,7 +70,6 @@ module.exports = {
               container.rain_chance = 0
             }
 
-            // console.log('Container', container)
             weather.push(container)
           })
           .catch(err => console.error('Error fetching weather', err))
