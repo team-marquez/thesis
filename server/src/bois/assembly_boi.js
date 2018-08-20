@@ -17,7 +17,7 @@ module.exports = {
     //   clientPreferences.pref.tripDates = ['2018-10-01', '2018-10-02', '2018-10-03']
     // }
     // //end dummy section
-
+    
     let tripOptions = {
       breakfast: [],
       lunch: [],
@@ -26,10 +26,12 @@ module.exports = {
       afternoon: [],
       evening: [],
       weather: clientPreferences.weather, // 0 on days with no precipitation, 1 on days with precipitation
-      tripDates: clientPreferences.pref.tripDates.slice(),
+      tripDates: clientPreferences.pref.tripDates,
       rainyActs: []
     }
 
+    console.log('Trip Options', tripOptions)
+    
     //fill Meal will only work in mvp+, when we have both local and tourist rests
     fillMeals = (mealType) => {
       let currentLT = LTAllocation.local > LTAllocation.tourist ? 0 : 1

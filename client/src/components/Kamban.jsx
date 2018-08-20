@@ -94,7 +94,7 @@ class Kamban extends React.Component {
                   {this.state.items.map((item, index) => (
                     <div  style={{border: '2px solid gray', height: '700px', width: '300px', marginRight: '10px', float: 'right'}}>
                       <div>
-                        {`${index + 50} degrees`}
+                        {`${this.props.temp[0].avg_temp} degrees`}
                       </div>
                       <br/>
 

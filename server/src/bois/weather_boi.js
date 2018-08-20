@@ -1,13 +1,13 @@
 const { Prisma } = require('prisma-binding')
-const path = require ('path')
+const path = require('path')
 
 const prisma = new Prisma({
   typeDefs: path.join(__dirname, '../generated/prisma.graphql'),
   endpoint: 'http://localhost:4466/'
- })
+})
 
 module.exports = {
-  weatherBoi: clientPreferences => {
+  weatherBoi: async clientPreferences => {
     const moment = require('moment')
     let userTripDates = clientPreferences.pref.tripDates
 
@@ -42,40 +42,52 @@ module.exports = {
       }
     `
 
-    clientPreferences.pref.tripDates.forEach(date => {
-      prisma.query
-        .weathers(
-          {
-            where: {
-              day: date
+    await new Promise((resolve, reject) => {
+      clientPreferences.pref.tripDates.forEach(date => {
+        prisma.query
+          .weathers(
+            {
+              where: {
+                day: date
+              }
+            },
+            '{avg_temp, min_temp, max_temp, snow, rain}'
+          )
+          .then(response => {
+            var { avg_temp, min_temp, max_temp, rain } = response[0]
+
+            var container = {
+              avg_temp,
+              min_temp,
+              max_temp
             }
-          },
-          '{avg_temp, min_temp, max_temp, snow, rain}'
-        )
-        .then((response) => {
-          var { avg_temp, min_temp, max_temp, rain } = response[0]
+          }, '{avg_temp, min_temp, max_temp, snow, rain}')
+          .then(response => {
+            var { avg_temp, min_temp, max_temp, rain } = response[0]
 
-          var container = {
-            avg_temp,
-            min_temp,
-            max_temp
-          }
+            var container = {
+              avg_temp,
+              min_temp,
+              max_temp
+            }
 
-          if (rain >= 70) {
-            container.rain = 1
-            container.rain_chance = rain
-          } else {
-            container.rain = 0
-            container.rain_chance = 0
-          }
+            if (rain >= 70) {
+              container.rain = 1
+              container.rain_chance = rain
+            } else {
+              container.rain = 0
+              container.rain_chance = 0
+            }
 
-          weather.push(container)
-        })
-        .catch(err => console.error('Error fetching weather', err))
+            // console.log('Container', container)
+            weather.push(container)
+          })
+          .catch(err => console.error('Error fetching weather', err))
+          .then(() => resolve())
+      })
     })
 
-    clientPreferences.weather = weather.slice()
-
+    clientPreferences.weather = weather
     return clientPreferences
   }
 }
