@@ -53,7 +53,7 @@ module.exports = {
             max_temp
           }
 
-          if (rain >= 50) {
+          if (rain >= 70) {
             container.rain = 1
             container.rain_chance = rain
           } else {
@@ -66,7 +66,7 @@ module.exports = {
         .catch(err => console.error('Error fetching weather', err))
     })
 
-    clientPreferences.temperatureArray = weather.slice()
+    clientPreferences.weather = weather.slice()
 
     return clientPreferences
   }

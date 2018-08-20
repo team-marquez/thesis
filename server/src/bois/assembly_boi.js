@@ -184,9 +184,9 @@ module.exports = {
     //new output due to new format needed on client side. refactor post MVP
     let trueTripOptions = {
       itinerary: [],
-      weather: tripOptions.weather.slice(),
-      tripDates: tripOptions.tripDates.slice(),
-      rainyActs: tripOptions.rainyActs.slice()
+      weather: clientPreferences.weather.slice(),
+      rainyActs: tripOptions.rainyActs.slice(),
+      tripDates: tripOptions.tripDates.slice()
     }
 
     let assembleItinerary = () => {
