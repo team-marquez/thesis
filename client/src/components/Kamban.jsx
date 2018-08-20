@@ -1,6 +1,12 @@
 import React from 'react'
+<<<<<<< HEAD
 
 import { Grid, Image, Button } from 'semantic-ui-react'
+=======
+import { Mutation, Query } from "react-apollo";
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { Grid, Button } from 'semantic-ui-react'
+>>>>>>> merges
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { FlexyFlipCard } from 'flexy-flipcards'
 
@@ -79,7 +85,6 @@ class Kamban extends React.Component {
   }
 
   render () {
-    const { open } = this.state
     return (
       <div>
         <Grid style={{display: 'inline-block'}}>

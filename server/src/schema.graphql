@@ -4,9 +4,31 @@
 # import Ratings from './generated/prisma.graphql'
 # import Weather from './generated/prisma.graphql'
 
+
+input Pref {
+  totalBudget: Int!
+  partySize: Int!
+  tripDates: Dates!
+  LT: Int!
+  IO: Int!
+  FA: Int!
+  kidFriendly: Boolean !
+}
+
+input Dates{
+  startDate: String!
+  endDate: String!
+}
+
+
 type Query {
   users: [Users!]!
   echo(args: String): String
+  test(args: String): String
+  weather(day: String): Weather
+  food(cost: Float): [Restaurant]
+  activities(indoor_outdoor: String): [Activity]
+  userPrefs(pref: Pref): String
 }
 
 type Mutation {
@@ -35,3 +57,4 @@ type Mutation {
     website: String
   ): Restaurant
 }
+
