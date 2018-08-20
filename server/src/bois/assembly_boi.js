@@ -206,6 +206,7 @@ module.exports = {
       // console.log('in assemble', trueTripOptions.itinerary[0][0])
     }
 
+    // console.log('Trip', tripOptions)
     assembleItinerary()
 
     //old output.  keeping for tests
