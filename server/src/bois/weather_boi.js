@@ -52,7 +52,9 @@ module.exports = {
           },
           '{avg_temp, min_temp, max_temp, snow, rain}'
         )
-        .then(({ avg_temp, min_temp, max_temp, rain }) => {
+        .then((response) => {
+          var { avg_temp, min_temp, max_temp, rain } = response[0]
+
           var container = {
             avg_temp,
             min_temp,

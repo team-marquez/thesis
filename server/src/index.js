@@ -25,9 +25,9 @@ const resolvers = {
       return c.db.query.restaurants({ where: { cost: cost } }, d)
       // return c.db.query.restaurants()
     },
-    weather: (a, { day }, c, d) => {
+    weather: (a, { date }, c, d) => {
       console.log(d)
-      return c.db.query.weather({ where: { day: day } }, d)
+      return c.db.query.weather({ where: { day: date } }, d)
     }
   },
   Mutation: {
