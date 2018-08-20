@@ -1,5 +1,6 @@
 const { Prisma } = require('prisma-binding')
-const path= require('path')
+const path = require ('path')
+
 const prisma = new Prisma({
   typeDefs: path.join(__dirname, '../generated/prisma.graphql'),
   endpoint: 'http://localhost:4466/'
@@ -51,7 +52,9 @@ module.exports = {
           },
           '{avg_temp, min_temp, max_temp, snow, rain}'
         )
-        .then(({ avg_temp, min_temp, max_temp, rain }) => {
+        .then((response) => {
+          var { avg_temp, min_temp, max_temp, rain } = response[0]
+
           var container = {
             avg_temp,
             min_temp,

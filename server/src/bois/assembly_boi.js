@@ -25,7 +25,7 @@ module.exports = {
       morning: [],
       afternoon: [],
       evening: [],
-      weather: clientPreferences.weather.slice(), // 0 on days with no precipitation, 1 on days with precipitation
+      weather: clientPreferences.weather, // 0 on days with no precipitation, 1 on days with precipitation
       tripDates: clientPreferences.pref.tripDates.slice(),
       rainyActs: []
     }
@@ -204,6 +204,7 @@ module.exports = {
       // console.log('in assemble', trueTripOptions.itinerary[0][0])
     }
 
+    // console.log('Trip', tripOptions)
     assembleItinerary()
 
     //old output.  keeping for tests
