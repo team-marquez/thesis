@@ -14,18 +14,13 @@ const resolvers = {
   Query: {
     userPrefs: async (_, pref, context, info) => {
       let recs = await rec.test();
-      // let test = { pref: JSON.parse(gen.genUserPrefs()) } //?
-      // test = budget.budgetBoi(recs, prefs)
-      console.log(pref)
       test = weather.weatherBoi(pref)
       test = assembly.assemblyBoi(recs, test)
-      console.log(test)
       return JSON.stringify(test, null, 2)
     },
     activities: (a, { IO }, c, d) => {
       console.log(c.db.query);
       return c.db.query.activity({ where: { indoor_outdoor: IO } }, d);
-      // readFile
     },
     food: (a, { cost }, c, d) => {
       return c.db.query.restaurants({ where: { cost: cost } }, d);
