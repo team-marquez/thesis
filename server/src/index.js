@@ -1,34 +1,33 @@
-const { GraphQLServer } = require("graphql-yoga");
-const { Prisma } = require("prisma-binding");
-const express = require("express");
-const path = require("path");
-const assembly = require("./bois/assembly_boi.js");
-const weather = require("./bois/weather_boi.js");
-const integrity = require("./bois/integrity_boi.js");
-const budget = require("./bois/budget_boi.js");
-let stuff = ["this", "actually", "worked", "wow"];
-let gen = require("../../spec/usserprefsgen");
-let rec = require("../../spec/randomrecs");
+const { GraphQLServer } = require("graphql-yoga")
+const { Prisma } = require("prisma-binding")
+const express = require("express")
+const path = require("path")
+const assembly = require("./bois/assembly_boi.js")
+const weather = require("./bois/weather_boi.js")
+const integrity = require("./bois/integrity_boi.js")
+const budget = require("./bois/budget_boi.js")
+let rec = require("../../spec/randomrecs")
 
 const resolvers = {
   Query: {
     userPrefs: async (_, pref, context, info) => {
-      let recs = await rec.test();
+      let recs = await rec.test()
+      console.log(pref)
       test = weather.weatherBoi(pref)
       test = assembly.assemblyBoi(recs, test)
       return JSON.stringify(test, null, 2)
     },
     activities: (a, { IO }, c, d) => {
-      console.log(c.db.query);
-      return c.db.query.activity({ where: { indoor_outdoor: IO } }, d);
+      console.log(c.db.query)
+      return c.db.query.activity({ where: { indoor_outdoor: IO } }, d)
     },
     food: (a, { cost }, c, d) => {
-      return c.db.query.restaurants({ where: { cost: cost } }, d);
+      return c.db.query.restaurants({ where: { cost: cost } }, d)
       // return c.db.query.restaurants()
     },
     weather: (a, { day }, c, d) => {
-      console.log(d);
-      return c.db.query.weather({ where: { day: day } }, d);
+      console.log(d)
+      return c.db.query.weather({ where: { day: day } }, d)
     }
   },
   Mutation: {
@@ -43,7 +42,7 @@ const resolvers = {
           }
         },
         info
-      );
+      )
     },
     createWeather: (
       _,
@@ -61,7 +60,7 @@ const resolvers = {
           }
         },
         info
-      );
+      )
     },
     createRestaurant: (
       _,
@@ -94,10 +93,10 @@ const resolvers = {
           }
         },
         info
-      );
+      )
     }
   }
-};
+}
 
 const server = new GraphQLServer({
   typeDefs: path.join(__dirname, "/schema.graphql"),
@@ -111,17 +110,17 @@ const server = new GraphQLServer({
       // secret: 'mysecret123', // only needed if specified in `database/prisma.yml`
     })
   })
-});
+})
 
-server.express.use(express.static(__dirname + "/../../client/dist/"));
+server.express.use(express.static(__dirname + "/../../client/dist/"))
 
 const options = {
   port: 4000,
   endpoint: "/graphql",
   subscriptions: "/subscriptions",
   playground: "/playground"
-};
+}
 
 server.start(options, ({ port }) =>
   console.log("Server is running on http://localhost:" + port)
-);
+)
