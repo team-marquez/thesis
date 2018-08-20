@@ -7,7 +7,7 @@ const prisma = new Prisma({
  })
 
 module.exports = {
-  weatherBoi: clientPreferences => {
+  weatherBoi: (clientPreferences) => {
     const moment = require('moment')
     let userTripDates = clientPreferences.pref.tripDates
 
@@ -72,8 +72,7 @@ module.exports = {
         .catch(err => console.error('Error fetching weather', err))
     })
 
-    clientPreferences.weather = weather.slice()
-
+    clientPreferences.weather = weather
     return clientPreferences
   }
 }
