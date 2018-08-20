@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Fri Aug 17 2018 14:49:36 GMT-0400 (EDT)
+# timestamp: Mon Aug 20 2018 15:07:40 GMT-0400 (EDT)
 
 type Activity implements Node {
   id: ID!
@@ -10,12 +10,11 @@ type Activity implements Node {
   location: String
   source: String!
   website: String
-  local_tourist: String!
-  indoor_outdoor: String
+  local_tourist: Int
+  indoor_outdoor: Int
   concepts: Json!
   categories: Json!
   child_friendly: Boolean
-  ratings(where: RatingsWhereInput): Ratings
 }
 
 """A connection to a list of items."""
@@ -36,12 +35,11 @@ input ActivityCreateInput {
   location: String
   source: String!
   website: String
-  local_tourist: String!
-  indoor_outdoor: String
+  local_tourist: Int
+  indoor_outdoor: Int
   concepts: Json!
   categories: Json!
   child_friendly: Boolean
-  ratings: RatingsCreateOneInput
 }
 
 """An edge in a connection."""
@@ -95,8 +93,8 @@ type ActivityPreviousValues {
   location: String
   source: String!
   website: String
-  local_tourist: String!
-  indoor_outdoor: String
+  local_tourist: Int
+  indoor_outdoor: Int
   concepts: Json!
   categories: Json!
   child_friendly: Boolean
@@ -149,12 +147,11 @@ input ActivityUpdateInput {
   location: String
   source: String
   website: String
-  local_tourist: String
-  indoor_outdoor: String
+  local_tourist: Int
+  indoor_outdoor: Int
   concepts: Json
   categories: Json
   child_friendly: Boolean
-  ratings: RatingsUpdateOneInput
 }
 
 input ActivityWhereInput {
@@ -468,91 +465,54 @@ input ActivityWhereInput {
 
   """All values not ending with the given string."""
   website_not_ends_with: String
-  local_tourist: String
+  local_tourist: Int
 
   """All values that are not equal to given value."""
-  local_tourist_not: String
+  local_tourist_not: Int
 
   """All values that are contained in given list."""
-  local_tourist_in: [String!]
+  local_tourist_in: [Int!]
 
   """All values that are not contained in given list."""
-  local_tourist_not_in: [String!]
+  local_tourist_not_in: [Int!]
 
   """All values less than the given value."""
-  local_tourist_lt: String
+  local_tourist_lt: Int
 
   """All values less than or equal the given value."""
-  local_tourist_lte: String
+  local_tourist_lte: Int
 
   """All values greater than the given value."""
-  local_tourist_gt: String
+  local_tourist_gt: Int
 
   """All values greater than or equal the given value."""
-  local_tourist_gte: String
-
-  """All values containing the given string."""
-  local_tourist_contains: String
-
-  """All values not containing the given string."""
-  local_tourist_not_contains: String
-
-  """All values starting with the given string."""
-  local_tourist_starts_with: String
-
-  """All values not starting with the given string."""
-  local_tourist_not_starts_with: String
-
-  """All values ending with the given string."""
-  local_tourist_ends_with: String
-
-  """All values not ending with the given string."""
-  local_tourist_not_ends_with: String
-  indoor_outdoor: String
+  local_tourist_gte: Int
+  indoor_outdoor: Int
 
   """All values that are not equal to given value."""
-  indoor_outdoor_not: String
+  indoor_outdoor_not: Int
 
   """All values that are contained in given list."""
-  indoor_outdoor_in: [String!]
+  indoor_outdoor_in: [Int!]
 
   """All values that are not contained in given list."""
-  indoor_outdoor_not_in: [String!]
+  indoor_outdoor_not_in: [Int!]
 
   """All values less than the given value."""
-  indoor_outdoor_lt: String
+  indoor_outdoor_lt: Int
 
   """All values less than or equal the given value."""
-  indoor_outdoor_lte: String
+  indoor_outdoor_lte: Int
 
   """All values greater than the given value."""
-  indoor_outdoor_gt: String
+  indoor_outdoor_gt: Int
 
   """All values greater than or equal the given value."""
-  indoor_outdoor_gte: String
-
-  """All values containing the given string."""
-  indoor_outdoor_contains: String
-
-  """All values not containing the given string."""
-  indoor_outdoor_not_contains: String
-
-  """All values starting with the given string."""
-  indoor_outdoor_starts_with: String
-
-  """All values not starting with the given string."""
-  indoor_outdoor_not_starts_with: String
-
-  """All values ending with the given string."""
-  indoor_outdoor_ends_with: String
-
-  """All values not ending with the given string."""
-  indoor_outdoor_not_ends_with: String
+  indoor_outdoor_gte: Int
   child_friendly: Boolean
 
   """All values that are not equal to given value."""
   child_friendly_not: Boolean
-  ratings: RatingsWhereInput
 }
 
 input ActivityWhereUniqueInput {
@@ -560,10 +520,6 @@ input ActivityWhereUniqueInput {
 }
 
 type AggregateActivity {
-  count: Int!
-}
-
-type AggregateRatings {
   count: Int!
 }
 
@@ -598,32 +554,26 @@ type Mutation {
   createActivity(data: ActivityCreateInput!): Activity!
   createRestaurant(data: RestaurantCreateInput!): Restaurant!
   createWeather(data: WeatherCreateInput!): Weather!
-  createRatings(data: RatingsCreateInput!): Ratings!
   updateUsers(data: UsersUpdateInput!, where: UsersWhereUniqueInput!): Users
   updateActivity(data: ActivityUpdateInput!, where: ActivityWhereUniqueInput!): Activity
   updateRestaurant(data: RestaurantUpdateInput!, where: RestaurantWhereUniqueInput!): Restaurant
   updateWeather(data: WeatherUpdateInput!, where: WeatherWhereUniqueInput!): Weather
-  updateRatings(data: RatingsUpdateInput!, where: RatingsWhereUniqueInput!): Ratings
   deleteUsers(where: UsersWhereUniqueInput!): Users
   deleteActivity(where: ActivityWhereUniqueInput!): Activity
   deleteRestaurant(where: RestaurantWhereUniqueInput!): Restaurant
   deleteWeather(where: WeatherWhereUniqueInput!): Weather
-  deleteRatings(where: RatingsWhereUniqueInput!): Ratings
   upsertUsers(where: UsersWhereUniqueInput!, create: UsersCreateInput!, update: UsersUpdateInput!): Users!
   upsertActivity(where: ActivityWhereUniqueInput!, create: ActivityCreateInput!, update: ActivityUpdateInput!): Activity!
   upsertRestaurant(where: RestaurantWhereUniqueInput!, create: RestaurantCreateInput!, update: RestaurantUpdateInput!): Restaurant!
   upsertWeather(where: WeatherWhereUniqueInput!, create: WeatherCreateInput!, update: WeatherUpdateInput!): Weather!
-  upsertRatings(where: RatingsWhereUniqueInput!, create: RatingsCreateInput!, update: RatingsUpdateInput!): Ratings!
   updateManyUserses(data: UsersUpdateInput!, where: UsersWhereInput): BatchPayload!
   updateManyActivities(data: ActivityUpdateInput!, where: ActivityWhereInput): BatchPayload!
   updateManyRestaurants(data: RestaurantUpdateInput!, where: RestaurantWhereInput): BatchPayload!
   updateManyWeathers(data: WeatherUpdateInput!, where: WeatherWhereInput): BatchPayload!
-  updateManyRatingses(data: RatingsUpdateInput!, where: RatingsWhereInput): BatchPayload!
   deleteManyUserses(where: UsersWhereInput): BatchPayload!
   deleteManyActivities(where: ActivityWhereInput): BatchPayload!
   deleteManyRestaurants(where: RestaurantWhereInput): BatchPayload!
   deleteManyWeathers(where: WeatherWhereInput): BatchPayload!
-  deleteManyRatingses(where: RatingsWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -658,268 +608,20 @@ type Query {
   activities(where: ActivityWhereInput, orderBy: ActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Activity]!
   restaurants(where: RestaurantWhereInput, orderBy: RestaurantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Restaurant]!
   weathers(where: WeatherWhereInput, orderBy: WeatherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Weather]!
-  ratingses(where: RatingsWhereInput, orderBy: RatingsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ratings]!
   users(where: UsersWhereUniqueInput!): Users
   activity(where: ActivityWhereUniqueInput!): Activity
   restaurant(where: RestaurantWhereUniqueInput!): Restaurant
   weather(where: WeatherWhereUniqueInput!): Weather
-  ratings(where: RatingsWhereUniqueInput!): Ratings
   usersesConnection(where: UsersWhereInput, orderBy: UsersOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UsersConnection!
   activitiesConnection(where: ActivityWhereInput, orderBy: ActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActivityConnection!
   restaurantsConnection(where: RestaurantWhereInput, orderBy: RestaurantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RestaurantConnection!
   weathersConnection(where: WeatherWhereInput, orderBy: WeatherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WeatherConnection!
-  ratingsesConnection(where: RatingsWhereInput, orderBy: RatingsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RatingsConnection!
 
   """Fetches an object given its ID"""
   node(
     """The ID of an object"""
     id: ID!
   ): Node
-}
-
-type Ratings implements Node {
-  id: ID!
-  indoor_outdoor: Float!
-  tourist_local: Float!
-  food_activity: Float!
-}
-
-"""A connection to a list of items."""
-type RatingsConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [RatingsEdge]!
-  aggregate: AggregateRatings!
-}
-
-input RatingsCreateInput {
-  indoor_outdoor: Float!
-  tourist_local: Float!
-  food_activity: Float!
-}
-
-input RatingsCreateOneInput {
-  create: RatingsCreateInput
-  connect: RatingsWhereUniqueInput
-}
-
-"""An edge in a connection."""
-type RatingsEdge {
-  """The item at the end of the edge."""
-  node: Ratings!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum RatingsOrderByInput {
-  id_ASC
-  id_DESC
-  indoor_outdoor_ASC
-  indoor_outdoor_DESC
-  tourist_local_ASC
-  tourist_local_DESC
-  food_activity_ASC
-  food_activity_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type RatingsPreviousValues {
-  id: ID!
-  indoor_outdoor: Float!
-  tourist_local: Float!
-  food_activity: Float!
-}
-
-type RatingsSubscriptionPayload {
-  mutation: MutationType!
-  node: Ratings
-  updatedFields: [String!]
-  previousValues: RatingsPreviousValues
-}
-
-input RatingsSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [RatingsSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [RatingsSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [RatingsSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: RatingsWhereInput
-}
-
-input RatingsUpdateDataInput {
-  indoor_outdoor: Float
-  tourist_local: Float
-  food_activity: Float
-}
-
-input RatingsUpdateInput {
-  indoor_outdoor: Float
-  tourist_local: Float
-  food_activity: Float
-}
-
-input RatingsUpdateOneInput {
-  create: RatingsCreateInput
-  connect: RatingsWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RatingsUpdateDataInput
-  upsert: RatingsUpsertNestedInput
-}
-
-input RatingsUpsertNestedInput {
-  update: RatingsUpdateDataInput!
-  create: RatingsCreateInput!
-}
-
-input RatingsWhereInput {
-  """Logical AND on all given filters."""
-  AND: [RatingsWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [RatingsWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [RatingsWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  indoor_outdoor: Float
-
-  """All values that are not equal to given value."""
-  indoor_outdoor_not: Float
-
-  """All values that are contained in given list."""
-  indoor_outdoor_in: [Float!]
-
-  """All values that are not contained in given list."""
-  indoor_outdoor_not_in: [Float!]
-
-  """All values less than the given value."""
-  indoor_outdoor_lt: Float
-
-  """All values less than or equal the given value."""
-  indoor_outdoor_lte: Float
-
-  """All values greater than the given value."""
-  indoor_outdoor_gt: Float
-
-  """All values greater than or equal the given value."""
-  indoor_outdoor_gte: Float
-  tourist_local: Float
-
-  """All values that are not equal to given value."""
-  tourist_local_not: Float
-
-  """All values that are contained in given list."""
-  tourist_local_in: [Float!]
-
-  """All values that are not contained in given list."""
-  tourist_local_not_in: [Float!]
-
-  """All values less than the given value."""
-  tourist_local_lt: Float
-
-  """All values less than or equal the given value."""
-  tourist_local_lte: Float
-
-  """All values greater than the given value."""
-  tourist_local_gt: Float
-
-  """All values greater than or equal the given value."""
-  tourist_local_gte: Float
-  food_activity: Float
-
-  """All values that are not equal to given value."""
-  food_activity_not: Float
-
-  """All values that are contained in given list."""
-  food_activity_in: [Float!]
-
-  """All values that are not contained in given list."""
-  food_activity_not_in: [Float!]
-
-  """All values less than the given value."""
-  food_activity_lt: Float
-
-  """All values less than or equal the given value."""
-  food_activity_lte: Float
-
-  """All values greater than the given value."""
-  food_activity_gt: Float
-
-  """All values greater than or equal the given value."""
-  food_activity_gte: Float
-}
-
-input RatingsWhereUniqueInput {
-  id: ID
 }
 
 type Restaurant implements Node {
@@ -1460,7 +1162,6 @@ type Subscription {
   activity(where: ActivitySubscriptionWhereInput): ActivitySubscriptionPayload
   restaurant(where: RestaurantSubscriptionWhereInput): RestaurantSubscriptionPayload
   weather(where: WeatherSubscriptionWhereInput): WeatherSubscriptionPayload
-  ratings(where: RatingsSubscriptionWhereInput): RatingsSubscriptionPayload
 }
 
 type Users implements Node {
@@ -1753,8 +1454,8 @@ type Weather implements Node {
   avg_temp: Float!
   min_temp: Float!
   max_temp: Float!
-  snow: Float!
-  rain: Float!
+  snow: Float
+  rain: Float
 }
 
 """A connection to a list of items."""
@@ -1772,8 +1473,8 @@ input WeatherCreateInput {
   avg_temp: Float!
   min_temp: Float!
   max_temp: Float!
-  snow: Float!
-  rain: Float!
+  snow: Float
+  rain: Float
 }
 
 """An edge in a connection."""
@@ -1812,8 +1513,8 @@ type WeatherPreviousValues {
   avg_temp: Float!
   min_temp: Float!
   max_temp: Float!
-  snow: Float!
-  rain: Float!
+  snow: Float
+  rain: Float
 }
 
 type WeatherSubscriptionPayload {

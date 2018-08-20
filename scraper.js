@@ -250,23 +250,23 @@ const timeOutIndividualPageScrape = (dynamicURL, dynamicName) => {
   })
 }
 
-const mutation = `
-mutation CreateRestaurant($name: String!, $image: String!, $cuisine: String!, $cost: Float!, $description: String!, $why_go: String!, $location: String, $source: String!, $website: String) {
-    createRestaurant(data: {
-        name: $name,
-        image: $image,
-        cuisine: $cuisine,
-        cost: $cost,
-        description: $description,
-        why_go: $why_go,
-        location: $location,
-        source: $source,
-        website: $website
-    }) {
-        id
-    }
-}
-`
+// const mutation = `
+// mutation CreateRestaurant($name: String!, $image: String!, $cuisine: String!, $cost: Float!, $description: String!, $why_go: String!, $location: String, $source: String!, $website: String) {
+//     createRestaurant(data: {
+//         name: $name,
+//         image: $image,
+//         cuisine: $cuisine,
+//         cost: $cost,
+//         description: $description,
+//         why_go: $why_go,
+//         location: $location,
+//         source: $source,
+//         website: $website
+//     }) {
+//         id
+//     }
+// }
+// `
 
 // timeOutListScrape(listURL)
 //   .then(data => {
