@@ -193,10 +193,10 @@ module.exports = {
       for (let i = 0; i < trueTripOptions.tripDates.length; i++) {
         var dayArray = [];
         dayArray.push(tripOptions.breakfast[i])
-        dayArray.push(tripOptions.lunch[i])
-        dayArray.push(tripOptions.dinner[i])
         dayArray.push(tripOptions.morning[i])
+        dayArray.push(tripOptions.lunch[i])
         dayArray.push(tripOptions.afternoon[i])
+        dayArray.push(tripOptions.dinner[i])
         dayArray.push(tripOptions.evening[i])
         trueTripOptions.itinerary.push(dayArray)
       }

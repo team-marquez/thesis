@@ -12,7 +12,7 @@ const resolvers = {
   Query: {
     userPrefs: async (_, pref, context, info) => {
       let recs = await rec.test()
-      console.log(pref)
+      console.log('prefs', pref)
       test = weather.weatherBoi(pref)
       test = assembly.assemblyBoi(recs, test)
       return JSON.stringify(test, null, 2)
