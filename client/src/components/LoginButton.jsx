@@ -66,7 +66,6 @@ class LoginButton extends React.Component {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
     .then(results => {
-      console.log('Logged In With Google', results)
       this.changeUser(results.additionalUserInfo.profile.given_name, results.additionalUserInfo.profile.picture.data.url)
     })
     this.closePopup()
@@ -77,7 +76,6 @@ class LoginButton extends React.Component {
     const provider = new firebase.auth.FacebookAuthProvider()
     firebase.auth().signInWithPopup(provider)
     .then(results => {      
-      console.log('Logged In With Facebook', results.additionalUserInfo.profile.picture.data.url)
       this.changeUser(results.additionalUserInfo.profile.name, results.additionalUserInfo.profile.picture.data.url)
     })
     .catch(err => console.log(err))
@@ -106,7 +104,6 @@ class LoginButton extends React.Component {
   checkUserLoggedIn () {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log(user)
         this.changeUser(user.displayName, user.photoURL)
       } else {
         // No user is signed in.
@@ -118,7 +115,6 @@ class LoginButton extends React.Component {
   logOut () {
     firebase.auth().signOut()
     .then(() => {
-      console.log('logged out')
       this.changeUser('Welcome User', 'https://react.semantic-ui.com/images/avatar/large/patrick.png')
     })
   }

@@ -4,7 +4,6 @@ const { clientPreferances } = require('./dummyData')
 
 describe('WeatherBoi', () => {
   let output = weatherBoi(clientPreferances)
-  // console.log(output)
   
   describe('date manipulation', () => {
     it('should alter the object of dates into an array', () => {

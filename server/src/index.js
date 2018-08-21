@@ -15,7 +15,6 @@ const resolvers = {
 
       test = await weather.weatherBoi(pref)
       test = assembly.assemblyBoi(recs, test)
-      console.log('testtesttest', test)
       return JSON.stringify(test, null, 2)
     },
     // activities: (a, { IO }, c, d) => {
