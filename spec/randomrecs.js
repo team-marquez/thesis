@@ -1,5 +1,5 @@
-const fs = require("fs")
-const shuffle = require("shuffle-array")
+const fs = require('fs')
+const shuffle = require('shuffle-array')
 const path = require('path')
 const DIR = path.join(__dirname, '../data.json')
 

@@ -1,23 +1,30 @@
-var path = require('path');
-var SRC_DIR = path.join(__dirname, '/client/src');
-var DIST_DIR = path.join(__dirname, '/client/dist');
+var path = require('path')
+var HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
+require('babel-polyfill')
+
+var SRC_DIR = path.join(__dirname, '/client/src')
+var DIST_DIR = path.join(__dirname, '/client/dist')
 
 module.exports = {
-  entry: `${SRC_DIR}/index.jsx`,
+  mode: 'production',
+  entry: ['babel-polyfill', `${SRC_DIR}/index.jsx`],
   output: {
     filename: 'bundle.js',
     path: DIST_DIR
   },
-  module : {
-    loaders : [
+  module: {
+    rules: [
       {
-        test : /\.jsx?/,
-        include : SRC_DIR,
-        loader : 'babel-loader',
-        query: {
-          presets: ['react', 'es2015']
+        type: 'javascript/auto',
+        test: /\.js[x]?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
         }
       }
     ]
-  }
-};
+  },
+  plugins: [
+    new HardSourceWebpackPlugin()
+  ]
+}
