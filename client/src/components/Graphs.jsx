@@ -1,14 +1,8 @@
 import React from 'react'
 
-
-import { Button } from 'semantic-ui-react'
-
 class Graphs extends React.Component {
   constructor (props) {
 		super (props)
-		this.state = {
-
-		}
 	}
 
 	budgetGraph () {
@@ -41,9 +35,6 @@ class Graphs extends React.Component {
 						['data2', 120],
 									],
 				type : 'donut',
-				onclick: function (d, i) { console.log("onclick", d, i); },
-				onmouseover: function (d, i) { console.log("onmouseover", d, i); },
-				onmouseout: function (d, i) { console.log("onmouseout", d, i); }
 			},
 			donut: {
 				title: "Iris Petal Width"

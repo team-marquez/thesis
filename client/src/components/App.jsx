@@ -4,17 +4,8 @@ import LoginButton from "./LoginButton.jsx";
 import LocationModal from "./LocationModal.jsx";
 import Footer from "./Footer.jsx";
 import AllDays from "./AllDays.jsx";
-import { InMemoryCache } from "apollo-cache-inmemory";
-
-import { Query } from "react-apollo";
-import { ApolloProvider } from "react-apollo";
-import { Mutation } from "react-apollo";
-import ApolloClient from "apollo-boost";
-import gql from "graphql-tag";
 
 import Onboarding from './Onboarding.jsx'
-
-
 
 class App extends React.Component {
   constructor(props) {
@@ -25,6 +16,7 @@ class App extends React.Component {
     this.pickTrip = this.pickTrip.bind(this);
   }
 
+  // Conditional rendering function for displaying the home page and the trip page. Works on LocationModals 'Next' button.
   pickTrip() {
     this.setState({
       pickedTrip: !this.state.pickedTrip
