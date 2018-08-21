@@ -18,7 +18,7 @@ class DayModal extends React.Component {
 			<div>
 				{this.props.days.map((day, index) => {
 					return (
-						<Modal size={'fullscreen'} trigger={<Button icon labelPosition='right' style={{marginLeft: '-35px', marginTop: '10px'}}>
+						<Modal size={'fullscreen'} key={index} trigger={<Button icon labelPosition='right' style={{marginLeft: '-35px', marginTop: '10px'}}>
 								{`Display Day ${index + 1}`}
 								<Icon name='expand arrows alternate' />
 							</Button>}>

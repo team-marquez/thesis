@@ -22,7 +22,6 @@ describe('BudgetBoi', () => {
         it('should delete an activity if outside price range', () => {
             let data = [{name: 'Highline', type: ['activity'], cost: 0}, {name: 'ExpensivePlace', type: ['activity'], cost: 5}]
             let output2 = budgetBoi(data, clientPreferances)
-            console.log(output2)
             expect(output2.length).to.lessThan(data.length)
         })
         

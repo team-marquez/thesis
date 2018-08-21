@@ -57,9 +57,11 @@ class Kamban extends React.Component {
     super (props)
     this.state = {
       items: getItems(this.props.days.length, this.props.days),
-      open: false
+      open: false,
+      graphShowing: false
     }
     this.onDragEnd = this.onDragEnd.bind(this)
+    this.showGraphs = this.showGraphs.bind(this)
   }
 
   onDragEnd(result) {
@@ -79,6 +81,12 @@ class Kamban extends React.Component {
     });
   }
 
+  showGraphs () {
+    this.setState({
+      graphShowing: !this.state.graphShowing
+    })
+  }
+
   render () {
     return (
       <div>
@@ -92,9 +100,9 @@ class Kamban extends React.Component {
                   {...provided.droppableProps}
                 >
                   {this.state.items.map((item, index) => (
-                    <div  style={{border: '2px solid gray', height: '700px', width: '300px', marginRight: '10px', float: 'right'}}>
+                    <div  key = {index} style={{border: '2px solid gray', height: '700px', width: '300px', marginRight: '10px', float: 'right'}}>
                       <div>
-                        {`${this.props.temp[0].avg_temp} degrees`}
+                        {`${this.props.temp[index].avg_temp} degrees`}
                       </div>
                       <br/>
 
@@ -114,14 +122,14 @@ class Kamban extends React.Component {
                               frontBackgroundColor="white"
                               backBackgroundColor="white"
                           >
-                              <div >
-                                <p>{item.content}</p>
-                                <Button ref='flipper'>STATS</Button>
-                              </div>
-                              <div>
-                                {/* <Graphs></Graphs> */}
-                                <Button ref='flipper'>TRIP</Button>
-                              </div>
+                            <div>
+                              <div>{item.content}</div>
+                              {this.state.graphShowing === false ? (<Button onClick = {this.showGraphs}>Load Data</Button>) : (<div><div><Button ref='flipper'>STATS</Button></div></div>)}
+                            </div>
+                            <div>
+                              {this.state.graphShowing === false ? (<div><Button ref='flipper'>TRIP</Button></div>) : (<div><Graphs></Graphs>
+                              <Button ref='flipper'>TRIP</Button></div>)}
+                            </div>
                           </FlexyFlipCard>
                           </div>
                         )}

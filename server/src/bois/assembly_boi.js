@@ -1,5 +1,6 @@
 module.exports = {
   assemblyBoi: (recs, clientPreferences) => {
+    
     let arrayMax = clientPreferences.pref.tripDates.length * 3
     let LTAllocation = {
       local: Math.ceil(1 - clientPreferences.pref.LT) * arrayMax,
@@ -29,8 +30,6 @@ module.exports = {
       tripDates: clientPreferences.pref.tripDates,
       rainyActs: []
     }
-
-    console.log('Trip Options', tripOptions)
     
     //fill Meal will only work in mvp+, when we have both local and tourist rests
     fillMeals = (mealType) => {
@@ -203,10 +202,8 @@ module.exports = {
         trueTripOptions.itinerary.push(dayArray)
       }
 
-      // console.log('in assemble', trueTripOptions.itinerary[0][0])
     }
 
-    // console.log('Trip', tripOptions)
     assembleItinerary()
 
     //old output.  keeping for tests

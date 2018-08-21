@@ -47,10 +47,6 @@ class LocationModal extends React.Component {
     this.mouseExit = this.mouseExit.bind(this);
   }
 
-  handleSelect(ranges){
-		console.log(ranges);
-	}
-
   mouseEnter() {
     this.setState({
       bright: "brightness(125%)"
@@ -219,7 +215,6 @@ class LocationModal extends React.Component {
                         icon="right arrow"
                         labelPosition="right"
                         onClick={async () => {
-                          console.log('client', this.state.tripDates.endDate)
                           const { data } = await client.query({
                             query: PREF_QUERY,
                             variables: { pref: {

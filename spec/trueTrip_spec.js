@@ -5,8 +5,6 @@ const { assemblyBoi } = require('./../server/src/bois/assembly_boi.js')
 describe('trueTripOption from AssemblyBoi', () => {
     let output = assemblyBoi(recsData, clientPreferances)
 
-    console.log(output.itinerary[0])
-
     it('should have itinerary, rainArray, rainyActs, tripDates, and tempArray properties', () => {
         expect(output.hasOwnProperty('itinerary')).to.equal(true)
         expect(output.hasOwnProperty('rainArray')).to.equal(true)
