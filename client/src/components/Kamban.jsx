@@ -91,7 +91,7 @@ class Kamban extends React.Component {
 
   render() {
     return (
-      <div id="baby">
+      <div>
         <Grid style={{ display: "inline-block" }}>
           <DragDropContext onDragEnd={this.onDragEnd}>
             <Droppable
