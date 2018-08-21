@@ -16,7 +16,8 @@ class Onboarding extends React.Component {
             showFifth: false,
             showSixth: false,
             showClosing: false,
-            selectedOption: {}
+            selectedOption: {},
+            chosenActivities: []
         }
         this.fillOnboardingArray = this.fillOnboardingArray.bind(this)
         this.open = this.open.bind(this)
@@ -29,6 +30,8 @@ class Onboarding extends React.Component {
         this.showSixth = this.showSixth.bind(this)
         this.submitAnswers = this.submitAnswers.bind(this)
         this.closeSixth = this.closeSixth.bind(this)
+        this.handleOptionSelect = this.handleOptionSelect.bind(this)
+        this.saveSelected = this.saveSelected.bind(this)
     }
     componentWillMount() {
       this.fillOnboardingArray()
@@ -37,13 +40,19 @@ class Onboarding extends React.Component {
     open(){ this.setState({ open: true }) }
     close() { this.setState({ open: false }, this.showFirst()) }
 
+    saveSelected() {
+      let arr = this.state.chosenActivities.slice()
+      arr.push(this.state.selectedOption)
+      this.setState({selectedOption: {}, chosenActivities: arr})
+    }
+
     showFirst() {this.setState({ showFirst: true})}
-    showSecond() {this.setState({ showFirst: false, showSecond: true})}
-    showThird() {this.setState({ showSecond: false, showThird: true})}
-    showFourth() {this.setState({ showThird: false, showFourth: true})}
-    showFifth() {this.setState({ showFourth: false, showFifth: true})}
-    showSixth() {this.setState({ showFifth: false, showSixth: true})}
-    closeSixth() {this.setState({ showSixth: false, showClosing: true})}
+    showSecond() {this.setState({ showFirst: false, showSecond: true}, this.saveSelected())}
+    showThird() {this.setState({ showSecond: false, showThird: true}, this.saveSelected())}
+    showFourth() {this.setState({ showThird: false, showFourth: true}, this.saveSelected())}
+    showFifth() {this.setState({ showFourth: false, showFifth: true}, this.saveSelected())}
+    showSixth() {this.setState({ showFifth: false, showSixth: true}, this.saveSelected())}
+    closeSixth() {this.setState({ showSixth: false, showClosing: true}, this.saveSelected())}
     submitAnswers() {
       this.setState({ showClosing: false})
     }
@@ -53,11 +62,16 @@ class Onboarding extends React.Component {
       let chosenIndicies = {};
       let randomizedActivities = []
       while (randomizedActivities.length < 6) {
-        let ind = Math.floor(Math.random() * 6)
+        let ind = Math.round(Math.random() * 5)
         if (chosenIndicies.hasOwnProperty(ind.toString())) continue
         randomizedActivities.push([onboardingActivities.indoor[ind], onboardingActivities.outdoor[ind]])
+        chosenIndicies[ind] = null
       }
       this.setState({onboardingArray: randomizedActivities})
+    }
+
+    handleOptionSelect(option) {
+      this.setState({selectedOption: option})
     }
     
     render() {
@@ -87,7 +101,8 @@ class Onboarding extends React.Component {
           <Modal open = {this.state.showFirst}>
             <Modal.Content>
               <OnboardingOptions indoor={this.state.onboardingArray[0][0]}
-                outdoor = {this.state.onboardingArray[0][1]} />
+                outdoor = {this.state.onboardingArray[0][1]} 
+                selectOption = {this.handleOptionSelect}/>
             </Modal.Content>
             <Modal.Actions>
               <Button onClick={this.showSecond} >
@@ -98,6 +113,9 @@ class Onboarding extends React.Component {
 
           <Modal open = {this.state.showSecond}>
             <Modal.Content>
+              <OnboardingOptions indoor={this.state.onboardingArray[1][0]}
+                outdoor = {this.state.onboardingArray[1][1]} 
+                selectOption = {this.handleOptionSelect}/>
               data number 2
             </Modal.Content>
             <Modal.Actions>
@@ -109,6 +127,9 @@ class Onboarding extends React.Component {
 
           <Modal open = {this.state.showThird}>
             <Modal.Content>
+              <OnboardingOptions indoor={this.state.onboardingArray[2][0]}
+                outdoor = {this.state.onboardingArray[2][1]} 
+                selectOption = {this.handleOptionSelect}/>
               data number threeeee
             </Modal.Content>
             <Modal.Actions>
@@ -121,6 +142,9 @@ class Onboarding extends React.Component {
           <Modal open = {this.state.showFourth}>
             <Modal.Content>
               44444
+              <OnboardingOptions indoor={this.state.onboardingArray[3][0]}
+                outdoor = {this.state.onboardingArray[3][1]} 
+                selectOption = {this.handleOptionSelect}/>
             </Modal.Content>
             <Modal.Actions>
               <Button onClick={this.showFifth} >
@@ -132,6 +156,9 @@ class Onboarding extends React.Component {
           <Modal open = {this.state.showFifth}>
             <Modal.Content>
               5 5 5 5 5 5
+              <OnboardingOptions indoor={this.state.onboardingArray[4][0]}
+                outdoor = {this.state.onboardingArray[4][1]} 
+                selectOption = {this.handleOptionSelect}/>
             </Modal.Content>
             <Modal.Actions>
               <Button onClick={this.showSixth} >
@@ -143,6 +170,9 @@ class Onboarding extends React.Component {
           <Modal open = {this.state.showSixth}>
             <Modal.Content>
               666 is evil!
+              <OnboardingOptions indoor={this.state.onboardingArray[5][0]}
+                outdoor = {this.state.onboardingArray[5][1]} 
+                selectOption = {this.handleOptionSelect}/>
             </Modal.Content>
             <Modal.Actions>
               <Button onClick={this.closeSixth} >
