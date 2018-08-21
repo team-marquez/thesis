@@ -1,10 +1,7 @@
 import React from "react"
-import { Mutation, Query } from "react-apollo"
-import { InMemoryCache } from "apollo-cache-inmemory"
 import { Grid, Button, Image } from "semantic-ui-react"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { FlexyFlipCard } from "flexy-flipcards"
-import $ from "jquery"
 import Graphs from "./Graphs.jsx"
 
 const getItems = (count, array) =>
