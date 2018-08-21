@@ -4,7 +4,7 @@
   "description": "thesis",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npm cache clean",
+    "postinstall": "npm cache clean --force",
     "server-dev": "nodemon server/src/index.js",
     "react-dev": "webpack -d --watch",
     "test": "mocha spec/scraper_spec.js --reporter nyan",
@@ -44,7 +44,6 @@
     "apollo-server-express": "^2.0.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
-    "c3": "^0.6.7",
     "chai-as-promised": "^7.1.1",
     "cheerio": "^1.0.0-rc.2",
     "date-fns": "^1.29.0",

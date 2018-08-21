@@ -1,5 +1,5 @@
 import React from 'react'
-import c3 from '../../dist/c3.min.js'
+
 
 import { Button } from 'semantic-ui-react'
 
