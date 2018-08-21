@@ -1,10 +1,12 @@
 var path = require('path')
+var HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 require('babel-polyfill')
 
 var SRC_DIR = path.join(__dirname, '/client/src')
 var DIST_DIR = path.join(__dirname, '/client/dist')
 
 module.exports = {
+  mode: 'production',
   entry: ['babel-polyfill', `${SRC_DIR}/index.jsx`],
   output: {
     filename: 'bundle.js',
@@ -21,5 +23,8 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new HardSourceWebpackPlugin()
+  ]
 }
