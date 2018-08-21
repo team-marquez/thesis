@@ -12,6 +12,8 @@ import { Mutation } from "react-apollo";
 import ApolloClient from "apollo-boost";
 import gql from "graphql-tag";
 
+import Onboarding from './Onboarding.jsx'
+
 
 
 class App extends React.Component {
@@ -41,6 +43,7 @@ class App extends React.Component {
               <LocationModal pickTrip={this.pickTrip}/>
             </div>
             <Footer/>
+            <Onboarding />
           </div>
         ) : (
           <div style={{textAlign: 'center'}}>
