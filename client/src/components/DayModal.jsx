@@ -4,13 +4,9 @@ import DayCard from './DayCard.jsx'
 
 import { Modal, Icon, Button } from 'semantic-ui-react'
 
-
-
 class DayModal extends React.Component {
 	constructor (props) {
 		super (props)
-		this.state = {
-		}
 	}
 
 	render () {
