@@ -4,6 +4,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { FlexyFlipCard } from "flexy-flipcards"
 import Graphs from "./Graphs.jsx"
 
+// Generates an array of the data we get back. Shows the name, cost, and the image.
 const getItems = (count, array) =>
   Array.from({ length: count }, (v, index) => index).map(index => ({
     id: `item-${index}`,
@@ -82,9 +83,12 @@ class Kamban extends React.Component {
       items
     })
   }
+
   handleClick(int) {
     this.setState({ vis: !this.state.vis })
   }
+
+
   render() {
     return (
       <div>

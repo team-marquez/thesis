@@ -26,6 +26,7 @@ class LoginButton extends React.Component {
     this.changeUser = this.changeUser.bind(this)
   }
 
+  // Checks the session from the start, and will change the picture and username of the user if they are already logged in.
   componentDidMount () {
     this.checkUserLoggedIn()
   }
