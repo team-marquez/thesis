@@ -11,10 +11,11 @@ let rec = require('../../spec/randomrecs')
 const resolvers = {
   Query: {
     userPrefs: async (_, pref, context, info) => {
-      let recs = rec.test()
+      let recs = await rec.test()
 
       test = await weather.weatherBoi(pref)
       test = assembly.assemblyBoi(recs, test)
+      console.log('testtesttest', test)
       return JSON.stringify(test, null, 2)
     },
     // activities: (a, { IO }, c, d) => {

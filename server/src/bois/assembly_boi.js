@@ -1,5 +1,7 @@
 module.exports = {
   assemblyBoi: (recs, clientPreferences) => {
+    console.log(recs)
+    
     let arrayMax = clientPreferences.pref.tripDates.length * 3
     let LTAllocation = {
       local: Math.ceil(1 - clientPreferences.pref.LT) * arrayMax,
@@ -190,6 +192,8 @@ module.exports = {
       rainyActs: tripOptions.rainyActs.slice(),
       tripDates: tripOptions.tripDates.slice()
     }
+
+    console.log('Actual options', trueTripOptions)
 
     let assembleItinerary = () => {
       for (let i = 0; i < trueTripOptions.tripDates.length; i++) {
