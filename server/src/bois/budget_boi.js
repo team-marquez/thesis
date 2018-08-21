@@ -37,7 +37,6 @@ module.exports = {
 			//activity path
 			if (type[0] === 'activity') {
 				if (cost > activitiesAsCost) recs.splice(i, 1)
-				console.log(recs)
 				i--
 			} else {
 				//meal path

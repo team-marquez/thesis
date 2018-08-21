@@ -52,14 +52,14 @@ class Graphs extends React.Component {
 	}
 
 	render () {
-		return (
+		return this.props.vis ? (
 			<div>
 				<div ref={ budget => this.budget = budget }></div>
 				{this.budgetGraph()}
 				<div ref={ walking => this.walking = walking }></div>
 				{this.walkingGraph()}
 			</div>
-		)
+		) : (<div></div>)
 	}
 }
 
