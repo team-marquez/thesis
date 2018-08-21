@@ -13,7 +13,8 @@ class Onboarding extends React.Component {
             showThird: false,
             showFourth: false,
             showFifth: false,
-            showSixth: false
+            showSixth: false,
+            showClosing: false
         }
         this.fillOnboardingArray = this.fillOnboardingArray.bind(this)
         this.open = this.open.bind(this)
@@ -25,6 +26,7 @@ class Onboarding extends React.Component {
         this.showFifth = this.showFifth.bind(this)
         this.showSixth = this.showSixth.bind(this)
         this.submitAnswers = this.submitAnswers.bind(this)
+        this.closeSixth = this.closeSixth.bind(this)
     }
     componentWillMount() {
       this.fillOnboardingArray()
@@ -39,8 +41,9 @@ class Onboarding extends React.Component {
     showFourth() {this.setState({ showThird: false, showFourth: true})}
     showFifth() {this.setState({ showFourth: false, showFifth: true})}
     showSixth() {this.setState({ showFifth: false, showSixth: true})}
+    closeSixth() {this.setState({ showSixth: false, showClosing: true})}
     submitAnswers() {
-      this.setState({ showSixth: false})
+      this.setState({ showClosing: false})
     }
 
 
@@ -139,8 +142,21 @@ class Onboarding extends React.Component {
               666 is evil!
             </Modal.Content>
             <Modal.Actions>
+              <Button onClick={this.closeSixth} >
+                Thats It <Icon name='right chevron'/>
+              </Button>
+            </Modal.Actions>
+          </Modal>
+
+          <Modal open = {this.state.showClosing}>
+            <Modal.Content>
+              <p>Thank you for taking the time to give us that information.</p>
+
+              <p>Please select the city  you would Like To Go To!</p>
+            </Modal.Content>
+            <Modal.Actions>
               <Button onClick={this.submitAnswers} >
-              <Icon name='checkmark'/>   Thank You! 
+              <Icon name='checkmark'/>   Lets Travel! 
               </Button>
             </Modal.Actions>
           </Modal>
