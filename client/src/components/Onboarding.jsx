@@ -1,5 +1,6 @@
 import React from 'react'
 import  { Button, Modal, Header, Icon } from 'semantic-ui-react'
+import OnboardingOptions from './OnboardingOptions.jsx'
 const { onboardingActivities } = require('./helpers/onboardingActivities.js')
 
 class Onboarding extends React.Component {
@@ -14,7 +15,8 @@ class Onboarding extends React.Component {
             showFourth: false,
             showFifth: false,
             showSixth: false,
-            showClosing: false
+            showClosing: false,
+            selectedOption: {}
         }
         this.fillOnboardingArray = this.fillOnboardingArray.bind(this)
         this.open = this.open.bind(this)
@@ -84,7 +86,8 @@ class Onboarding extends React.Component {
 
           <Modal open = {this.state.showFirst}>
             <Modal.Content>
-              here i am to save the daaaaaay!
+              <OnboardingOptions indoor={this.state.onboardingArray[0][0]}
+                outdoor = {this.state.onboardingArray[0][1]} />
             </Modal.Content>
             <Modal.Actions>
               <Button onClick={this.showSecond} >
