@@ -1,7 +1,8 @@
 import React from 'react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import { Image } from 'semantic-ui-react'
-// fake data generator
+
+// Generates an array of the amount of days selected. Content displays the image, name, cost, location, description, and link.
 const getItems = (count,array) =>
   Array.from({ length: count }, (v, activity) => activity).map(activity => ({
     id: `item-${activity}`,
@@ -33,6 +34,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   ...draggableStyle,
 });
 
+// Styling for when the card is being dragged.
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? 'white' : 'white',
   padding: grid,
@@ -65,8 +67,6 @@ class DayCard extends React.Component {
     });
   }
 
-  // Normally you would want to split things out into separate components.
-  // But in this example everything is just done in one place for simplicity
   render() {
     return (
       <div>

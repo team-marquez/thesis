@@ -47,12 +47,14 @@ class LocationModal extends React.Component {
     this.mouseExit = this.mouseExit.bind(this);
   }
 
+  // Mouse enter event to the make the brightness higher on the location we are selecting.
   mouseEnter() {
     this.setState({
       bright: "brightness(125%)"
     });
   }
 
+  // Mouse exit event to return the brightness back to original when not on the location.
   mouseExit() {
     this.setState({
       bright: "brightness(100%)"
