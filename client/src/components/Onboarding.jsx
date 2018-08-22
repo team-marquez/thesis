@@ -92,7 +92,7 @@ class Onboarding extends React.Component {
               </p>
             </Modal.Content>
             <Modal.Actions>
-              <Button onClick={this.close} >
+              <Button primary onClick={this.close} >
                 Next <Icon name='right chevron'/>
               </Button>
             </Modal.Actions>
@@ -105,7 +105,7 @@ class Onboarding extends React.Component {
                 selectOption = {this.handleOptionSelect}/>
             </Modal.Content>
             <Modal.Actions>
-              <Button onClick={this.showSecond} >
+              <Button color='green' onClick={this.showSecond} >
                 Next <Icon name='right chevron'/>
               </Button>
             </Modal.Actions>
@@ -116,10 +116,9 @@ class Onboarding extends React.Component {
               <OnboardingOptions indoor={this.state.onboardingArray[1][0]}
                 outdoor = {this.state.onboardingArray[1][1]} 
                 selectOption = {this.handleOptionSelect}/>
-              data number 2
             </Modal.Content>
             <Modal.Actions>
-              <Button onClick={this.showThird} >
+              <Button color='green' onClick={this.showThird} >
                 Next <Icon name='right chevron'/>
               </Button>
             </Modal.Actions>
@@ -130,10 +129,9 @@ class Onboarding extends React.Component {
               <OnboardingOptions indoor={this.state.onboardingArray[2][0]}
                 outdoor = {this.state.onboardingArray[2][1]} 
                 selectOption = {this.handleOptionSelect}/>
-              data number threeeee
             </Modal.Content>
             <Modal.Actions>
-              <Button onClick={this.showFourth} >
+              <Button color='green' onClick={this.showFourth} >
                 Next <Icon name='right chevron'/>
               </Button>
             </Modal.Actions>
@@ -141,13 +139,12 @@ class Onboarding extends React.Component {
 
           <Modal open = {this.state.showFourth}>
             <Modal.Content>
-              44444
               <OnboardingOptions indoor={this.state.onboardingArray[3][0]}
                 outdoor = {this.state.onboardingArray[3][1]} 
                 selectOption = {this.handleOptionSelect}/>
             </Modal.Content>
             <Modal.Actions>
-              <Button onClick={this.showFifth} >
+              <Button color='green' onClick={this.showFifth} >
                 Next <Icon name='right chevron'/>
               </Button>
             </Modal.Actions>
@@ -155,13 +152,12 @@ class Onboarding extends React.Component {
 
           <Modal open = {this.state.showFifth}>
             <Modal.Content>
-              5 5 5 5 5 5
               <OnboardingOptions indoor={this.state.onboardingArray[4][0]}
                 outdoor = {this.state.onboardingArray[4][1]} 
                 selectOption = {this.handleOptionSelect}/>
             </Modal.Content>
             <Modal.Actions>
-              <Button onClick={this.showSixth} >
+              <Button color='green' onClick={this.showSixth} >
                 Next <Icon name='right chevron'/>
               </Button>
             </Modal.Actions>
@@ -169,13 +165,12 @@ class Onboarding extends React.Component {
 
           <Modal open = {this.state.showSixth}>
             <Modal.Content>
-              666 is evil!
               <OnboardingOptions indoor={this.state.onboardingArray[5][0]}
                 outdoor = {this.state.onboardingArray[5][1]} 
                 selectOption = {this.handleOptionSelect}/>
             </Modal.Content>
             <Modal.Actions>
-              <Button onClick={this.closeSixth} >
+              <Button primary onClick={this.closeSixth} >
                 Thats It <Icon name='right chevron'/>
               </Button>
             </Modal.Actions>
@@ -188,7 +183,7 @@ class Onboarding extends React.Component {
               <p>Please select the city  you would Like To Go To!</p>
             </Modal.Content>
             <Modal.Actions>
-              <Button onClick={this.submitAnswers} >
+              <Button primary onClick={this.submitAnswers} >
               <Icon name='checkmark'/>   Lets Travel! 
               </Button>
             </Modal.Actions>
