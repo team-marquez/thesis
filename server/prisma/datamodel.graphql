@@ -4,6 +4,12 @@ type Users {
   password: String!
   age: Int!
   gender: Int!
+  history: [Trip!]! @relation(name: "UserHistory", onDelete: CASCADE)
+}
+
+type Trip {
+  id: ID! @unique
+  details: Activity @relation(name: "Act", onDelete: CASCADE)
 }
 
 type Activity {
@@ -44,3 +50,26 @@ type Weather {
   snow: Float
   rain: Float
 }
+
+# mutation {
+#   updateUsers(
+#     data: {
+#       history: {
+#         create: { details: { connect: { id: "tripId" } } }
+#       }
+#     }
+#     where: { id: "userId" }
+#   ) {
+#     id
+#   }
+# }
+
+# query {
+#   users(where: { id: "userId" }) {
+#     history {
+#       details {
+#         name
+#       }
+#     }
+#   }
+# }
