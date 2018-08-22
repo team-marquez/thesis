@@ -11,8 +11,6 @@ class LoginButton extends React.Component {
       index: 0,
       email: '',
       password: '',
-      user: 'Welcome User',
-      image: 'https://react.semantic-ui.com/images/avatar/large/patrick.png',
       loggedIn: false
     }
     this.openSignIn = this.openSignIn.bind(this)
@@ -24,7 +22,6 @@ class LoginButton extends React.Component {
     this.createWithEmail = this.createWithEmail.bind(this)
     this.checkUserLoggedIn = this.checkUserLoggedIn.bind(this)
     this.logOut = this.logOut.bind(this)
-    this.changeUser = this.changeUser.bind(this)
   }
 
   // Checks the session from the start, and will change the picture and username of the user if they are already logged in.
@@ -68,7 +65,7 @@ class LoginButton extends React.Component {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
     .then(results => {
-      this.changeUser(results.additionalUserInfo.profile.given_name, results.additionalUserInfo.profile.picture.data.url)
+      this.props.changeUser(results.additionalUserInfo.profile.given_name, results.additionalUserInfo.profile.picture.data.url)
       this.setState({loggedIn: true})
     })
     this.closePopup()
@@ -79,7 +76,7 @@ class LoginButton extends React.Component {
     const provider = new firebase.auth.FacebookAuthProvider()
     firebase.auth().signInWithPopup(provider)
     .then(results => {      
-      this.changeUser(results.additionalUserInfo.profile.name, results.additionalUserInfo.profile.picture.data.url)
+      this.props.changeUser(results.additionalUserInfo.profile.name, results.additionalUserInfo.profile.picture.data.url)
       this.setState({loggedIn: true})
     })
     .catch(err => console.log(err))
@@ -112,7 +109,7 @@ class LoginButton extends React.Component {
   checkUserLoggedIn () {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.changeUser(user.displayName, user.photoURL)
+        this.props.changeUser(user.displayName, user.photoURL)
         this.setState({loggedIn: true})
       } else {
         this.setState({loggedIn: false})
@@ -124,16 +121,8 @@ class LoginButton extends React.Component {
   logOut () {
     firebase.auth().signOut()
     .then(() => {
-      this.changeUser('Welcome User', 'https://react.semantic-ui.com/images/avatar/large/patrick.png')
+      this.props.changeUser('Welcome User', 'https://react.semantic-ui.com/images/avatar/large/patrick.png')
       this.setState({loggedIn: false})
-    })
-  }
-
-  //Set username
-  changeUser (username, image) {
-    this.setState({
-      user: username,
-      image: image || this.state.image
     })
   }
 
@@ -145,13 +134,13 @@ class LoginButton extends React.Component {
 
           {this.state.loggedIn === true ? (
           <div style={{display: 'inline-block', float: 'left', marginLeft: '10px', paddingTop: '10px'}}>
-            <Button>User Profile</Button>
+            <Button onClick={this.props.home}>User Profile</Button>
           </div>
           ) : (<p></p>)}
 
           <div style = {{display: 'inline-block', marginTop: '5px'}}>
             <Header as='h3'>
-              <Image circular src={this.state.image} /> {this.state.user}
+              <Image circular src={this.props.image} /> {this.props.user}
             </Header>
           </div>
 
