@@ -5,6 +5,8 @@ import LocationModal from "./LocationModal.jsx";
 import Footer from "./Footer.jsx";
 import AllDays from "./AllDays.jsx";
 
+import Onboarding from './Onboarding.jsx'
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -33,6 +35,7 @@ class App extends React.Component {
               <LocationModal pickTrip={this.pickTrip}/>
             </div>
             <Footer/>
+            <Onboarding />
           </div>
         ) : (
           <div style={{textAlign: 'center'}}>
