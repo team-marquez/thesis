@@ -29,7 +29,7 @@ class UserProfile extends React.Component {
 			<div>
 				<div>
 					<Segment clearing style={{backgroundImage: 'linear-gradient(lightCyan, white)'}}>
-						<Header as='h2' icon='home' content={this.props.user} floated='right'/>
+						<Header as='h2' icon='user circle' content={this.props.user} floated='right'/>
 						<Button onClick={this.handleButtonClick} floated='left' style={{marginTop: '3px'}}>Settings</Button>
 					</Segment>
 				</div>

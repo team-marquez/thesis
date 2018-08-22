@@ -74,7 +74,7 @@ class App extends React.Component {
               </div>
             ) : (
               <div style={{textAlign: 'center'}}>
-                <AllDays/>
+                <AllDays home={this.switchHome} user={this.state.user}/>
               </div>
             )}
           </div>

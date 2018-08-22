@@ -27,7 +27,7 @@ class AllDays extends React.Component {
 						data = JSON.parse(data.userPrefs)
             return (
               <div>
-                <Kamban days={data.itinerary} temp={data.weather}/>
+                <Kamban days={data.itinerary} temp={data.weather} home={this.props.home} user={this.props.user}/>
                 <DayModal days={data.itinerary} />
               </div>
             )
