@@ -187,10 +187,25 @@ class LoginButton extends React.Component {
                       onChange={(e) => {this.passwordVariable(e)}}
                     />
                   </Input> 
-                  <Button size='mini' icon='world' onClick={this.createWithEmail}/><br/><br/> 
+                  <Button size='mini' icon='world' 
+                    onClick={() => {
+                      this.createWithEmail()
+                      this.props.openOnboarding()
+                    }}
+                  /><br/><br/> 
                   <p>Or Sign Up With Google/Facebook</p>
-                  <a><i onClick = {this.loginWithGoogle} className="google plus square icon huge"></i></a>
-                  <a><i onClick = {this.loginWithFacebook} className="facebook square icon huge"></i></a>
+                  <a><i className="google plus square icon huge"
+                    onClick = {() => {
+                      this.loginWithGoogle()
+                      this.props.openOnboarding()
+                    }}
+                  ></i></a>
+                  <a><i className="facebook square icon huge"
+                    onClick = {() => {
+                      this.loginWithFacebook()
+                      this.props.openOnboarding()
+                    }}
+                  ></i></a>
                 </div>
               </Segment>
             </Portal>
@@ -209,10 +224,16 @@ class LoginButton extends React.Component {
                       onChange={(e) => {this.passwordVariable(e)}}
                     />
                   </Input> 
-                  <Button size='mini' icon='world' onClick={this.loginWithEmail}/><br/><br/>
+                  <Button size='mini' icon='world' 
+                    onClick={this.loginWithEmail}
+                  /><br/><br/>
                   <p>Or Log In With Google/Facebook</p>
-                  <a><i onClick = {this.loginWithGoogle} className="google plus square icon huge"></i></a>
-                  <a><i onClick = {this.loginWithFacebook} className="facebook square icon huge"></i></a>
+                  <a><i  className="google plus square icon huge"
+                    onClick = {this.loginWithGoogle}
+                  ></i></a>
+                  <a><i className="facebook square icon huge"
+                    onClick = {this.loginWithFacebook}
+                  ></i></a>
                 </div>
               </Segment>
             </Portal>

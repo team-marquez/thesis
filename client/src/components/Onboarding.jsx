@@ -10,7 +10,6 @@ class Onboarding extends React.Component {
     super(props);
     this.state = {
       onboardingArray: [],
-      open: false,
       showFirst: false,
       showSecond: false,
       showThird: false,
@@ -22,8 +21,6 @@ class Onboarding extends React.Component {
       chosenActivities: []
     };
     this.fillOnboardingArray = this.fillOnboardingArray.bind(this);
-    this.open = this.open.bind(this);
-    this.close = this.close.bind(this);
     this.showFirst = this.showFirst.bind(this);
     this.showSecond = this.showSecond.bind(this);
     this.showThird = this.showThird.bind(this);
@@ -37,13 +34,6 @@ class Onboarding extends React.Component {
   }
   componentWillMount() {
     this.fillOnboardingArray();
-  }
-
-  open() {
-    this.setState({ open: true });
-  }
-  close() {
-    this.setState({ open: false }, this.showFirst());
   }
 
   saveSelected() {
@@ -108,13 +98,13 @@ class Onboarding extends React.Component {
   }
 
   render() {
-    const { open } = this.state;
+    const { open } = this.props;
     return (
       <div>
         <Modal
           open={open}
           size={"tiny"}
-          trigger={<Button onClick={this.open}>Display Onboarding</Button>}
+          // trigger={<Button onClick={this.open}>Display Onboarding</Button>}
         >
           <Header
             style={{ textAlign: "center" }}
@@ -134,7 +124,12 @@ class Onboarding extends React.Component {
             </p>
           </Modal.Content>
           <Modal.Actions style={{ textAlign: "center" }}>
-            <Button primary onClick={this.close} className="onboardingButton">
+            <Button primary className="onboardingButton"
+              onClick={() => {
+                this.props.closer()
+                this.showFirst()
+              }} 
+            >
               Next <Icon name="right chevron" />
             </Button>
           </Modal.Actions>
