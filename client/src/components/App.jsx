@@ -16,10 +16,13 @@ class App extends React.Component {
       home: false,
       user: 'Welcome User',
       image: 'https://react.semantic-ui.com/images/avatar/large/patrick.png',
+      openOnboarding: false
     };
     this.pickTrip = this.pickTrip.bind(this)
     this.switchHome = this.switchHome.bind(this)
     this.changeUser = this.changeUser.bind(this)
+    this.openOnboarding = this.openOnboarding.bind(this)
+    this.closeFirstOnboard = this.closeFirstOnboard.bind(this)
   }
 
   // Conditional rendering function for displaying the home page and the trip page. Works on LocationModals 'Next' button.
@@ -43,6 +46,14 @@ class App extends React.Component {
     })
   }
 
+  openOnboarding () {
+    this.setState({openOnboarding: true})
+  }
+
+  closeFirstOnboard () {
+    this.setState({openOnboarding: false})
+  }
+
   render() {
     return (
       <div>
@@ -51,17 +62,19 @@ class App extends React.Component {
             {this.state.pickedTrip === false ? (
               <div>
                 <div style={{textAlign: 'center', marginBottom: '15px'}}>
-                  <LoginButton home={this.switchHome} user={this.state.user} image={this.state.image} changeUser={this.changeUser}/>  
+                  <LoginButton home={this.switchHome} user={this.state.user} image={this.state.image} changeUser={this.changeUser}
+                    openOnboarding = {this.openOnboarding}
+                  />  
                 </div>
                 <div style={{display: 'inline-block'}}>
                   <LocationModal pickTrip={this.pickTrip}/>
                 </div>
                   <Footer/>
-                  <Onboarding/>
+                  <Onboarding open={this.state.openOnboarding} closer = {this.closeFirstOnboard} />
               </div>
             ) : (
               <div style={{textAlign: 'center'}}>
-                <AllDays/>
+                <AllDays home={this.switchHome} user={this.state.user}/>
               </div>
             )}
           </div>

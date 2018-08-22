@@ -11,9 +11,11 @@ const ProgressBar = () => {
   ;<Progress value="2" total="6" progress="ratio" indicating />
 }
 
-const ONBOARD_USER = gql`
+const UPDATE_USERS = gql`
   mutation UpdateUsers($id: String!, $trips: Json!) {
-    updateUsers(id: $id, trips: $trips)
+    updateUsers(id: $id, trips: $trips) {
+      id
+    }
   }
 `
 
@@ -22,7 +24,6 @@ class Onboarding extends React.Component {
     super(props)
     this.state = {
       onboardingArray: [],
-      open: false,
       showFirst: false,
       showSecond: false,
       showThird: false,
@@ -34,8 +35,6 @@ class Onboarding extends React.Component {
       chosenActivities: []
     }
     this.fillOnboardingArray = this.fillOnboardingArray.bind(this)
-    this.open = this.open.bind(this)
-    this.close = this.close.bind(this)
     this.showFirst = this.showFirst.bind(this)
     this.showSecond = this.showSecond.bind(this)
     this.showThird = this.showThird.bind(this)
@@ -59,8 +58,8 @@ class Onboarding extends React.Component {
   }
 
   saveSelected() {
-    let arr = this.state.chosenActivities.slice()
-    arr.push(this.state.selectedOption)
+    let arr = this.state.chosenActivities
+    arr.push({ id: this.state.selectedOption.id })
     this.setState({ selectedOption: {}, chosenActivities: arr })
   }
 
@@ -88,18 +87,11 @@ class Onboarding extends React.Component {
   submitAnswers() {
     this.setState({ showClosing: false })
 
-    let cats = {}
+    let cats = []
     for (let i = 0; i < this.state.chosenActivities.length; i++) {
-      let current = this.state.chosenActivities[i].categories
-      for (let cat in current) {
-        if (cats.hasOwnProperty(cat)) cats[cat]++
-        else cats[cat] = 1
-      }
+      let current = this.state.chosenActivities[i].id
+      cats.push(current)
     }
-
-    // updateUsers({ variables: { userId: 'thing', trips: cats } })
-
-    //do something with the counted categories, and reset chosenActivities
   }
 
   fillOnboardingArray() {
@@ -122,175 +114,194 @@ class Onboarding extends React.Component {
   }
 
   render() {
-    const { open } = this.state
+    const { open } = this.props
     return (
-      <div>
-        <Modal
-          open={open}
-          size={'tiny'}
-          trigger={<Button onClick={this.open}>Display Onboarding</Button>}
-        >
-          <Header
-            style={{ textAlign: 'center' }}
-            content={`Welcome to Let's Go To!`}
-          />
-          <Modal.Content style={{ fontSize: '18px' }}>
-            <p>
-              In order to make sure you get a personalized trip that suits you
-              best, we need to know a little bit more about you!
-            </p>
-            <p>
-              You'll be presented with a series of activities. All you need to
-              do is tell us which one you prefer.
-            </p>
-            <p>
-              To get started, just press <em>Next</em>!
-            </p>
-          </Modal.Content>
-          <Modal.Actions style={{ textAlign: 'center' }}>
-            <Button primary onClick={this.close} className="onboardingButton">
-              Next <Icon name="right chevron" />
-            </Button>
-          </Modal.Actions>
-        </Modal>
+      <Mutation mutation={UPDATE_USERS}>
+        {(updateUsers, { data }) => (
+          <div>
+            <Modal open={open} size={'tiny'}>
+              // trigger=
+              {<Button onClick={this.open}>Display Onboarding</Button>}
+              <Header
+                style={{ textAlign: 'center' }}
+                content={`Welcome to Let's Go To!`}
+              />
+              <Modal.Content style={{ fontSize: '18px' }}>
+                <p>
+                  In order to make sure you get a personalized trip that suits
+                  you best, we need to know a little bit more about you!
+                </p>
+                <p>
+                  You'll be presented with a series of activities. All you need
+                  to do is tell us which one you prefer.
+                </p>
+                <p>
+                  To get started, just press <em>Next</em>!
+                </p>
+              </Modal.Content>
+              <Modal.Actions style={{ textAlign: 'center' }}>
+                <Button
+                  primary
+                  className="onboardingButton"
+                  onClick={() => {
+                    this.props.closer()
+                    this.showFirst()
+                  }}
+                >
+                  Next <Icon name="right chevron" />
+                </Button>
+              </Modal.Actions>
+            </Modal>
 
-        <Modal open={this.state.showFirst}>
-          <Modal.Content>
-            <Progress value="0" total="6" progress="ratio" indicating />
-            <OnboardingOptions
-              indoor={this.state.onboardingArray[0][0]}
-              outdoor={this.state.onboardingArray[0][1]}
-              selectOption={this.handleOptionSelect}
-            />
-          </Modal.Content>
-          <Modal.Actions style={{ textAlign: 'center' }}>
-            <Button
-              color="green"
-              onClick={this.showSecond}
-              className="onboardingButton"
-            >
-              Next <Icon name="right chevron" />
-            </Button>
-          </Modal.Actions>
-        </Modal>
+            <Modal open={this.state.showFirst}>
+              <Modal.Content>
+                <Progress value="0" total="6" progress="ratio" indicating />
+                <OnboardingOptions
+                  indoor={this.state.onboardingArray[0][0]}
+                  outdoor={this.state.onboardingArray[0][1]}
+                  selectOption={this.handleOptionSelect}
+                />
+              </Modal.Content>
+              <Modal.Actions style={{ textAlign: 'center' }}>
+                <Button
+                  color="green"
+                  onClick={this.showSecond}
+                  className="onboardingButton"
+                >
+                  Next <Icon name="right chevron" />
+                </Button>
+              </Modal.Actions>
+            </Modal>
 
-        <Modal open={this.state.showSecond}>
-          <Modal.Content>
-            <Progress value="1" total="6" progress="ratio" indicating />
-            <OnboardingOptions
-              indoor={this.state.onboardingArray[1][0]}
-              outdoor={this.state.onboardingArray[1][1]}
-              selectOption={this.handleOptionSelect}
-            />
-          </Modal.Content>
-          <Modal.Actions style={{ textAlign: 'center' }}>
-            <Button
-              color="green"
-              onClick={this.showThird}
-              className="onboardingButton"
-            >
-              Next <Icon name="right chevron" />
-            </Button>
-          </Modal.Actions>
-        </Modal>
+            <Modal open={this.state.showSecond}>
+              <Modal.Content>
+                <Progress value="1" total="6" progress="ratio" indicating />
+                <OnboardingOptions
+                  indoor={this.state.onboardingArray[1][0]}
+                  outdoor={this.state.onboardingArray[1][1]}
+                  selectOption={this.handleOptionSelect}
+                />
+              </Modal.Content>
+              <Modal.Actions style={{ textAlign: 'center' }}>
+                <Button
+                  color="green"
+                  onClick={this.showThird}
+                  className="onboardingButton"
+                >
+                  Next <Icon name="right chevron" />
+                </Button>
+              </Modal.Actions>
+            </Modal>
 
-        <Modal open={this.state.showThird}>
-          <Modal.Content>
-            <Progress value="2" total="6" progress="ratio" indicating />
-            <OnboardingOptions
-              indoor={this.state.onboardingArray[2][0]}
-              outdoor={this.state.onboardingArray[2][1]}
-              selectOption={this.handleOptionSelect}
-            />
-          </Modal.Content>
-          <Modal.Actions style={{ textAlign: 'center' }}>
-            <Button
-              color="green"
-              onClick={this.showFourth}
-              className="onboardingButton"
-            >
-              Next <Icon name="right chevron" />
-            </Button>
-          </Modal.Actions>
-        </Modal>
+            <Modal open={this.state.showThird}>
+              <Modal.Content>
+                <Progress value="2" total="6" progress="ratio" indicating />
+                <OnboardingOptions
+                  indoor={this.state.onboardingArray[2][0]}
+                  outdoor={this.state.onboardingArray[2][1]}
+                  selectOption={this.handleOptionSelect}
+                />
+              </Modal.Content>
+              <Modal.Actions style={{ textAlign: 'center' }}>
+                <Button
+                  color="green"
+                  onClick={this.showFourth}
+                  className="onboardingButton"
+                >
+                  Next <Icon name="right chevron" />
+                </Button>
+              </Modal.Actions>
+            </Modal>
 
-        <Modal open={this.state.showFourth}>
-          <Modal.Content>
-            <Progress value="3" total="6" progress="ratio" indicating />
-            <OnboardingOptions
-              indoor={this.state.onboardingArray[3][0]}
-              outdoor={this.state.onboardingArray[3][1]}
-              selectOption={this.handleOptionSelect}
-            />
-          </Modal.Content>
-          <Modal.Actions style={{ textAlign: 'center' }}>
-            <Button
-              color="green"
-              onClick={this.showFifth}
-              className="onboardingButton"
-            >
-              Next <Icon name="right chevron" />
-            </Button>
-          </Modal.Actions>
-        </Modal>
+            <Modal open={this.state.showFourth}>
+              <Modal.Content>
+                <Progress value="3" total="6" progress="ratio" indicating />
+                <OnboardingOptions
+                  indoor={this.state.onboardingArray[3][0]}
+                  outdoor={this.state.onboardingArray[3][1]}
+                  selectOption={this.handleOptionSelect}
+                />
+              </Modal.Content>
+              <Modal.Actions style={{ textAlign: 'center' }}>
+                <Button
+                  color="green"
+                  onClick={this.showFifth}
+                  className="onboardingButton"
+                >
+                  Next <Icon name="right chevron" />
+                </Button>
+              </Modal.Actions>
+            </Modal>
 
-        <Modal open={this.state.showFifth}>
-          <Modal.Content>
-            <Progress value="4" total="6" progress="ratio" indicating />
-            <OnboardingOptions
-              indoor={this.state.onboardingArray[4][0]}
-              outdoor={this.state.onboardingArray[4][1]}
-              selectOption={this.handleOptionSelect}
-            />
-          </Modal.Content>
-          <Modal.Actions style={{ textAlign: 'center' }}>
-            <Button
-              color="green"
-              onClick={this.showSixth}
-              className="onboardingButton"
-            >
-              Next <Icon name="right chevron" />
-            </Button>
-          </Modal.Actions>
-        </Modal>
+            <Modal open={this.state.showFifth}>
+              <Modal.Content>
+                <Progress value="4" total="6" progress="ratio" indicating />
+                <OnboardingOptions
+                  indoor={this.state.onboardingArray[4][0]}
+                  outdoor={this.state.onboardingArray[4][1]}
+                  selectOption={this.handleOptionSelect}
+                />
+              </Modal.Content>
+              <Modal.Actions style={{ textAlign: 'center' }}>
+                <Button
+                  color="green"
+                  onClick={this.showSixth}
+                  className="onboardingButton"
+                >
+                  Next <Icon name="right chevron" />
+                </Button>
+              </Modal.Actions>
+            </Modal>
 
-        <Modal open={this.state.showSixth}>
-          <Modal.Content>
-            <Progress value="5" total="6" progress="ratio" indicating />
-            <OnboardingOptions
-              indoor={this.state.onboardingArray[5][0]}
-              outdoor={this.state.onboardingArray[5][1]}
-              selectOption={this.handleOptionSelect}
-            />
-          </Modal.Content>
-          <Modal.Actions style={{ textAlign: 'center' }}>
-            <Button
-              color="green"
-              onClick={this.closeSixth}
-              className="onboardingButton"
-            >
-              Thats It <Icon name="right chevron" />
-            </Button>
-          </Modal.Actions>
-        </Modal>
+            <Modal open={this.state.showSixth}>
+              <Modal.Content>
+                <Progress value="5" total="6" progress="ratio" indicating />
+                <OnboardingOptions
+                  indoor={this.state.onboardingArray[5][0]}
+                  outdoor={this.state.onboardingArray[5][1]}
+                  selectOption={this.handleOptionSelect}
+                />
+              </Modal.Content>
+              <Modal.Actions style={{ textAlign: 'center' }}>
+                <Button
+                  color="green"
+                  onClick={this.closeSixth}
+                  className="onboardingButton"
+                >
+                  Thats It <Icon name="right chevron" />
+                </Button>
+              </Modal.Actions>
+            </Modal>
 
-        <Modal open={this.state.showClosing} size={'tiny'}>
-          <Modal.Content style={{ fontSize: '18px' }}>
-            <p>Thank you for taking the time to give us that information.</p>
+            <Modal open={this.state.showClosing} size={'tiny'}>
+              <Modal.Content style={{ fontSize: '18px' }}>
+                <p>
+                  Thank you for taking the time to give us that information.
+                </p>
 
-            <p>Please select the city you would Like To Go To!</p>
-          </Modal.Content>
-          <Modal.Actions style={{ textAlign: 'center' }}>
-            <Button
-              primary
-              onClick={this.submitAnswers}
-              className="onboardingButton"
-            >
-              <Icon name="checkmark" /> Lets Travel!
-            </Button>
-          </Modal.Actions>
-        </Modal>
-      </div>
+                <p>Please select the city you would Like To Go To!</p>
+              </Modal.Content>
+              <Modal.Actions style={{ textAlign: 'center' }}>
+                <Button
+                  primary
+                  onClick={e => {
+                    e.preventDefault()
+                    updateUsers({
+                      variables: {
+                        id: 'cjl5f4vh800ak0846azmgib7b',
+                        trips: this.state.chosenActivities
+                      }
+                    })
+                  }}
+                  className="onboardingButton"
+                >
+                  <Icon name="checkmark" /> Lets Travel!
+                </Button>
+              </Modal.Actions>
+            </Modal>
+          </div>
+        )}
+      </Mutation>
     )
   }
 }

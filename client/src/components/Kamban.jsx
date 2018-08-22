@@ -1,5 +1,5 @@
 import React from "react"
-import { Grid, Button, Image } from "semantic-ui-react"
+import { Grid, Button, Header, Icon, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { FlexyFlipCard } from "flexy-flipcards"
 import Graphs from "./Graphs.jsx"
@@ -92,6 +92,12 @@ class Kamban extends React.Component {
   render() {
     return (
       <div>
+        <div>
+					<Segment clearing style={{backgroundImage: 'linear-gradient(lightCyan, white)'}}>
+            {this.props.user === 'Welcome User' ? (<Header as='h2' icon='user circle' floated='right'/>) : (<Header as='h2' icon='user circle' onClick = {this.props.home} floated='right'/>)}
+					</Segment>
+				</div>
+
         <Grid style={{ display: "inline-block" }}>
           <DragDropContext onDragEnd={this.onDragEnd}>
             <Droppable
