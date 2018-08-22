@@ -1,13 +1,25 @@
-import React from "react";
-import { Button, Modal, Header, Icon, Progress } from "semantic-ui-react";
-import OnboardingOptions from "./OnboardingOptions.jsx";
-const { onboardingActivities } = require("./helpers/onboardingActivities.js");
+import React from 'react'
+import { Button, Modal, Header, Icon, Progress } from 'semantic-ui-react'
+import OnboardingOptions from './OnboardingOptions.jsx'
 
-const ProgressBar = () => {(<Progress value= '2' total = '6' progress = 'ratio' indicating />)}
+const { onboardingActivities } = require('./helpers/onboardingActivities.js')
+
+import { Mutation } from 'react-apollo'
+import gql from 'graphql-tag'
+
+const ProgressBar = () => {
+  ;<Progress value="2" total="6" progress="ratio" indicating />
+}
+
+const ONBOARD_USER = gql`
+  mutation UpdateUsers($id: String!, $trips: Json!) {
+    updateUsers(id: $id, trips: $trips)
+  }
+`
 
 class Onboarding extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       onboardingArray: [],
       open: false,
@@ -20,61 +32,61 @@ class Onboarding extends React.Component {
       showClosing: false,
       selectedOption: {},
       chosenActivities: []
-    };
-    this.fillOnboardingArray = this.fillOnboardingArray.bind(this);
-    this.open = this.open.bind(this);
-    this.close = this.close.bind(this);
-    this.showFirst = this.showFirst.bind(this);
-    this.showSecond = this.showSecond.bind(this);
-    this.showThird = this.showThird.bind(this);
-    this.showFourth = this.showFourth.bind(this);
-    this.showFifth = this.showFifth.bind(this);
-    this.showSixth = this.showSixth.bind(this);
-    this.submitAnswers = this.submitAnswers.bind(this);
-    this.closeSixth = this.closeSixth.bind(this);
-    this.handleOptionSelect = this.handleOptionSelect.bind(this);
-    this.saveSelected = this.saveSelected.bind(this);
+    }
+    this.fillOnboardingArray = this.fillOnboardingArray.bind(this)
+    this.open = this.open.bind(this)
+    this.close = this.close.bind(this)
+    this.showFirst = this.showFirst.bind(this)
+    this.showSecond = this.showSecond.bind(this)
+    this.showThird = this.showThird.bind(this)
+    this.showFourth = this.showFourth.bind(this)
+    this.showFifth = this.showFifth.bind(this)
+    this.showSixth = this.showSixth.bind(this)
+    this.submitAnswers = this.submitAnswers.bind(this)
+    this.closeSixth = this.closeSixth.bind(this)
+    this.handleOptionSelect = this.handleOptionSelect.bind(this)
+    this.saveSelected = this.saveSelected.bind(this)
   }
   componentWillMount() {
-    this.fillOnboardingArray();
+    this.fillOnboardingArray()
   }
 
   open() {
-    this.setState({ open: true });
+    this.setState({ open: true })
   }
   close() {
-    this.setState({ open: false }, this.showFirst());
+    this.setState({ open: false }, this.showFirst())
   }
 
   saveSelected() {
-    let arr = this.state.chosenActivities.slice();
-    arr.push(this.state.selectedOption);
-    this.setState({ selectedOption: {}, chosenActivities: arr });
+    let arr = this.state.chosenActivities.slice()
+    arr.push(this.state.selectedOption)
+    this.setState({ selectedOption: {}, chosenActivities: arr })
   }
 
   showFirst() {
-    this.setState({ showFirst: true });
+    this.setState({ showFirst: true })
   }
   showSecond() {
-    this.setState({ showFirst: false, showSecond: true }, this.saveSelected());
+    this.setState({ showFirst: false, showSecond: true }, this.saveSelected())
   }
   showThird() {
-    this.setState({ showSecond: false, showThird: true }, this.saveSelected());
+    this.setState({ showSecond: false, showThird: true }, this.saveSelected())
   }
   showFourth() {
-    this.setState({ showThird: false, showFourth: true }, this.saveSelected());
+    this.setState({ showThird: false, showFourth: true }, this.saveSelected())
   }
   showFifth() {
-    this.setState({ showFourth: false, showFifth: true }, this.saveSelected());
+    this.setState({ showFourth: false, showFifth: true }, this.saveSelected())
   }
   showSixth() {
-    this.setState({ showFifth: false, showSixth: true }, this.saveSelected());
+    this.setState({ showFifth: false, showSixth: true }, this.saveSelected())
   }
   closeSixth() {
-    this.setState({ showSixth: false, showClosing: true }, this.saveSelected());
+    this.setState({ showSixth: false, showClosing: true }, this.saveSelected())
   }
   submitAnswers() {
-    this.setState({ showClosing: false });
+    this.setState({ showClosing: false })
 
     let cats = {}
     for (let i = 0; i < this.state.chosenActivities.length; i++) {
@@ -85,42 +97,44 @@ class Onboarding extends React.Component {
       }
     }
 
+    // updateUsers({ variables: { userId: 'thing', trips: cats } })
+
     //do something with the counted categories, and reset chosenActivities
   }
 
   fillOnboardingArray() {
-    let chosenIndicies = {};
-    let randomizedActivities = [];
+    let chosenIndicies = {}
+    let randomizedActivities = []
     while (randomizedActivities.length < 6) {
-      let ind = Math.round(Math.random() * 5);
-      if (chosenIndicies.hasOwnProperty(ind.toString())) continue;
+      let ind = Math.round(Math.random() * 5)
+      if (chosenIndicies.hasOwnProperty(ind.toString())) continue
       randomizedActivities.push([
         onboardingActivities.indoor[ind],
         onboardingActivities.outdoor[ind]
-      ]);
-      chosenIndicies[ind] = null;
+      ])
+      chosenIndicies[ind] = null
     }
-    this.setState({ onboardingArray: randomizedActivities });
+    this.setState({ onboardingArray: randomizedActivities })
   }
 
   handleOptionSelect(option) {
-    this.setState({ selectedOption: option });
+    this.setState({ selectedOption: option })
   }
 
   render() {
-    const { open } = this.state;
+    const { open } = this.state
     return (
       <div>
         <Modal
           open={open}
-          size={"tiny"}
+          size={'tiny'}
           trigger={<Button onClick={this.open}>Display Onboarding</Button>}
         >
           <Header
-            style={{ textAlign: "center" }}
+            style={{ textAlign: 'center' }}
             content={`Welcome to Let's Go To!`}
           />
-          <Modal.Content style={{ fontSize: "18px" }}>
+          <Modal.Content style={{ fontSize: '18px' }}>
             <p>
               In order to make sure you get a personalized trip that suits you
               best, we need to know a little bit more about you!
@@ -133,7 +147,7 @@ class Onboarding extends React.Component {
               To get started, just press <em>Next</em>!
             </p>
           </Modal.Content>
-          <Modal.Actions style={{ textAlign: "center" }}>
+          <Modal.Actions style={{ textAlign: 'center' }}>
             <Button primary onClick={this.close} className="onboardingButton">
               Next <Icon name="right chevron" />
             </Button>
@@ -142,14 +156,14 @@ class Onboarding extends React.Component {
 
         <Modal open={this.state.showFirst}>
           <Modal.Content>
-          <Progress value= '0' total = '6' progress = 'ratio' indicating />
+            <Progress value="0" total="6" progress="ratio" indicating />
             <OnboardingOptions
               indoor={this.state.onboardingArray[0][0]}
               outdoor={this.state.onboardingArray[0][1]}
               selectOption={this.handleOptionSelect}
             />
           </Modal.Content>
-          <Modal.Actions style={{ textAlign: "center" }}>
+          <Modal.Actions style={{ textAlign: 'center' }}>
             <Button
               color="green"
               onClick={this.showSecond}
@@ -162,14 +176,14 @@ class Onboarding extends React.Component {
 
         <Modal open={this.state.showSecond}>
           <Modal.Content>
-            <Progress value= '1' total = '6' progress = 'ratio' indicating />
+            <Progress value="1" total="6" progress="ratio" indicating />
             <OnboardingOptions
               indoor={this.state.onboardingArray[1][0]}
               outdoor={this.state.onboardingArray[1][1]}
               selectOption={this.handleOptionSelect}
             />
           </Modal.Content>
-          <Modal.Actions style={{ textAlign: "center" }}>
+          <Modal.Actions style={{ textAlign: 'center' }}>
             <Button
               color="green"
               onClick={this.showThird}
@@ -182,14 +196,14 @@ class Onboarding extends React.Component {
 
         <Modal open={this.state.showThird}>
           <Modal.Content>
-            <Progress value= '2' total = '6' progress = 'ratio' indicating />
+            <Progress value="2" total="6" progress="ratio" indicating />
             <OnboardingOptions
               indoor={this.state.onboardingArray[2][0]}
               outdoor={this.state.onboardingArray[2][1]}
               selectOption={this.handleOptionSelect}
             />
           </Modal.Content>
-          <Modal.Actions style={{ textAlign: "center" }}>
+          <Modal.Actions style={{ textAlign: 'center' }}>
             <Button
               color="green"
               onClick={this.showFourth}
@@ -202,14 +216,14 @@ class Onboarding extends React.Component {
 
         <Modal open={this.state.showFourth}>
           <Modal.Content>
-            <Progress value= '3' total = '6' progress = 'ratio' indicating />
+            <Progress value="3" total="6" progress="ratio" indicating />
             <OnboardingOptions
               indoor={this.state.onboardingArray[3][0]}
               outdoor={this.state.onboardingArray[3][1]}
               selectOption={this.handleOptionSelect}
             />
           </Modal.Content>
-          <Modal.Actions style={{ textAlign: "center" }}>
+          <Modal.Actions style={{ textAlign: 'center' }}>
             <Button
               color="green"
               onClick={this.showFifth}
@@ -222,14 +236,14 @@ class Onboarding extends React.Component {
 
         <Modal open={this.state.showFifth}>
           <Modal.Content>
-            <Progress value= '4' total = '6' progress = 'ratio' indicating />
+            <Progress value="4" total="6" progress="ratio" indicating />
             <OnboardingOptions
               indoor={this.state.onboardingArray[4][0]}
               outdoor={this.state.onboardingArray[4][1]}
               selectOption={this.handleOptionSelect}
             />
           </Modal.Content>
-          <Modal.Actions style={{ textAlign: "center" }}>
+          <Modal.Actions style={{ textAlign: 'center' }}>
             <Button
               color="green"
               onClick={this.showSixth}
@@ -242,14 +256,14 @@ class Onboarding extends React.Component {
 
         <Modal open={this.state.showSixth}>
           <Modal.Content>
-            <Progress value= '5' total = '6' progress = 'ratio' indicating />
+            <Progress value="5" total="6" progress="ratio" indicating />
             <OnboardingOptions
               indoor={this.state.onboardingArray[5][0]}
               outdoor={this.state.onboardingArray[5][1]}
               selectOption={this.handleOptionSelect}
             />
           </Modal.Content>
-          <Modal.Actions style={{ textAlign: "center" }}>
+          <Modal.Actions style={{ textAlign: 'center' }}>
             <Button
               color="green"
               onClick={this.closeSixth}
@@ -260,13 +274,13 @@ class Onboarding extends React.Component {
           </Modal.Actions>
         </Modal>
 
-        <Modal open={this.state.showClosing} size={"tiny"}>
-          <Modal.Content style={{ fontSize: "18px" }}>
+        <Modal open={this.state.showClosing} size={'tiny'}>
+          <Modal.Content style={{ fontSize: '18px' }}>
             <p>Thank you for taking the time to give us that information.</p>
 
             <p>Please select the city you would Like To Go To!</p>
           </Modal.Content>
-          <Modal.Actions style={{ textAlign: "center" }}>
+          <Modal.Actions style={{ textAlign: 'center' }}>
             <Button
               primary
               onClick={this.submitAnswers}
@@ -277,8 +291,8 @@ class Onboarding extends React.Component {
           </Modal.Actions>
         </Modal>
       </div>
-    );
+    )
   }
 }
 
-export default Onboarding;
+export default Onboarding
