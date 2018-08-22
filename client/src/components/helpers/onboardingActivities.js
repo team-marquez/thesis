@@ -35,7 +35,7 @@ module.exports = {
                 description: 'Mysteries have always been around and always been popular, but they haven’t always been respected. Otto Penzler has had a significant hand in that transformation. You get into Otto Penzler’s New York office through a door in the Mysterious Bookshop, the world’s oldest and biggest bookstore focusing on mystery, crime fiction, espionage, and thrillers. The door is roped off with a big X made of yellow police tape reading CRIME SCENE DO NOT CROSS.',
                 img: 'https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzL2U4ZThhYWM4OWNiZDI5MjhjOV9pbWFnZSAoNjYpLmpwZyJdLFsicCIsImNvbnZlcnQiLCItcXVhbGl0eSA4MSAtYXV0by1vcmllbnQiXSxbInAiLCJ0aHVtYiIsIjM3MngyNDgjIl1d/image%20%2866%29.jpg',
                 website: 'https://www.atlasobscura.com/places/Mysterious-Bookshop',
-                categories: {'arts and entertainment': 1, 'art and entertainment': 1, 'society': 1}
+                categories: {'art and entertainment': 1, 'society': 1}
             },
             {
                 name: 'New York Federal Gold Vault',
@@ -100,7 +100,7 @@ module.exports = {
                 description: 'For a hundred years this elegant American elm at the center of Tompkins Square Park was just a tree. Then, in 1966, the Hare Krishna mantra was chanted under its sprawling canopy for the first time, and it became the birthplace of a religion.To Hare Krishnas, this tree is a sacred site.',
                 img: 'https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzLzc4YjZjM2VkYzgwZGU1MzY0ZF9UcmVlIDYuanBnIl0sWyJwIiwiY29udmVydCIsIi1xdWFsaXR5IDgxIC1hdXRvLW9yaWVudCJdLFsicCIsInRodW1iIiwiMzcyeDI0OCMiXV0/Tree%206.jpg',
                 website: 'http://www.nycgovparks.org/parks/tompkins-square-park/highlights/10823',
-                categories: {'religion and spirituality': 1, 'art and entertainment': 1, 'religion and spirituality': 1}
+                categories: {'religion and spirituality': 1, 'art and entertainment': 1}
             },
             {
                 name: '284 Broome Street',

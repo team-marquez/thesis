@@ -75,6 +75,17 @@ class Onboarding extends React.Component {
   }
   submitAnswers() {
     this.setState({ showClosing: false });
+
+    let cats = {}
+    for (let i = 0; i < this.state.chosenActivities.length; i++) {
+      let current = this.state.chosenActivities[i].categories
+      for (let cat in current) {
+        if (cats.hasOwnProperty(cat)) cats[cat]++
+        else cats[cat] = 1
+      }
+    }
+
+    //do something with the counted categories, and reset chosenActivities
   }
 
   fillOnboardingArray() {
