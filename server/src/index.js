@@ -6,6 +6,7 @@ const assembly = require('./bois/assembly_boi.js')
 const weather = require('./bois/weather_boi.js')
 const integrity = require('./bois/integrity_boi.js')
 const budget = require('./bois/budget_boi.js')
+const recommendation = require('./bois/recommendation_boi.js')
 let rec = require('../../spec/randomrecs')
 
 const resolvers = {
