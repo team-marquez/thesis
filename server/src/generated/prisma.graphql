@@ -1,5 +1,5 @@
-# source: http://localhost:4466
-# timestamp: Mon Aug 20 2018 15:07:40 GMT-0400 (EDT)
+# source: http://34.234.236.21:4466
+# timestamp: Wed Aug 22 2018 16:05:01 GMT-0400 (EDT)
 
 type Activity implements Node {
   id: ID!
@@ -40,6 +40,11 @@ input ActivityCreateInput {
   concepts: Json!
   categories: Json!
   child_friendly: Boolean
+}
+
+input ActivityCreateOneInput {
+  create: ActivityCreateInput
+  connect: ActivityWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -139,6 +144,21 @@ input ActivitySubscriptionWhereInput {
   node: ActivityWhereInput
 }
 
+input ActivityUpdateDataInput {
+  name: String
+  description: String
+  cost: Float
+  image: String
+  location: String
+  source: String
+  website: String
+  local_tourist: Int
+  indoor_outdoor: Int
+  concepts: Json
+  categories: Json
+  child_friendly: Boolean
+}
+
 input ActivityUpdateInput {
   name: String
   description: String
@@ -152,6 +172,20 @@ input ActivityUpdateInput {
   concepts: Json
   categories: Json
   child_friendly: Boolean
+}
+
+input ActivityUpdateOneInput {
+  create: ActivityCreateInput
+  connect: ActivityWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: ActivityUpdateDataInput
+  upsert: ActivityUpsertNestedInput
+}
+
+input ActivityUpsertNestedInput {
+  update: ActivityUpdateDataInput!
+  create: ActivityCreateInput!
 }
 
 input ActivityWhereInput {
@@ -527,6 +561,10 @@ type AggregateRestaurant {
   count: Int!
 }
 
+type AggregateTrip {
+  count: Int!
+}
+
 type AggregateUsers {
   count: Int!
 }
@@ -551,29 +589,35 @@ scalar Long
 
 type Mutation {
   createUsers(data: UsersCreateInput!): Users!
-  createActivity(data: ActivityCreateInput!): Activity!
   createRestaurant(data: RestaurantCreateInput!): Restaurant!
   createWeather(data: WeatherCreateInput!): Weather!
+  createTrip(data: TripCreateInput!): Trip!
+  createActivity(data: ActivityCreateInput!): Activity!
   updateUsers(data: UsersUpdateInput!, where: UsersWhereUniqueInput!): Users
-  updateActivity(data: ActivityUpdateInput!, where: ActivityWhereUniqueInput!): Activity
   updateRestaurant(data: RestaurantUpdateInput!, where: RestaurantWhereUniqueInput!): Restaurant
   updateWeather(data: WeatherUpdateInput!, where: WeatherWhereUniqueInput!): Weather
+  updateTrip(data: TripUpdateInput!, where: TripWhereUniqueInput!): Trip
+  updateActivity(data: ActivityUpdateInput!, where: ActivityWhereUniqueInput!): Activity
   deleteUsers(where: UsersWhereUniqueInput!): Users
-  deleteActivity(where: ActivityWhereUniqueInput!): Activity
   deleteRestaurant(where: RestaurantWhereUniqueInput!): Restaurant
   deleteWeather(where: WeatherWhereUniqueInput!): Weather
+  deleteTrip(where: TripWhereUniqueInput!): Trip
+  deleteActivity(where: ActivityWhereUniqueInput!): Activity
   upsertUsers(where: UsersWhereUniqueInput!, create: UsersCreateInput!, update: UsersUpdateInput!): Users!
-  upsertActivity(where: ActivityWhereUniqueInput!, create: ActivityCreateInput!, update: ActivityUpdateInput!): Activity!
   upsertRestaurant(where: RestaurantWhereUniqueInput!, create: RestaurantCreateInput!, update: RestaurantUpdateInput!): Restaurant!
   upsertWeather(where: WeatherWhereUniqueInput!, create: WeatherCreateInput!, update: WeatherUpdateInput!): Weather!
+  upsertTrip(where: TripWhereUniqueInput!, create: TripCreateInput!, update: TripUpdateInput!): Trip!
+  upsertActivity(where: ActivityWhereUniqueInput!, create: ActivityCreateInput!, update: ActivityUpdateInput!): Activity!
   updateManyUserses(data: UsersUpdateInput!, where: UsersWhereInput): BatchPayload!
-  updateManyActivities(data: ActivityUpdateInput!, where: ActivityWhereInput): BatchPayload!
   updateManyRestaurants(data: RestaurantUpdateInput!, where: RestaurantWhereInput): BatchPayload!
   updateManyWeathers(data: WeatherUpdateInput!, where: WeatherWhereInput): BatchPayload!
+  updateManyTrips(data: TripUpdateInput!, where: TripWhereInput): BatchPayload!
+  updateManyActivities(data: ActivityUpdateInput!, where: ActivityWhereInput): BatchPayload!
   deleteManyUserses(where: UsersWhereInput): BatchPayload!
-  deleteManyActivities(where: ActivityWhereInput): BatchPayload!
   deleteManyRestaurants(where: RestaurantWhereInput): BatchPayload!
   deleteManyWeathers(where: WeatherWhereInput): BatchPayload!
+  deleteManyTrips(where: TripWhereInput): BatchPayload!
+  deleteManyActivities(where: ActivityWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -605,17 +649,20 @@ type PageInfo {
 
 type Query {
   userses(where: UsersWhereInput, orderBy: UsersOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Users]!
-  activities(where: ActivityWhereInput, orderBy: ActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Activity]!
   restaurants(where: RestaurantWhereInput, orderBy: RestaurantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Restaurant]!
   weathers(where: WeatherWhereInput, orderBy: WeatherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Weather]!
+  trips(where: TripWhereInput, orderBy: TripOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Trip]!
+  activities(where: ActivityWhereInput, orderBy: ActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Activity]!
   users(where: UsersWhereUniqueInput!): Users
-  activity(where: ActivityWhereUniqueInput!): Activity
   restaurant(where: RestaurantWhereUniqueInput!): Restaurant
   weather(where: WeatherWhereUniqueInput!): Weather
+  trip(where: TripWhereUniqueInput!): Trip
+  activity(where: ActivityWhereUniqueInput!): Activity
   usersesConnection(where: UsersWhereInput, orderBy: UsersOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UsersConnection!
-  activitiesConnection(where: ActivityWhereInput, orderBy: ActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActivityConnection!
   restaurantsConnection(where: RestaurantWhereInput, orderBy: RestaurantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RestaurantConnection!
   weathersConnection(where: WeatherWhereInput, orderBy: WeatherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WeatherConnection!
+  tripsConnection(where: TripWhereInput, orderBy: TripOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TripConnection!
+  activitiesConnection(where: ActivityWhereInput, orderBy: ActivityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ActivityConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -1159,9 +1206,179 @@ input RestaurantWhereUniqueInput {
 
 type Subscription {
   users(where: UsersSubscriptionWhereInput): UsersSubscriptionPayload
-  activity(where: ActivitySubscriptionWhereInput): ActivitySubscriptionPayload
   restaurant(where: RestaurantSubscriptionWhereInput): RestaurantSubscriptionPayload
   weather(where: WeatherSubscriptionWhereInput): WeatherSubscriptionPayload
+  trip(where: TripSubscriptionWhereInput): TripSubscriptionPayload
+  activity(where: ActivitySubscriptionWhereInput): ActivitySubscriptionPayload
+}
+
+type Trip implements Node {
+  id: ID!
+  details(where: ActivityWhereInput): Activity
+}
+
+"""A connection to a list of items."""
+type TripConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TripEdge]!
+  aggregate: AggregateTrip!
+}
+
+input TripCreateInput {
+  details: ActivityCreateOneInput
+}
+
+input TripCreateManyInput {
+  create: [TripCreateInput!]
+  connect: [TripWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type TripEdge {
+  """The item at the end of the edge."""
+  node: Trip!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TripOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type TripPreviousValues {
+  id: ID!
+}
+
+type TripSubscriptionPayload {
+  mutation: MutationType!
+  node: Trip
+  updatedFields: [String!]
+  previousValues: TripPreviousValues
+}
+
+input TripSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TripSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TripSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TripSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TripWhereInput
+}
+
+input TripUpdateDataInput {
+  details: ActivityUpdateOneInput
+}
+
+input TripUpdateInput {
+  details: ActivityUpdateOneInput
+}
+
+input TripUpdateManyInput {
+  create: [TripCreateInput!]
+  connect: [TripWhereUniqueInput!]
+  disconnect: [TripWhereUniqueInput!]
+  delete: [TripWhereUniqueInput!]
+  update: [TripUpdateWithWhereUniqueNestedInput!]
+  upsert: [TripUpsertWithWhereUniqueNestedInput!]
+}
+
+input TripUpdateWithWhereUniqueNestedInput {
+  where: TripWhereUniqueInput!
+  data: TripUpdateDataInput!
+}
+
+input TripUpsertWithWhereUniqueNestedInput {
+  where: TripWhereUniqueInput!
+  update: TripUpdateDataInput!
+  create: TripCreateInput!
+}
+
+input TripWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TripWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TripWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TripWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  details: ActivityWhereInput
+}
+
+input TripWhereUniqueInput {
+  id: ID
 }
 
 type Users implements Node {
@@ -1170,6 +1387,7 @@ type Users implements Node {
   password: String!
   age: Int!
   gender: Int!
+  history(where: TripWhereInput, orderBy: TripOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Trip!]
 }
 
 """A connection to a list of items."""
@@ -1187,6 +1405,7 @@ input UsersCreateInput {
   password: String!
   age: Int!
   gender: Int!
+  history: TripCreateManyInput
 }
 
 """An edge in a connection."""
@@ -1267,6 +1486,7 @@ input UsersUpdateInput {
   password: String
   age: Int
   gender: Int
+  history: TripUpdateManyInput
 }
 
 input UsersWhereInput {
@@ -1442,6 +1662,9 @@ input UsersWhereInput {
 
   """All values greater than or equal the given value."""
   gender_gte: Int
+  history_every: TripWhereInput
+  history_some: TripWhereInput
+  history_none: TripWhereInput
 }
 
 input UsersWhereUniqueInput {

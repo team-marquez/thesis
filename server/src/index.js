@@ -26,10 +26,9 @@ const resolvers = {
       test = assembly.assemblyBoi(recs, test)
       return JSON.stringify(test, null, 2)
     },
-    // activities: (a, { IO }, c, d) => {
-    //   console.log(c.db.query)
-    //   return c.db.query.activity({ where: { indoor_outdoor: IO } }, d)
-    // },
+    userRecs: (_, { id }, context, info) => {
+      return recommendation.getRecs(id)
+    },
     food: (a, { cost }, c, d) => {
       return c.db.query.restaurants({ where: { cost: cost } }, d)
       // return c.db.query.restaurants()
@@ -60,6 +59,31 @@ const resolvers = {
       client.send(new rqs.AddUser(creation.id)).then(() => {
         return creation
       })
+    },
+    updateUsers: (_, { id, trips }, context, info) => {
+      trips.forEach(trip => {
+        context.db.mutation.updateUsers(
+          {
+            data: {
+              history: {
+                create: {
+                  details: {
+                    connect: {
+                      id: trip.id
+                    }
+                  }
+                }
+              }
+            },
+            where: {
+              id
+            }
+          },
+          info
+        )
+      })
+
+      return recommendation.updateRecs(id, trips)
     }
   }
 }
