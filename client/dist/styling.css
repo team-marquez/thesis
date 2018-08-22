@@ -1,7 +1,7 @@
 .onboardingOptions {
     display: inline-block;
     text-align: center;
-    height: 550px;
+    height: 500px;
 }
 
 .leftOption {
@@ -28,4 +28,8 @@
 
 .optionImage:hover {
     transform: scale(1.15)
+}
+
+.onboardingButton {
+    width: 45%
 }
