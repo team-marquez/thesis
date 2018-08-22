@@ -8,7 +8,8 @@ module.exports = {
                 description: 'One of the Travel Channel’s “10 Most Haunted Places in America.” A sealed well underneath former Manhattan Bistro in Soho was the site of the 1799 murder of Gulielma Elmore Sands, who was strangled and dumped in the well on Spring St. The accused murderer was Levi Weeks, whom Sands had been secretly seeing. Weeks was masterfully defended in court by Alexander Hamilton and Aaron Burr. As a result, the jury delivered an acquittal after just five minutes of deliberation.',
                 img: 'https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzLzZiMWJlOGI5ZDRhMzM1YTQ5ZGRhZGQzNTdiNTFmNjJiTlktQkc2ODZfU1BBQ0VzX0dfMjAxMTEwMjQxODE3NDEuanBlZyJdLFsicCIsInRodW1iIiwiNjAweDQwMCswKzAiXSxbInAiLCJjb252ZXJ0IiwiLXF1YWxpdHkgODEgLWF1dG8tb3JpZW50Il0sWyJwIiwidGh1bWIiLCIzNzJ4MjQ4IyJdXQ/NY-BG686_SPACEs_G_20111024181741.jpeg',
                 website: 'https://www.atlasobscura.com/places/The-Manhattan-Well-Murder',
-                categories: {'food and drink': 1, 'society': 1, 'home and garden': 1}
+                categories: {'food and drink': 1, 'society': 1, 'home and garden': 1},
+                id: 'cjl2nkgh100aa09920efe9nyt'
             },
             {
                 name: 'Titanic Memorial',
@@ -17,7 +18,8 @@ module.exports = {
                 description: 'The Titanic Memorial lighthouse has stood at the entrance to the South Street Seaport since 1976. Before it moved to its current home, the memorial was erected on top of the Seamen’s Church Institute in 1913 after the Unsinkable Molly Brown insisted that a monument to those lost in the Titanic be erected.',
                 img: 'https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzLzk0NGQ2YThmN2UwZGY5MTgwMjdmYzI3OWYxYmI5NjExOWVjYjA4YmUuanBnIl0sWyJwIiwiY29udmVydCIsIi1xdWFsaXR5IDgxIC1hdXRvLW9yaWVudCJdLFsicCIsInRodW1iIiwiMzcyeDI0OCMiXV0/944d6a8f7e0df918027fc279f1bb96119ecb08be.jpg',
                 website: 'https://www.atlasobscura.com/places/Titanic-Memorial',
-                categories: {'law, govt and politics': 1, 'hobbies and interests': 1, 'society': 1}
+                categories: {'law, govt and politics': 1, 'hobbies and interests': 1, 'society': 1},
+                id: 'cjl2nkgl600ag09924tn3zznf'
             },
             {
                 name: 'Trinity Churchyard',
@@ -26,7 +28,8 @@ module.exports = {
                 description: 'Now dwarfed by the surrounding Wall Street skyscrapers, Trinity Church was the tallest building in New York City when it was completed in 1846. The surrounding stones are even older than the church, many dating back to the 17th century. The most notable interment of Trinity Churchyard is definitely Alexander Hamilton.',
                 img: 'https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzL2MwNTM1ZTJmYTI0YmM2ZTU2MF90cmluaXR5Y2h1cmNoeWFyZDA2LmpwZyJdLFsicCIsImNvbnZlcnQiLCItcXVhbGl0eSA4MSAtYXV0by1vcmllbnQiXSxbInAiLCJ0aHVtYiIsIjM3MngyNDgjIl1d',
                 website: 'https://www.atlasobscura.com/places/Trinity-Churchyard',
-                categories: {'art and entertainment': 1, 'society': 1, 'science': 1}
+                categories: {'art and entertainment': 1, 'society': 1, 'science': 1},
+                id: 'cjl2nkgl600ah0992rmyjyjfl'
             },
             {
                 name: 'Mysterious Bookshop',
@@ -35,7 +38,8 @@ module.exports = {
                 description: 'Mysteries have always been around and always been popular, but they haven’t always been respected. Otto Penzler has had a significant hand in that transformation. You get into Otto Penzler’s New York office through a door in the Mysterious Bookshop, the world’s oldest and biggest bookstore focusing on mystery, crime fiction, espionage, and thrillers. The door is roped off with a big X made of yellow police tape reading CRIME SCENE DO NOT CROSS.',
                 img: 'https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzL2U4ZThhYWM4OWNiZDI5MjhjOV9pbWFnZSAoNjYpLmpwZyJdLFsicCIsImNvbnZlcnQiLCItcXVhbGl0eSA4MSAtYXV0by1vcmllbnQiXSxbInAiLCJ0aHVtYiIsIjM3MngyNDgjIl1d/image%20%2866%29.jpg',
                 website: 'https://www.atlasobscura.com/places/Mysterious-Bookshop',
-                categories: {'art and entertainment': 1, 'society': 1}
+                categories: {'art and entertainment': 1, 'society': 1},
+                id: 'cjl2nkgnh00dw0992odx4w29s'
             },
             {
                 name: 'New York Federal Gold Vault',
@@ -44,7 +48,8 @@ module.exports = {
                 description: 'The largest accumulation of gold in human history is located deep underneath the heart of Manhattan’s financial district, at the New York Federal Reserve Bank. Some 80 feet beneath sidewalk level, the Fed’s special vault is built in bedrock and entrusted with deposits from central banks across the globe. Inside sits 7,000 tons of glittering gold bars.',
                 img: 'https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzLzZiMWJlOGI5ZDRhMzM1YTQ5ZGRhZGQzNTdiNTFmNjJiZ29sZDAxLmpwZyJdLFsicCIsImNvbnZlcnQiLCItcXVhbGl0eSA4MSAtYXV0by1vcmllbnQiXSxbInAiLCJ0aHVtYiIsIjM3MngyNDgjIl1d/gold01.jpg',
                 website: 'https://www.newyorkfed.org/aboutthefed/visiting.html',
-                categories: {'finance': 1, 'travel': 1, 'business and industrial': 1}
+                categories: {'finance': 1, 'travel': 1, 'business and industrial': 1},
+                id: 'cjl2nkgm800by0992ovyuamx9'
             },
             {
                 name: 'Explorers Club Headquarters',
@@ -53,7 +58,8 @@ module.exports = {
                 description: 'Behind impressive heavy doors and ornate turn-of-the-century stained glass windows lies the Explorers Club headquarters on East 70th Street.Founded in 1904 by seven leading polar explorers of the era, the Explorers Club fosters the scientific exploration of land, sea, air and space. It became the international headquarters in 1965.',
                 img: 'https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzLzkwMjZlNDgyYWVkMjI3YjQ5M2EzMjc4OGI4MDA4Yzc3NjFmMzgxYWIuanBnIl0sWyJwIiwiY29udmVydCIsIi1xdWFsaXR5IDgxIC1hdXRvLW9yaWVudCJdLFsicCIsInRodW1iIiwiMzcyeDI0OCMiXV0/9026e482aed227b493a32788b8008c7761f381ab.jpg',
                 website: 'http://www.explorers.org/index.php/about/history/a_gathering_place',
-                categories: {'shopping': 1, 'travel': 1, 'business and industrial': 1}
+                categories: {'shopping': 1, 'travel': 1, 'business and industrial': 1},
+                id: 'cjl2nkgng00dp0992fcxn08pz'
             }
         ],
         outdoor: [
@@ -64,7 +70,8 @@ module.exports = {
                 description: 'The SeaGlass Carousel in New York City’s Battery Park is housed inside a glass-paneled nautilus shell that sits atop the site of the original New York Aquarium. Opened in August 2015, the carousel is the creation of the Battery Conservancy and George Tsypin, a renowned opera and theater designer who is the man behind the staging of LaScala operas, the Sochi Olympics, and the Spider-man Broadway musical.',
                 img: 'https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzLzhhNTJlMTRiNzY2YzlkMjE1ZF9SaWRlIDQuanBnIl0sWyJwIiwiY29udmVydCIsIi1xdWFsaXR5IDgxIC1hdXRvLW9yaWVudCJdLFsicCIsInRodW1iIiwiMzcyeDI0OCMiXV0',
                 website: 'https://www.nycgovparks.org/parks/septuagesimo-uno/',
-                categories: {'pets': 1, 'travel': 1, 'family and parenting': 1}
+                categories: {'pets': 1, 'travel': 1, 'family and parenting': 1},
+                id: 'cjl2nkgle00al0992xhp6hq0i'
             },
             {
                 name: 'Slocum Memorial Fountain',
@@ -73,7 +80,8 @@ module.exports = {
                 description: 'Prior to September 11, the General Slocum steamship fire was the greatest loss of life in any disaster in New York City history. However, its memorial in Tompkins Square is easily overlooked.The nine-foot stele sculpted by Bruno Louis Zimm from pink Tennessee marble shows two children in relief with the words “They were Earth’s purest children, young and fair.” A lion’s head spits out water into a small basin.',
                 img: 'https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzL2Y3YzIyMGUyZGU2NmYxMzJhNF8xNDU4MTYwNjk2N181M2I5NmNkMWZhX2guanBnIl0sWyJwIiwiY29udmVydCIsIi1xdWFsaXR5IDgxIC1hdXRvLW9yaWVudCJdLFsicCIsInRodW1iIiwiMzcyeDI0OCMiXV0',
                 website: 'http://www.nycgovparks.org/parks/tompkinssquarepark/highlights/17099',
-                categories: {'family and parenting': 1, 'automotive and vehicles': 1, 'law, govt and politics': 1}
+                categories: {'family and parenting': 1, 'automotive and vehicles': 1, 'law, govt and politics': 1},
+                id: 'cjl2nkgm000b509920edv5yd0'
             },
             {
                 name: 'Vanderbilt Tennis Club',
@@ -82,7 +90,8 @@ module.exports = {
                 description: 'Little known to most commuters there have been posh, exclusive tennis courts hidden on the upper levels of Grand Central Terminal since the 1960’s, but the Vanderbilt Tennis Club is the current purveyor of courts behind the famous vaulted windows. A fitness center has existed in Grand Central Terminal since the 1960’s, originally in the form of the Vanderbilt Athletic Club.',
                 img: 'https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzLzUwYzNmYWU2NTlhMDQ2MmRjZl8zNDAyMjhfMjQ2NTU4OTg4NzE2MzY4XzY2MTUyMTJfby5qcGciXSxbInAiLCJjb252ZXJ0IiwiLXF1YWxpdHkgODEgLWF1dG8tb3JpZW50Il0sWyJwIiwidGh1bWIiLCIzNzJ4MjQ4IyJdXQ',
                 website: 'http://www.vanderbilttennisclub.com/',
-                categories: {'sports': 1, 'health and fitness': 1, 'real estate': 1}
+                categories: {'sports': 1, 'health and fitness': 1, 'real estate': 1},
+                id: 'cjl2nkgm700bu0992pdjvs051'
             },
             {
                 name: '190 Bowery',
@@ -91,7 +100,8 @@ module.exports = {
                 description: '190 Bowery looks abandoned, forgotten, covered in trash and graffiti on an otherwise well-maintained major street in Manhattan. A hulking six story, 72-room mass built as the Germania Bank Building in 1898, today the structure is a single family home. It’s the American Dream as a house, a building that went from rags to riches on a street once known for its murders, now known for its centrality.',
                 img: 'https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzL3liNjMydG0zYWlzYTE2NDI4OTE5ZTUzMDM1YmYxX0Z1bGxTaXplUmVuZGVyLmpwZyJdLFsicCIsImNvbnZlcnQiLCItcXVhbGl0eSA4MSAtYXV0by1vcmllbnQiXSxbInAiLCJ0aHVtYiIsIjM3MngyNDgjIl1d/FullSizeRender.jpg',
                 website: 'https://www.atlasobscura.com/places/190-Bowery',
-                categories: {'science': 1, 'travel': 1, 'finance': 1}
+                categories: {'science': 1, 'travel': 1, 'finance': 1},
+                id: 'cjl2nkgma00c70992o7ufh05b'
             },
             {
                 name: 'Hare Krishna Tree',
@@ -100,7 +110,8 @@ module.exports = {
                 description: 'For a hundred years this elegant American elm at the center of Tompkins Square Park was just a tree. Then, in 1966, the Hare Krishna mantra was chanted under its sprawling canopy for the first time, and it became the birthplace of a religion.To Hare Krishnas, this tree is a sacred site.',
                 img: 'https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzLzc4YjZjM2VkYzgwZGU1MzY0ZF9UcmVlIDYuanBnIl0sWyJwIiwiY29udmVydCIsIi1xdWFsaXR5IDgxIC1hdXRvLW9yaWVudCJdLFsicCIsInRodW1iIiwiMzcyeDI0OCMiXV0/Tree%206.jpg',
                 website: 'http://www.nycgovparks.org/parks/tompkins-square-park/highlights/10823',
-                categories: {'religion and spirituality': 1, 'art and entertainment': 1}
+                categories: {'religion and spirituality': 1, 'art and entertainment': 1},
+                id: 'cjl2nkgn300cu0992rstk7iz1'
             },
             {
                 name: '284 Broome Street',
@@ -109,7 +120,8 @@ module.exports = {
                 description: 'The block of Broome Street between Allen and Eldridge is the smelliest block in New York City. The New York Times Magazine tested the area with a number of olfactory experts, who all agreed it is the worst smell known to the City. If you happen to think you can handle anything, or that you’ve smelled worse, hop a subway down to the Lower East Side and take a few whiffs. Better yet, challenge a friend and make the loser buy lunch at Shopsin’s, only a few blocks away.',
                 img: 'https://assets.atlasobscura.com/media/W1siZiIsInVwbG9hZHMvcGxhY2VfaW1hZ2VzLzZiMWJlOGI5ZDRhMzM1YTQ5ZGRhZGQzNTdiNTFmNjJic21lbGxpZXN0LWJsb2NrMS5qcGciXSxbInAiLCJjb252ZXJ0IiwiLXF1YWxpdHkgODEgLWF1dG8tb3JpZW50Il0sWyJwIiwidGh1bWIiLCIzNzJ4MjQ4IyJdXQ/smelliest-block1.jpg',
                 website: 'https://www.atlasobscura.com/places/284-Broome-Street',
-                categories: {'style and fashion': 1, 'technology and computing': 1, 'society': 1}
+                categories: {'style and fashion': 1, 'technology and computing': 1, 'society': 1},
+                id: 'cjl2nkgne00dd0992tdtrw369'
             }
         ]
     }
