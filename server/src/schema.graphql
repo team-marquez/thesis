@@ -27,6 +27,7 @@ type Query {
   food(cost: Float): [Restaurant]
   activities(indoor_outdoor: Int): [Activity]
   userPrefs(pref: Pref): String
+  userRecs(id: String): Json
 }
 
 type Mutation {
@@ -54,5 +55,8 @@ type Mutation {
     source: String!
     website: String
   ): Restaurant
+  updateUsers(
+    id: String!
+    trips: Json
+  ): Users
 }
-

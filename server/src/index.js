@@ -6,7 +6,16 @@ const assembly = require('./bois/assembly_boi.js')
 const weather = require('./bois/weather_boi.js')
 const integrity = require('./bois/integrity_boi.js')
 const budget = require('./bois/budget_boi.js')
+const recommendation = require('./bois/recommendation_boi.js')
 let rec = require('../../spec/randomrecs')
+
+const recombee = require('recombee-api-client')
+const rqs = recombee.requests
+
+const client = new recombee.ApiClient(
+  'hack-reactor',
+  'KiTAOmy8RdNPzSZgspvDzVxivkFcsTxXtRA284YbtlyLUZvdoyq1UjVN2sFZhnCD'
+)
 
 const resolvers = {
   Query: {
@@ -17,10 +26,9 @@ const resolvers = {
       test = assembly.assemblyBoi(recs, test)
       return JSON.stringify(test, null, 2)
     },
-    // activities: (a, { IO }, c, d) => {
-    //   console.log(c.db.query)
-    //   return c.db.query.activity({ where: { indoor_outdoor: IO } }, d)
-    // },
+    userRecs: (_, { id }, context, info) => {
+      return recommendation.getRecs(id)
+    },
     food: (a, { cost }, c, d) => {
       return c.db.query.restaurants({ where: { cost: cost } }, d)
       // return c.db.query.restaurants()
@@ -30,8 +38,13 @@ const resolvers = {
     }
   },
   Mutation: {
-    createUsers: (_, { username, password, age, gender }, context, info) => {
-      return context.db.mutation.createUsers(
+    createUsers: async (
+      _,
+      { username, password, age, gender },
+      context,
+      info
+    ) => {
+      const creation = await context.db.mutation.createUsers(
         {
           data: {
             username,
@@ -42,6 +55,35 @@ const resolvers = {
         },
         info
       )
+
+      client.send(new rqs.AddUser(creation.id)).then(() => {
+        return creation
+      })
+    },
+    updateUsers: (_, { id, trips }, context, info) => {
+      trips.forEach(trip => {
+        context.db.mutation.updateUsers(
+          {
+            data: {
+              history: {
+                create: {
+                  details: {
+                    connect: {
+                      id: trip.id
+                    }
+                  }
+                }
+              }
+            },
+            where: {
+              id
+            }
+          },
+          info
+        )
+      })
+
+      return recommendation.updateRecs(id, trips)
     }
   }
 }
