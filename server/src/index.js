@@ -53,7 +53,7 @@ const server = new GraphQLServer({
     ...req,
     db: new Prisma({
       typeDefs: path.join(__dirname, '/generated/prisma.graphql'), // the auto-generated GraphQL schema of the Prisma API
-      endpoint: 'http://marqu-Publi-19R8UJR2G25LD-723373124.us-east-1.elb.amazonaws.com', // the endpoint of the Prisma API
+      endpoint: 'http://34.234.236.21:4466', // the endpoint of the Prisma API
       debug: true // log all GraphQL queries & mutations sent to the Prisma API
       // secret: 'mysecret123', // only needed if specified in `database/prisma.yml`
     })

@@ -3,7 +3,7 @@ const path = require('path')
 
 const prisma = new Prisma({
   typeDefs: path.join(__dirname, '../generated/prisma.graphql'),
-  endpoint: 'http://marqu-Publi-19R8UJR2G25LD-723373124.us-east-1.elb.amazonaws.com'
+  endpoint: 'http://34.234.236.21:4466'
 })
 
 module.exports = {
