@@ -1,5 +1,10 @@
 import React from "react";
 
+let selectedCSS = {
+  // border: '3px solid green',
+  backgroundImage: 'linear-gradient(lightgreen,white)'
+}
+
 class OnboardingOptions extends React.Component {
   constructor(props) {
     super(props)
@@ -21,31 +26,42 @@ class OnboardingOptions extends React.Component {
   
   render() {
     return (
-      <div>
-        <div onClick={() => {
-          this.props.selectOption(this.props.indoor)
-          this.selectIndoor()
-        }}
-          style= {this.state.indoorSelected ? {border: '3px solid green'} : null }
-          >
-          <h2>Option 1</h2>
-          <div>
-            <h3>{this.props.indoor.name}</h3>
-            <img src={this.props.indoor.img} />
-            Description: {this.props.indoor.description}
+      <div className= 'onboardingOptions'>
+        <div className = 'leftOption' 
+            style= {this.state.indoorSelected ? selectedCSS : null }
+        >
+          <div onClick={() => {
+            this.props.selectOption(this.props.indoor)
+            this.selectIndoor()
+          }}
+            >
+            <h2>Option 1</h2>
+            <div>
+              <h3>{this.props.indoor.name}</h3>
+              <img className= 'optionImage' src={this.props.indoor.img} />
+              <br/>
+              <h4>Description</h4>
+              <p>{this.props.indoor.description}</p>
+            </div>
           </div>
         </div>
-        <div onClick={() => {
-          this.props.selectOption(this.props.outdoor)
-          this.selectOutdoor()
-        }}
-          style= {this.state.outdoorSelected ? {border: '3px solid green'} : null }
+
+        <div className = 'rightOption'
+            style= {this.state.outdoorSelected ? selectedCSS : null }
         >
-          <h2>Option 2</h2>
-          <div>
-            <h3>{this.props.outdoor.name}</h3>
-            <img src={this.props.outdoor.img} />
-            Description: {this.props.outdoor.description}
+          <div onClick={() => {
+            this.props.selectOption(this.props.outdoor)
+            this.selectOutdoor()
+          }}
+          >
+            <h2>Option 2</h2>
+            <div>
+              <h3>{this.props.outdoor.name}</h3>
+              <img className = 'optionImage' src={this.props.outdoor.img} />
+              <br/>
+              <h4>Description</h4>
+              <p>{this.props.outdoor.description}</p>
+            </div>
           </div>
         </div>
       </div>

@@ -11,8 +11,7 @@ class LoginButton extends React.Component {
       index: 0,
       email: '',
       password: '',
-      user: 'Welcome User',
-      image: 'https://react.semantic-ui.com/images/avatar/large/patrick.png'
+      loggedIn: false
     }
     this.openSignIn = this.openSignIn.bind(this)
     this.openLogIn = this.openLogIn.bind(this)
@@ -23,7 +22,6 @@ class LoginButton extends React.Component {
     this.createWithEmail = this.createWithEmail.bind(this)
     this.checkUserLoggedIn = this.checkUserLoggedIn.bind(this)
     this.logOut = this.logOut.bind(this)
-    this.changeUser = this.changeUser.bind(this)
   }
 
   // Checks the session from the start, and will change the picture and username of the user if they are already logged in.
@@ -67,7 +65,8 @@ class LoginButton extends React.Component {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
     .then(results => {
-      this.changeUser(results.additionalUserInfo.profile.given_name, results.additionalUserInfo.profile.picture.data.url)
+      this.props.changeUser(results.additionalUserInfo.profile.given_name, results.additionalUserInfo.profile.picture.data.url)
+      this.setState({loggedIn: true})
     })
     this.closePopup()
   }
@@ -77,7 +76,8 @@ class LoginButton extends React.Component {
     const provider = new firebase.auth.FacebookAuthProvider()
     firebase.auth().signInWithPopup(provider)
     .then(results => {      
-      this.changeUser(results.additionalUserInfo.profile.name, results.additionalUserInfo.profile.picture.data.url)
+      this.props.changeUser(results.additionalUserInfo.profile.name, results.additionalUserInfo.profile.picture.data.url)
+      this.setState({loggedIn: true})
     })
     .catch(err => console.log(err))
     this.closePopup()
@@ -94,7 +94,11 @@ class LoginButton extends React.Component {
 
   //Firebase Auth User Login with Email/Password
   loginWithEmail () {
-    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(function(error) {
+    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    .then(results => {
+      this.setState({loggedIn: true})
+    })
+    .catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
     });
@@ -105,9 +109,10 @@ class LoginButton extends React.Component {
   checkUserLoggedIn () {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.changeUser(user.displayName, user.photoURL)
+        this.props.changeUser(user.displayName, user.photoURL)
+        this.setState({loggedIn: true})
       } else {
-        // No user is signed in.
+        this.setState({loggedIn: false})
       }
     });
   }
@@ -116,15 +121,8 @@ class LoginButton extends React.Component {
   logOut () {
     firebase.auth().signOut()
     .then(() => {
-      this.changeUser('Welcome User', 'https://react.semantic-ui.com/images/avatar/large/patrick.png')
-    })
-  }
-
-  //Set username
-  changeUser (username, image) {
-    this.setState({
-      user: username,
-      image: image || this.state.image
+      this.props.changeUser('Welcome User', 'https://react.semantic-ui.com/images/avatar/large/patrick.png')
+      this.setState({loggedIn: false})
     })
   }
 
@@ -134,36 +132,43 @@ class LoginButton extends React.Component {
       <div>
         <div className = 'signUpButton' style = {{textAlign: 'center', marginTop: '5px', marginRight: '10px', marginBottom: '5px'}}>
 
-          <div style = {{display: 'inline-block', float: 'left', marginLeft: '10px', paddingTop: '10px'}}>
-            <Button animated='fade'>
-              <Button.Content visible>Log Out</Button.Content>
-              <Button.Content hidden onClick = {this.logOut}><Icon name='user close' /></Button.Content>
-            </Button>
+          {this.state.loggedIn === true ? (
+          <div style={{display: 'inline-block', float: 'left', marginLeft: '10px', paddingTop: '10px'}}>
+            <Button onClick={this.props.home}>User Profile</Button>
           </div>
-
+          ) : (<p></p>)}
 
           <div style = {{display: 'inline-block', marginTop: '5px'}}>
             <Header as='h3'>
-              <Image circular src={this.state.image} /> {this.state.user}
+              <Image circular src={this.props.image} /> {this.props.user}
             </Header>
           </div>
 
-          <div style = {{display: 'inline-block', float: 'right', paddingTop: '10px'}}>
-            <Button.Group>
-              <Button
-                content={open ? 'Close Portal' : 'Open Portal'}
-                negative={open}
-                onClick={this.openSignIn}
-              >Sign Up</Button>
-              <Button.Or />
-              <Button
-                content={open ? 'Close Portal' : 'Open Portal'}
-                negative={open}
-                positive={!open}
-                onClick={this.openLogIn}
-              >Login</Button>
-            </Button.Group>
-          </div>
+          {this.state.loggedIn === false ? (
+            <div style = {{display: 'inline-block', float: 'right', paddingTop: '10px'}}>
+              <Button.Group>
+                <Button
+                  content={open ? 'Close Portal' : 'Open Portal'}
+                  negative={open}
+                  onClick={this.openSignIn}
+                >Sign Up</Button>
+                <Button.Or />
+                <Button
+                  content={open ? 'Close Portal' : 'Open Portal'}
+                  negative={open}
+                  positive={!open}
+                  onClick={this.openLogIn}
+                >Login</Button>
+              </Button.Group>
+            </div>
+            ) : (
+            <div style = {{display: 'inline-block', float: 'right', paddingTop: '10px'}}>
+              <Button animated='fade'>
+                <Button.Content visible>Log Out</Button.Content>
+                <Button.Content hidden onClick = {this.logOut}><Icon name='user close' /></Button.Content>
+              </Button>
+            </div>
+          )}
         </div>
 
         <div>
