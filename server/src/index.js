@@ -9,6 +9,14 @@ const budget = require('./bois/budget_boi.js')
 const recommendation = require('./bois/recommendation_boi.js')
 let rec = require('../../spec/randomrecs')
 
+const recombee = require('recombee-api-client')
+const rqs = recombee.requests
+
+const client = new recombee.ApiClient(
+  'hack-reactor',
+  'KiTAOmy8RdNPzSZgspvDzVxivkFcsTxXtRA284YbtlyLUZvdoyq1UjVN2sFZhnCD'
+)
+
 const resolvers = {
   Query: {
     userPrefs: async (_, pref, context, info) => {
@@ -31,8 +39,13 @@ const resolvers = {
     }
   },
   Mutation: {
-    createUsers: (_, { username, password, age, gender }, context, info) => {
-      return context.db.mutation.createUsers(
+    createUsers: async (
+      _,
+      { username, password, age, gender },
+      context,
+      info
+    ) => {
+      const creation = await context.db.mutation.createUsers(
         {
           data: {
             username,
@@ -43,6 +56,10 @@ const resolvers = {
         },
         info
       )
+
+      client.send(new rqs.AddUser(creation.id)).then(() => {
+        return creation
+      })
     }
   }
 }
