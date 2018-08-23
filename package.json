@@ -11,7 +11,8 @@
     "test-assembly": "mocha spec/assembly_spec.js --reporter nyan",
     "test-budget": "mocha spec/budget_spec.js --reporter nyan",
     "test-weather": "mocha spec/weather_spec.js --reporter nyan",
-    "test-true": "mocha spec/trueTrip_spec.js --reporter nyan"
+    "test-true": "mocha spec/trueTrip_spec.js --reporter nyan",
+    "test-react": "react-scripts test --env=jsdom"
   },
   "repository": {
     "type": "git",
@@ -47,6 +48,8 @@
     "chai-as-promised": "^7.1.1",
     "cheerio": "^1.0.0-rc.2",
     "date-fns": "^1.29.0",
+    "enzyme": "^3.4.4",
+    "enzyme-adapter-react-16": "^1.2.0",
     "express": "^4.16.3",
     "firebase": "^5.3.1",
     "flexy-flipcards": "^0.1.2",
@@ -59,6 +62,7 @@
     "react-beautiful-dnd": "^9.0.0",
     "react-date-range": "^0.9.4",
     "react-dom": "16.4.2",
+    "react-scripts": "1.1.5",
     "react-semantic-ui-range": "^0.6.2",
     "recombee-api-client": "^2.1.0",
     "semantic-ui-react": "^0.82.2",
