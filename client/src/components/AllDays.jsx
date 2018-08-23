@@ -13,9 +13,6 @@ let ITINERARY = gql`
 `
 
 class AllDays extends React.Component {
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     return (
