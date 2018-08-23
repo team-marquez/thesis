@@ -120,8 +120,6 @@ class Onboarding extends React.Component {
         {(updateUsers, { data }) => (
           <div>
             <Modal open={open} size={'tiny'}>
-              // trigger=
-              {<Button onClick={this.open}>Display Onboarding</Button>}
               <Header
                 style={{ textAlign: 'center' }}
                 content={`Welcome to Let's Go To!`}
@@ -292,6 +290,7 @@ class Onboarding extends React.Component {
                         trips: this.state.chosenActivities
                       }
                     })
+                    this.submitAnswers()
                   }}
                   className="onboardingButton"
                 >
