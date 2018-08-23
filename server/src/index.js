@@ -44,8 +44,8 @@ const resolvers = {
       let recs = restaurants.concat(activities)
       recs = shuffle(recs, {copy: true})
       test = await weather.weatherBoi(pref)
-      test = budget.budgetBoi(recs, test)
-      test = assembly.assemblyBoi(recs, test)
+      recs2 = budget.budgetBoi(recs, test)
+      test = assembly.assemblyBoi(recs2, test)
       return JSON.stringify(test, null, 2)
     },
     userRecs: (_, { id }, context, info) => {

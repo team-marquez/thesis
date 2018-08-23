@@ -42,7 +42,11 @@ module.exports = {
 				}
 			} else {
 				//meal path
-				let mealArr = recs[i].mealtime
+        let mealArr = recs[i].mealtime
+        if (mealArr === null) {
+          console.log('Over HEREREREE: ', recs[i])
+          continue
+        }
 				
 				if (mealArr.includes('dinner')) {
 					if (cost > foodAsCost.dinner) {
@@ -61,8 +65,8 @@ module.exports = {
 					}
 				}
 			}
-		}
-
+    }
+    
 		return recs
 	}
 }
