@@ -1,11 +1,11 @@
 import React from "react";
 
 import LoginButton from "./LoginButton.jsx";
-import LocationModal from "./LocationModal.jsx";
 import Footer from "./Footer.jsx";
 import AllDays from "./AllDays.jsx";
 import UserProfile from './UserProfile.jsx'
 import Onboarding from './Onboarding.jsx'
+import UserPreferences from "./UserPreferences.jsx";
 
 
 class App extends React.Component {
@@ -60,8 +60,18 @@ class App extends React.Component {
         {this.state.home === false ? (
           <div>
             {this.state.pickedTrip === false ? (
-              <div>
-                <div style={{textAlign: 'center', marginBottom: '15px'}}>
+              <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
+
+                <img style={{ minWidth: '100%', minHeight: '100%', filter:'grayscale(100%)' }} src="https://images.unsplash.com/photo-1523756025758-565a549d6eb6?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=d8663c5594055b93eb4401194c780668" />
+
+                <div style={{position: 'absolute', top: '50%', left: '50%', font: 'arial', color: 'white', fontSize: '100px', fontWeight: 'bold', transform: 'translate(-50%, -50%)'}}>
+                  <div style={{marginBottom: '8%', }}>New York</div>
+                  <div style={{width: '29%', margin: 'auto'}}>
+                    <UserPreferences pickTrip={this.pickTrip} />
+                  </div>
+                </div>
+
+                {/* <div style={{textAlign: 'center', marginBottom: '15px'}}>
                   <LoginButton home={this.switchHome} user={this.state.user} image={this.state.image} changeUser={this.changeUser}
                     openOnboarding = {this.openOnboarding}
                   />  
@@ -70,7 +80,7 @@ class App extends React.Component {
                   <LocationModal pickTrip={this.pickTrip}/>
                 </div>
                   <Footer/>
-                  <Onboarding open={this.state.openOnboarding} closer = {this.closeFirstOnboard} />
+                  <Onboarding open={this.state.openOnboarding} closer = {this.closeFirstOnboard} /> */}
               </div>
             ) : (
               <div style={{textAlign: 'center'}}>
