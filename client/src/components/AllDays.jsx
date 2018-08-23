@@ -60,7 +60,7 @@ class Cont extends React.Component {
     return this.state.dayCardUp ? (
       this.genDayCard()
     ) : (
-      <Kamban days={itinerary} flip={this.flip} temp={weather} />
+      <Kamban days={itinerary} flip={this.flip} temp={weather} home={this.props.home}/>
     )
   }
 }
