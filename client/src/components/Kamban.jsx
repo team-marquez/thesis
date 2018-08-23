@@ -30,7 +30,7 @@ const getItems = (count, array) =>
                 textShadow: "2px 0px black"
               }}
             >
-              {activity.name}
+              {activity.name.length > 30 ? activity.name.substring(0, 40) : activity.name}
             </div>
             <br />
             <div
@@ -185,7 +185,7 @@ class Kamban extends React.Component {
                         key={index}
                         style={{
                           border: "2px solid gray",
-                          height: "700px",
+                          height: "750px",
                           width: "300px",
                           marginRight: "10px",
                           float: "right",
