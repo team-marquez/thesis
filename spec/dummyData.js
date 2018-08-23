@@ -1,5 +1,5 @@
 module.exports = {
-    clientPreferances: {
+    weatherClientPreferances: {
         user: 'marty',
         pref: {
             totalBudget: 2250,
@@ -8,6 +8,19 @@ module.exports = {
                 startDate: '2018-11-14T0000',
                 endDate: '2018-11-16T0000'
             },
+            LT: .75,
+            IO: .75,
+            FA: .4,
+            kidFriendly: false
+        }
+    },
+    budgetClientPreferances: {
+        user: 'marty',
+        pref: {
+            totalBudget: 2250,
+            partySize: 3,
+
+            tripDates: [1, 2, 3],
             LT: .75,
             IO: .75,
             FA: .4,
