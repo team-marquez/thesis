@@ -72,7 +72,7 @@ class UserPreferences extends React.Component {
             <Modal
               size={'mini'}
               trigger={
-                <Button basic color='white' animated="fade" onClick={this.pickTrip}>
+                <Button animated="fade" onClick={this.pickTrip}>
                   <Button.Content visible>Take us away</Button.Content>
                   <Button.Content hidden>
                     <Icon name="plane" />

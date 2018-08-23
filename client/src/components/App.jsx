@@ -1,4 +1,5 @@
 import React from "react";
+import { Button, Icon } from 'semantic-ui-react'
 
 import LoginButton from "./LoginButton.jsx";
 import Footer from "./Footer.jsx";
@@ -63,6 +64,14 @@ class App extends React.Component {
               <div style={{ display: 'flex', width: '100vw', height: '100vh' }}>
 
                 <img style={{ minWidth: '100%', minHeight: '100%', filter:'grayscale(100%)' }} src="https://images.unsplash.com/photo-1523756025758-565a549d6eb6?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=d8663c5594055b93eb4401194c780668" />
+
+                <div style={{position: 'absolute', top: '4%', left: '86%'}}>
+                  <Button.Group>
+                    <Button>Login</Button>
+                    <Button.Or />
+                    <Button>Register</Button>
+                  </Button.Group>
+                </div>
 
                 <div style={{position: 'absolute', top: '50%', left: '50%', font: 'arial', color: 'white', fontSize: '100px', fontWeight: 'bold', transform: 'translate(-50%, -50%)'}}>
                   <div style={{marginBottom: '8%', }}>New York</div>
