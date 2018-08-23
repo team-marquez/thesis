@@ -232,7 +232,9 @@ class LocationModal extends React.Component {
                               kidFriendly: this.state.NSFW
                             }}
                           })
-                          client.writeData({data})          
+                          client.writeData({data})
+                          let itin = JSON.parse(data.userPrefs)
+                          client.writeData({data: {itinerary: JSON.stringify(itin.itinerary)}})                    
                           this.props.pickTrip()
                         }}
                       />
