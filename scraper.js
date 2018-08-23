@@ -636,7 +636,6 @@ let attractionSinglePage = website => {
           }
         })
       item.LTScore = 1
-      item.IOScore = Math.round(Math.random())
     })
     return item
   })

@@ -60,6 +60,7 @@
     "react-date-range": "^0.9.4",
     "react-dom": "16.4.2",
     "react-semantic-ui-range": "^0.6.2",
+    "recombee-api-client": "^2.1.0",
     "semantic-ui-react": "^0.82.2",
     "watson-developer-cloud": "^3.8.0"
   },
