@@ -23,6 +23,7 @@ const resolvers = {
       let recs = await rec.test()
 
       test = await weather.weatherBoi(pref)
+      test = budget.budgetBoi(recs, test)
       test = assembly.assemblyBoi(recs, test)
       return JSON.stringify(test, null, 2)
     },
