@@ -130,7 +130,13 @@ class LoginButton extends React.Component {
     const { open } = this.state
     return (
       <div>
-        <div className = 'signUpButton' style = {{textAlign: 'center', marginTop: '5px', marginRight: '10px', marginBottom: '5px'}}>
+        <Button.Group>
+          <Button onClick={this.openLogIn}>Login</Button>
+          <Button.Or />
+          <Button onClick={this.openSignIn}>Register</Button>
+        </Button.Group>
+        
+        {/* <div className = 'signUpButton' style = {{textAlign: 'center', marginTop: '5px', marginRight: '10px', marginBottom: '5px'}}>
 
           {this.state.loggedIn === true ? (
           <div style={{display: 'inline-block', float: 'left', marginLeft: '10px', paddingTop: '10px'}}>
@@ -169,7 +175,7 @@ class LoginButton extends React.Component {
               </Button>
             </div>
           )}
-        </div>
+        </div> */}
 
         <div>
           {this.state.index === 1 ? (

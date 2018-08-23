@@ -19,7 +19,7 @@ module.exports = {
 			else if (amount > 0 && amount <= 20) return 1
 			else if (amount > 20 && amount <= 51) return 2
 			else if (amount > 50 && amount <= 99) return 3
-			else if (amount > 100) return 4
+			else if (amount >= 100) return 4
 		}
 
 		let foodAsCost = {
@@ -36,24 +36,37 @@ module.exports = {
 
 			//activity path
 			if (type[0] === 'activity') {
-				if (cost > activitiesAsCost) recs.splice(i, 1)
-				i--
+				if (cost > activitiesAsCost) {
+					recs.splice(i, 1)
+					i--
+				}
 			} else {
 				//meal path
-				let arr = ['breakfast', 'lunch', 'dinner']
-				type.detail = {meal: arr}
-				let mealArr = type.detail.meal
+        let mealArr = recs[i].mealtime
+        if (mealArr === null) {
+          console.log('Over HEREREREE: ', recs[i])
+          continue
+        }
 				
 				if (mealArr.includes('dinner')) {
-					if (cost > foodAsCost.dinner) recs.splice(i, 1)
+					if (cost > foodAsCost.dinner) {
+						recs.splice(i, 1); 
+						i--
+					}
 				} else if (mealArr.includes('lunch')) {
-					if (cost > foodAsCost.lunch) recs.splice(i, 1)
+					if (cost > foodAsCost.lunch) {
+						recs.splice(i, 1); 
+						i--
+					}
 				} else if (mealArr.includes('breakfast')) {
-					if (cost > foodAsCost.breakfast) recs.splice(i, 1)
+					if (cost > foodAsCost.breakfast) {
+						recs.splice(i, 1); 
+						i--
+					}
 				}
 			}
-		}
-
+    }
+    
 		return recs
 	}
 }

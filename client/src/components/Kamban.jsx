@@ -1,23 +1,69 @@
 import React from "react"
-import { Grid, Button, Header, Icon, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
+import {
+  Grid,
+  Button,
+  Header,
+  Icon,
+  Image,
+  Menu,
+  Segment,
+  Sidebar
+} from "semantic-ui-react"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { FlexyFlipCard } from "flexy-flipcards"
 import Graphs from "./Graphs.jsx"
+import {ApolloConsumer} from "react-apollo"
 
 // Generates an array of the data we get back. Shows the name, cost, and the image.
 const getItems = (count, array) =>
   Array.from({ length: count }, (v, index) => index).map(index => ({
     id: `item-${index}`,
-    content: array[index].map((activity) => { return (  
-      <div>
-        <div>  
-          <div style={{float: 'right', color: 'rgb(245, 255, 246)', fontWeight: 'bold', textShadow: '2px 0px black'}}>{activity.name}</div><br/>
-          <div style={{float: 'right', color: 'rgb(245, 255, 246)', fontWeight: 'bold', textShadow: '2px 0px black'}}>{activity.cost === null || 0 ? 'Free' : activity.cost === 1 ? '$' : activity.cost === 2 ? '$$' : activity.cost === 3 ? '$$$' : activity.cost === 4 ? '$$$$' : null}</div>
-          <Image style={{width: '50px', height: '50px'}} src={activity.image}></Image>
-        </div> <br/>
-      </div>
-    )})
-  }));
+    content: array[index].map(activity => {
+      return (
+        <div>
+          <div>
+            <div
+              style={{
+                float: "right",
+                color: "rgb(245, 255, 246)",
+                fontWeight: "bold",
+                textShadow: "2px 0px black"
+              }}
+            >
+              {activity.name.length > 20 ? activity.name.substring(0, 40) : activity.name}
+            </div>
+            <br />
+            <div
+              style={{
+                float: "right",
+                color: "rgb(245, 255, 246)",
+                fontWeight: "bold",
+                textShadow: "2px 0px black"
+              }}
+            >
+              {activity.cost === null || 0
+                ? "Free"
+                : activity.cost === 1
+                  ? "$"
+                  : activity.cost === 2
+                    ? "$$"
+                    : activity.cost === 3
+                      ? "$$$"
+                      : activity.cost === 4
+                        ? "$$$$"
+                        : null}
+            </div>
+            <Image
+              style={{ width: "50px", height: "50px" }}
+              src={activity.image}
+            />
+          </div>{" "}
+          <br />
+        </div>
+      )
+    }),
+    orig: array[index]
+  }))
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -37,15 +83,15 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   margin: 0,
 
   // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'rgba(0,0,0,0.0)',
+  background: isDragging ? "lightgreen" : "rgba(0,0,0,0.0)",
 
   // styles we need to apply on draggables
   ...draggableStyle
 })
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? 'rgba(0,0,0,0.0)' : 'rgba(0,0,0,0.0)',
-  display: 'flex',
+  background: isDraggingOver ? "rgba(0,0,0,0.0)" : "rgba(0,0,0,0.0)",
+  display: "flex",
   padding: grid,
   overflow: "auto"
 })
@@ -88,18 +134,40 @@ class Kamban extends React.Component {
     this.setState({ vis: !this.state.vis })
   }
 
-
   render() {
     return (
+      <ApolloConsumer>
+      {(client) => {
+      return (
       <div>
         <div>
-					<Segment clearing style={{backgroundImage: 'linear-gradient(lightCyan, white)'}}>
-            {this.props.user === 'Welcome User' ? (<Header as='h2' icon='user circle' floated='right'/>) : (<Header as='h2' icon='user circle' onClick = {this.props.home} floated='right'/>)}
-					</Segment>
-				</div>
+          <Segment
+            clearing
+            style={{ backgroundImage: "linear-gradient(lightCyan, white)" }}
+          >
+            {this.props.user === "Welcome User" ? (
+              <Header as="h2" icon="user circle" floated="right" />
+            ) : (
+              <Header
+                as="h2"
+                icon="user circle"
+                onClick={this.props.home}
+                floated="right"
+              />
+            )}
+          </Segment>
+        </div>
 
         <Grid style={{ display: "inline-block" }}>
-          <DragDropContext onDragEnd={this.onDragEnd}>
+          <DragDropContext
+            onDragEnd={result => {
+              this.onDragEnd(result)
+              let temp = JSON.stringify(
+                this.state.items.map(elem => elem.orig)
+              )
+              client.writeData({ data: { itinerary :  temp} })
+            }}
+          >
             <Droppable
               droppableId="droppable"
               type="app"
@@ -113,18 +181,39 @@ class Kamban extends React.Component {
                     {...provided.droppableProps}
                   >
                     {this.state.items.map((item, index) => (
-                      <div  key = {index} style={{border: '2px solid gray', height: '700px', width: '300px', marginRight: '10px', float: 'right', 
-                      backgroundImage: this.props.temp[index].rain_chance === 0 ? 'url(https://i.imgur.com/gf8W6wy.jpg)' : 'url(https://78.media.tumblr.com/a9207e4a4e7c4680611259bfd6f3d341/tumblr_ns4cghz1OP1u7nuo6o1_500.jpg)'}}>
-                        <div> 
+                      <div
+                        key={index}
+                        style={{
+                          border: "2px solid gray",
+                          height: "750px",
+                          width: "300px",
+                          marginRight: "10px",
+                          float: "right",
+                          backgroundImage:
+                            this.props.temp[index].rain_chance === 0
+                              ? "url(https://i.imgur.com/gf8W6wy.jpg)"
+                              : "url(https://78.media.tumblr.com/a9207e4a4e7c4680611259bfd6f3d341/tumblr_ns4cghz1OP1u7nuo6o1_500.jpg)"
+                        }}
+                      >
+                        <div>
                           <div>
-                            {`${this.props.temp[index].max_temp.toString().substr(0, 2)}° Max || ${this.props.temp[index].min_temp.toString().substr(0, 2)}° Min`}
+                            {`${this.props.temp[index].max_temp
+                              .toString()
+                              .substr(0, 2)}° Max || ${this.props.temp[
+                              index
+                            ].min_temp
+                              .toString()
+                              .substr(0, 2)}° Min`}
                           </div>
                           <div>
-                            {this.props.temp[index].rain_chance === 0 ? 'Little to No chance of rain' : 'High chance of rain'}
+                            {this.props.temp[index].rain_chance === 0
+                              ? "Little to No chance of rain"
+                              : "High chance of rain"}
                           </div>
-                          <hr></hr>
+                          <Button onClick={() => this.props.flip(item.orig, index)}>Modal</Button>
+                          <hr />
                         </div>
-                        <br/>
+                        <br />
 
                         <Draggable
                           key={item.id}
@@ -141,12 +230,14 @@ class Kamban extends React.Component {
                                 provided.draggableProps.style
                               )}
                             >
+                           
                               <FlexyFlipCard
                                 frontBackgroundColor="rgba(0,0,0,0.0)"
                                 backBackgroundColor="rgba(0,0,0,0.0)"
                               >
                                 <div>
                                   <p>{item.content}</p>
+                                  <hr></hr>
                                   <Button
                                     onFocus={() => {
                                       let newstate = {}
@@ -160,6 +251,9 @@ class Kamban extends React.Component {
                                 </div>
                                 <div>
                                   <Graphs vis={this.state[item.id]} />
+                                  <br/>
+                                  <br/>
+                                  <hr></hr>
                                   <Button
                                     onFocus={() => {
                                       console.log(item.id)
@@ -187,7 +281,8 @@ class Kamban extends React.Component {
             </Droppable>
           </DragDropContext>
         </Grid>
-      </div>
+      </div>)}}
+      </ApolloConsumer>
     )
   }
 }

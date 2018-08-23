@@ -7,23 +7,45 @@ const weather = require('./bois/weather_boi.js')
 const integrity = require('./bois/integrity_boi.js')
 const budget = require('./bois/budget_boi.js')
 const recommendation = require('./bois/recommendation_boi.js')
-let rec = require('../../spec/randomrecs')
+const shuffle = require('shuffle-array')
+
 
 const recombee = require('recombee-api-client')
 const rqs = recombee.requests
 
 const client = new recombee.ApiClient(
   'hack-reactor',
-  'KiTAOmy8RdNPzSZgspvDzVxivkFcsTxXtRA284YbtlyLUZvdoyq1UjVN2sFZhnCD'
+  '__key__'
 )
+const prisma = new Prisma({
+  typeDefs: path.join(__dirname, 'generated/prisma.graphql'),
+  endpoint: 'http://34.234.236.21:4466'
+})
+
+
+let restaurants = null
+let activities = null
+
+prisma.query.restaurants({},'{id, name,  image,  cuisine,  cost,   description,  location,  source, website,  mealtime, local_tourist }').then(e => {
+  console.log('restaurants queried')
+  restaurants = e
+  restaurants.forEach(elem => elem['type'] = ['restaurant'])
+})
+
+prisma.query.activities({},'{id, name,description, cost, image, location,source, website, local_tourist,indoor_outdoor,concepts,categories,child_friendly,}').then(e => {
+  console.log('activities queried')
+  activities = e
+  activities.forEach(elem => elem['type'] = ['activity'])
+})
 
 const resolvers = {
   Query: {
     userPrefs: async (_, pref, context, info) => {
-      let recs = await rec.test()
-
+      let recs = restaurants.concat(activities)
+      recs = shuffle(recs, {copy: true})
       test = await weather.weatherBoi(pref)
-      test = assembly.assemblyBoi(recs, test)
+      recs2 = budget.budgetBoi(recs, test)
+      test = assembly.assemblyBoi(recs2, test)
       return JSON.stringify(test, null, 2)
     },
     userRecs: (_, { id }, context, info) => {
