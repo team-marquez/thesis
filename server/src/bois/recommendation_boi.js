@@ -1,7 +1,7 @@
 const recombee = require('recombee-api-client')
 const rqs = recombee.requests
 
-const client = new recombee.ApiClient('hack-reactor', 'KiTAOmy8RdNPzSZgspvDzVxivkFcsTxXtRA284YbtlyLUZvdoyq1UjVN2sFZhnCD')
+const client = new recombee.ApiClient('hack-reactor', '__key__')
 
 module.exports = {
   getRecs: userId => {
