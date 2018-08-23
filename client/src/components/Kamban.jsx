@@ -30,7 +30,7 @@ const getItems = (count, array) =>
                 textShadow: "2px 0px black"
               }}
             >
-              {activity.name}
+              {activity.name.length > 20 ? activity.name.substring(0, 40) : activity.name}
             </div>
             <br />
             <div
@@ -185,7 +185,7 @@ class Kamban extends React.Component {
                         key={index}
                         style={{
                           border: "2px solid gray",
-                          height: "700px",
+                          height: "750px",
                           width: "300px",
                           marginRight: "10px",
                           float: "right",
@@ -230,12 +230,14 @@ class Kamban extends React.Component {
                                 provided.draggableProps.style
                               )}
                             >
+                           
                               <FlexyFlipCard
                                 frontBackgroundColor="rgba(0,0,0,0.0)"
                                 backBackgroundColor="rgba(0,0,0,0.0)"
                               >
                                 <div>
                                   <p>{item.content}</p>
+                                  <hr></hr>
                                   <Button
                                     onFocus={() => {
                                       let newstate = {}
@@ -249,6 +251,9 @@ class Kamban extends React.Component {
                                 </div>
                                 <div>
                                   <Graphs vis={this.state[item.id]} />
+                                  <br/>
+                                  <br/>
+                                  <hr></hr>
                                   <Button
                                     onFocus={() => {
                                       console.log(item.id)
