@@ -10,7 +10,7 @@ class Graphs extends React.Component {
 			bindto: this.budget,
 			data: {
 				columns: [
-					['data', 91.4]
+					['Budget Spent Today', 31.4]
 				],
 				type: 'gauge',
 			},
