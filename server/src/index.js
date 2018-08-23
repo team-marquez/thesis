@@ -15,7 +15,7 @@ const rqs = recombee.requests
 
 const client = new recombee.ApiClient(
   'hack-reactor',
-  'KiTAOmy8RdNPzSZgspvDzVxivkFcsTxXtRA284YbtlyLUZvdoyq1UjVN2sFZhnCD'
+  '__key__'
 )
 const prisma = new Prisma({
   typeDefs: path.join(__dirname, 'generated/prisma.graphql'),
