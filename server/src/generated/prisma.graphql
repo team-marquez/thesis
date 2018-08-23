@@ -1,5 +1,5 @@
 # source: http://34.234.236.21:4466
-# timestamp: Wed Aug 22 2018 16:05:01 GMT-0400 (EDT)
+# timestamp: Thu Aug 23 2018 10:58:09 GMT-0400 (EDT)
 
 type Activity implements Node {
   id: ID!
@@ -682,6 +682,8 @@ type Restaurant implements Node {
   location: String
   source: String!
   website: String
+  mealtime: Json
+  local_tourist: Int
 }
 
 """A connection to a list of items."""
@@ -704,6 +706,8 @@ input RestaurantCreateInput {
   location: String
   source: String!
   website: String
+  mealtime: Json
+  local_tourist: Int
 }
 
 """An edge in a connection."""
@@ -736,6 +740,10 @@ enum RestaurantOrderByInput {
   source_DESC
   website_ASC
   website_DESC
+  mealtime_ASC
+  mealtime_DESC
+  local_tourist_ASC
+  local_tourist_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -753,6 +761,8 @@ type RestaurantPreviousValues {
   location: String
   source: String!
   website: String
+  mealtime: Json
+  local_tourist: Int
 }
 
 type RestaurantSubscriptionPayload {
@@ -804,6 +814,8 @@ input RestaurantUpdateInput {
   location: String
   source: String
   website: String
+  mealtime: Json
+  local_tourist: Int
 }
 
 input RestaurantWhereInput {
@@ -1197,6 +1209,28 @@ input RestaurantWhereInput {
 
   """All values not ending with the given string."""
   website_not_ends_with: String
+  local_tourist: Int
+
+  """All values that are not equal to given value."""
+  local_tourist_not: Int
+
+  """All values that are contained in given list."""
+  local_tourist_in: [Int!]
+
+  """All values that are not contained in given list."""
+  local_tourist_not_in: [Int!]
+
+  """All values less than the given value."""
+  local_tourist_lt: Int
+
+  """All values less than or equal the given value."""
+  local_tourist_lte: Int
+
+  """All values greater than the given value."""
+  local_tourist_gt: Int
+
+  """All values greater than or equal the given value."""
+  local_tourist_gte: Int
 }
 
 input RestaurantWhereUniqueInput {

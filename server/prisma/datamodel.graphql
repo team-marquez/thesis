@@ -39,6 +39,8 @@ type Restaurant {
   location: String
   source: String!
   website: String
+  mealtime: Json
+  local_tourist: Int
 }
 
 type Weather {
