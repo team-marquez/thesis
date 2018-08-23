@@ -1,9 +1,9 @@
 const { weatherBoi } = require('./../server/src/bois/weather_boi')
 const expect = require('chai').expect
-const { clientPreferances } = require('./dummyData')
+const { weatherClientPreferances } = require('./dummyData')
 
 describe('WeatherBoi', () => {
-  let output = weatherBoi(clientPreferances)
+  let output = weatherBoi(weatherClientPreferances)
   
   describe('date manipulation', () => {
     it('should alter the object of dates into an array', () => {
