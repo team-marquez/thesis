@@ -143,7 +143,7 @@ class Kamban extends React.Component {
                             >
                               <FlexyFlipCard
                                 frontBackgroundColor="rgba(0,0,0,0.0)"
-                                backBackgroundColor="white"
+                                backBackgroundColor="rgba(0,0,0,0.0)"
                               >
                                 <div>
                                   <p>{item.content}</p>
