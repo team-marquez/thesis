@@ -132,7 +132,7 @@ class DayCard extends React.Component {
                           )}
                         >
                           <div>
-                            <div style={{ display: "inline-block" }}>
+                            <div style={{ textAlign: 'left' }}>
                               <a href={item.content.link} target="_blank">
                                 <Image
                                   style={{ width: "150px", height: "100px" }}
@@ -142,11 +142,9 @@ class DayCard extends React.Component {
                             </div>
                             <div
                               style={{
-                                display: "inline-block",
                                 width: "100%",
                                 float: "right",
-                                marginTop: "-9%",
-                                textAlign: "center"
+                                marginTop: "-8%",
                               }}
                             >
                               <div style={{ display: "inline-block" }}>
@@ -154,7 +152,6 @@ class DayCard extends React.Component {
                               </div>
                               <div
                                 style={{
-                                  display: "inline-block",
                                   opacity: ".6",
                                   float: "right"
                                 }}
@@ -175,19 +172,17 @@ class DayCard extends React.Component {
                             <div
                               style={{
                                 opacity: ".6",
-                                display: "inline-block",
                                 width: "100%",
                                 float: "right",
                                 marginTop: "-7%",
-                                textAlign: "center"
                               }}
                             >
                               <em>{item.content.location}</em>
                             </div>
                             <div
                               style={{
-                                display: "inline-block",
-                                width: "85%",
+                                textAlign: 'left',
+                                width: "88%",
                                 float: "right",
                                 marginTop: "-5%"
                               }}
