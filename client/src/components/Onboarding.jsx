@@ -33,7 +33,8 @@ class Onboarding extends React.Component {
       showClosing: false,
       selectedOption: {},
       chosenActivities: [],
-      progress: 0
+      progress: 0,
+      optionSelected: false
     }
     this.fillOnboardingArray = this.fillOnboardingArray.bind(this)
     this.showFirst = this.showFirst.bind(this)
@@ -68,22 +69,22 @@ class Onboarding extends React.Component {
     this.setState({ showFirst: true })
   }
   showSecond() {
-    this.setState({ showFirst: false, showSecond: true }, this.saveSelected())
+    this.setState({ showFirst: false, showSecond: true, optionSelected: false }, this.saveSelected())
   }
   showThird() {
-    this.setState({ showSecond: false, showThird: true }, this.saveSelected())
+    this.setState({ showSecond: false, showThird: true, optionSelected: false }, this.saveSelected())
   }
   showFourth() {
-    this.setState({ showThird: false, showFourth: true }, this.saveSelected())
+    this.setState({ showThird: false, showFourth: true, optionSelected: false }, this.saveSelected())
   }
   showFifth() {
-    this.setState({ showFourth: false, showFifth: true }, this.saveSelected())
+    this.setState({ showFourth: false, showFifth: true, optionSelected: false }, this.saveSelected())
   }
   showSixth() {
-    this.setState({ showFifth: false, showSixth: true }, this.saveSelected())
+    this.setState({ showFifth: false, showSixth: true, optionSelected: false }, this.saveSelected())
   }
   closeSixth() {
-    this.setState({ showSixth: false, showClosing: true }, this.saveSelected())
+    this.setState({ showSixth: false, showClosing: true, optionSelected: false }, this.saveSelected())
   }
   submitAnswers() {
     this.setState({ showClosing: false })
@@ -111,8 +112,13 @@ class Onboarding extends React.Component {
   }
 
   handleOptionSelect(option) {
-    this.setState({ selectedOption: option })
-  }
+    if (this.state.optionSelected) {
+      this.setState({ selectedOption: option })
+    } else {
+      let oldProgress = this.state.progress
+      this.setState({progress: ++oldProgress, selectedOption: option, optionSelected: true})
+    }
+  }U
 
   render() {
     const { open } = this.props
@@ -166,7 +172,8 @@ class Onboarding extends React.Component {
                   color="green"
                   onClick={this.showSecond}
                   className="onboardingButton"
-                >
+                  disabled = {this.state.optionSelected ? false : true}
+                  >
                   Next <Icon name="right chevron" />
                 </Button>
               </Modal.Actions>
@@ -174,19 +181,20 @@ class Onboarding extends React.Component {
 
             <Modal open={this.state.showSecond}>
               <Modal.Content>
-                <Progress value="1" total="6" progress="ratio" indicating />
+                <Progress value={this.state.progress.toString()} total="6" progress="ratio" indicating />
                 <OnboardingOptions
                   indoor={this.state.onboardingArray[1][0]}
                   outdoor={this.state.onboardingArray[1][1]}
                   selectOption={this.handleOptionSelect}
-                />
+                  />
               </Modal.Content>
               <Modal.Actions style={{ textAlign: 'center' }}>
                 <Button
                   color="green"
                   onClick={this.showThird}
                   className="onboardingButton"
-                >
+                  disabled = {this.state.optionSelected ? false : true}
+                  >
                   Next <Icon name="right chevron" />
                 </Button>
               </Modal.Actions>
@@ -194,19 +202,20 @@ class Onboarding extends React.Component {
 
             <Modal open={this.state.showThird}>
               <Modal.Content>
-                <Progress value="2" total="6" progress="ratio" indicating />
+                <Progress value={this.state.progress.toString()} total="6" progress="ratio" indicating />
                 <OnboardingOptions
                   indoor={this.state.onboardingArray[2][0]}
                   outdoor={this.state.onboardingArray[2][1]}
                   selectOption={this.handleOptionSelect}
-                />
+                  />
               </Modal.Content>
               <Modal.Actions style={{ textAlign: 'center' }}>
                 <Button
                   color="green"
                   onClick={this.showFourth}
                   className="onboardingButton"
-                >
+                  disabled = {this.state.optionSelected ? false : true}
+                  >
                   Next <Icon name="right chevron" />
                 </Button>
               </Modal.Actions>
@@ -214,19 +223,20 @@ class Onboarding extends React.Component {
 
             <Modal open={this.state.showFourth}>
               <Modal.Content>
-                <Progress value="3" total="6" progress="ratio" indicating />
+                <Progress value={this.state.progress.toString()} total="6" progress="ratio" indicating />
                 <OnboardingOptions
                   indoor={this.state.onboardingArray[3][0]}
                   outdoor={this.state.onboardingArray[3][1]}
                   selectOption={this.handleOptionSelect}
-                />
+                  />
               </Modal.Content>
               <Modal.Actions style={{ textAlign: 'center' }}>
                 <Button
                   color="green"
                   onClick={this.showFifth}
                   className="onboardingButton"
-                >
+                  disabled = {this.state.optionSelected ? false : true}
+                  >
                   Next <Icon name="right chevron" />
                 </Button>
               </Modal.Actions>
@@ -234,19 +244,20 @@ class Onboarding extends React.Component {
 
             <Modal open={this.state.showFifth}>
               <Modal.Content>
-                <Progress value="4" total="6" progress="ratio" indicating />
+                <Progress value={this.state.progress.toString()} total="6" progress="ratio" indicating />
                 <OnboardingOptions
                   indoor={this.state.onboardingArray[4][0]}
                   outdoor={this.state.onboardingArray[4][1]}
                   selectOption={this.handleOptionSelect}
-                />
+                  />
               </Modal.Content>
               <Modal.Actions style={{ textAlign: 'center' }}>
                 <Button
                   color="green"
                   onClick={this.showSixth}
                   className="onboardingButton"
-                >
+                  disabled = {this.state.optionSelected ? false : true}
+                  >
                   Next <Icon name="right chevron" />
                 </Button>
               </Modal.Actions>
@@ -254,19 +265,20 @@ class Onboarding extends React.Component {
 
             <Modal open={this.state.showSixth}>
               <Modal.Content>
-                <Progress value="5" total="6" progress="ratio" indicating />
+                <Progress value={this.state.progress.toString()} total="6" progress="ratio" indicating />
                 <OnboardingOptions
                   indoor={this.state.onboardingArray[5][0]}
                   outdoor={this.state.onboardingArray[5][1]}
                   selectOption={this.handleOptionSelect}
-                />
+                  />
               </Modal.Content>
               <Modal.Actions style={{ textAlign: 'center' }}>
                 <Button
                   color="green"
                   onClick={this.closeSixth}
                   className="onboardingButton"
-                >
+                  disabled = {this.state.optionSelected ? false : true}
+                  >
                   Thats It <Icon name="right chevron" />
                 </Button>
               </Modal.Actions>
