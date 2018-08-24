@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, Portal, Segment, Header, Input, Icon, Image } from 'semantic-ui-react'
+import { Button, Portal, Segment, Header, Input, Icon, Image, Popup } from 'semantic-ui-react'
 import firebase from './firebase.js'
 
 class LoginButton extends React.Component {
@@ -10,9 +10,9 @@ class LoginButton extends React.Component {
       open: false,
       index: 0,
       email: '',
-      password: '',
-      loggedIn: false
+      password: ''
     }
+    
     this.openSignIn = this.openSignIn.bind(this)
     this.openLogIn = this.openLogIn.bind(this)
     this.closePopup = this.closePopup.bind(this)
@@ -66,7 +66,7 @@ class LoginButton extends React.Component {
     firebase.auth().signInWithPopup(provider)
     .then(results => {
       this.props.changeUser(results.additionalUserInfo.profile.given_name, results.additionalUserInfo.profile.picture.data.url)
-      this.setState({loggedIn: true})
+      this.props.handleLogin()
     })
     this.closePopup()
   }
@@ -77,7 +77,7 @@ class LoginButton extends React.Component {
     firebase.auth().signInWithPopup(provider)
     .then(results => {      
       this.props.changeUser(results.additionalUserInfo.profile.name, results.additionalUserInfo.profile.picture.data.url)
-      this.setState({loggedIn: true})
+      this.props.handleLogin()
     })
     .catch(err => console.log(err))
     this.closePopup()
@@ -96,7 +96,7 @@ class LoginButton extends React.Component {
   loginWithEmail () {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
     .then(results => {
-      this.setState({loggedIn: true})
+      this.props.handleLogin()
     })
     .catch(function(error) {
       var errorCode = error.code;
@@ -110,9 +110,9 @@ class LoginButton extends React.Component {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.props.changeUser(user.displayName, user.photoURL)
-        this.setState({loggedIn: true})
+        this.props.handleLogin()
       } else {
-        this.setState({loggedIn: false})
+        this.props.handleLogout()
       }
     });
   }
@@ -122,133 +122,96 @@ class LoginButton extends React.Component {
     firebase.auth().signOut()
     .then(() => {
       this.props.changeUser('Welcome User', 'https://react.semantic-ui.com/images/avatar/large/patrick.png')
-      this.setState({loggedIn: false})
+      this.props.handleLogout()
     })
   }
 
   render () {
     const { open } = this.state
     return (
-      <div>
-        <Button.Group>
-          <Button onClick={this.openLogIn}>Login</Button>
-          <Button.Or />
-          <Button onClick={this.openSignIn}>Register</Button>
-        </Button.Group>
-        
-        {/* <div className = 'signUpButton' style = {{textAlign: 'center', marginTop: '5px', marginRight: '10px', marginBottom: '5px'}}>
-
-          {this.state.loggedIn === true ? (
-          <div style={{display: 'inline-block', float: 'left', marginLeft: '10px', paddingTop: '10px'}}>
-            <Button onClick={this.props.home}>User Profile</Button>
-          </div>
-          ) : (<p></p>)}
-
-          <div style = {{display: 'inline-block', marginTop: '5px'}}>
-            <Header as='h3'>
-              <Image circular src={this.props.image} /> {this.props.user}
-            </Header>
-          </div>
-
-          {this.state.loggedIn === false ? (
-            <div style = {{display: 'inline-block', float: 'right', paddingTop: '10px'}}>
-              <Button.Group>
-                <Button
-                  content={open ? 'Close Portal' : 'Open Portal'}
-                  negative={open}
-                  onClick={this.openSignIn}
-                >Sign Up</Button>
-                <Button.Or />
-                <Button
-                  content={open ? 'Close Portal' : 'Open Portal'}
-                  negative={open}
-                  positive={!open}
-                  onClick={this.openLogIn}
-                >Login</Button>
-              </Button.Group>
-            </div>
-            ) : (
-            <div style = {{display: 'inline-block', float: 'right', paddingTop: '10px'}}>
-              <Button animated='fade'>
-                <Button.Content visible>Log Out</Button.Content>
-                <Button.Content hidden onClick = {this.logOut}><Icon name='user close' /></Button.Content>
-              </Button>
-            </div>
-          )}
-        </div> */}
+       <div>
+        {this.props.loggedIn === true ? <div>
+            <Popup trigger={
+              <Image src={this.props.image} avatar onClick={this.props.handleButtonClick} style={{position: 'absolute', top: '4%', left: '94%'}} />
+            } content='User Profile'/>
+          </div> : <div style={{position: 'absolute', top: '4%', left: '86%'}}>
+            <Button.Group>
+              <Button onClick={this.openLogIn}>Login</Button>
+              <Button.Or />
+              <Button onClick={this.openSignIn}>Register</Button>
+            </Button.Group>
+          </div>}
 
         <div>
-          {this.state.index === 1 ? (
-            <Portal onClose={this.closePopup} open={open}>
+          {this.state.index === 1 ? <Portal onClose={this.closePopup} open={open}>
               <Segment style={{ left: '37%', position: 'fixed', top: '10%', zIndex: 1000 }}>
-                <Header style={{textAlign: 'center'}}>Sign Up</Header>
-                <div style={{textAlign: 'center'}}>
-                  <Input iconPosition='left' placeholder='Email' size='mini'>
-                    <Icon name='at' />
-                    <input onChange={(e) => {this.emailVariable(e)}}/>
+                <Header style={{ textAlign: 'center' }}>Sign Up</Header>
+                <div style={{ textAlign: 'center' }}>
+                  <Input iconPosition="left" placeholder="Email" size="mini">
+                    <Icon name="at" />
+                    <input onChange={e => {
+                        this.emailVariable(e)
+                      }} />
                   </Input>
-                  <Input iconPosition='left' type='password' placeholder='Password' size='mini'>
-                    <Icon name='key' />
-                    <input 
-                      onChange={(e) => {this.passwordVariable(e)}}
-                    />
-                  </Input> 
-                  <Button size='mini' icon='world' 
-                    onClick={() => {
+                  <Input iconPosition="left" type="password" placeholder="Password" size="mini">
+                    <Icon name="key" />
+                    <input onChange={e => {
+                        this.passwordVariable(e)
+                      }} />
+                  </Input>
+                  <Button size="mini" icon="world" onClick={() => {
                       this.createWithEmail()
                       this.props.openOnboarding()
-                    }}
-                  /><br/><br/> 
+                    }} />
+                  <br />
+                  <br />
                   <p>Or Sign Up With Google/Facebook</p>
-                  <a><i className="google plus square icon huge"
-                    onClick = {() => {
-                      this.loginWithGoogle()
-                      this.props.openOnboarding()
-                    }}
-                  ></i></a>
-                  <a><i className="facebook square icon huge"
-                    onClick = {() => {
-                      this.loginWithFacebook()
-                      this.props.openOnboarding()
-                    }}
-                  ></i></a>
+                  <a>
+                    <i className="google plus square icon huge" onClick={() => {
+                        this.loginWithGoogle()
+                        this.props.openOnboarding()
+                      }} />
+                  </a>
+                  <a>
+                    <i className="facebook square icon huge" onClick={() => {
+                        this.loginWithFacebook()
+                        this.props.openOnboarding()
+                      }} />
+                  </a>
                 </div>
               </Segment>
-            </Portal>
-          ) : (
-            <Portal onClose={this.closePopup} open={open}>
+            </Portal> : <Portal onClose={this.closePopup} open={open}>
               <Segment style={{ left: '37%', position: 'fixed', top: '10%', zIndex: 1000 }}>
-                <Header style={{textAlign: 'center'}}>Log In</Header>
-                <div style={{textAlign: 'center'}}>
-                  <Input iconPosition='left' placeholder='Email' size='mini'>
-                    <Icon name='at' />
-                    <input onChange={(e) => {this.emailVariable(e)}}/>
+                <Header style={{ textAlign: 'center' }}>Log In</Header>
+                <div style={{ textAlign: 'center' }}>
+                  <Input iconPosition="left" placeholder="Email" size="mini">
+                    <Icon name="at" />
+                    <input onChange={e => {
+                        this.emailVariable(e)
+                      }} />
                   </Input>
-                  <Input iconPosition='left' type='password' placeholder='Password' size='mini'>
-                    <Icon name='key' />
-                    <input 
-                      onChange={(e) => {this.passwordVariable(e)}}
-                    />
-                  </Input> 
-                  <Button size='mini' icon='world' 
-                    onClick={this.loginWithEmail}
-                  /><br/><br/>
+                  <Input iconPosition="left" type="password" placeholder="Password" size="mini">
+                    <Icon name="key" />
+                    <input onChange={e => {
+                        this.passwordVariable(e)
+                      }} />
+                  </Input>
+                  <Button size="mini" icon="world" onClick={this.loginWithEmail} />
+                  <br />
+                  <br />
                   <p>Or Log In With Google/Facebook</p>
-                  <a><i  className="google plus square icon huge"
-                    onClick = {this.loginWithGoogle}
-                  ></i></a>
-                  <a><i className="facebook square icon huge"
-                    onClick = {this.loginWithFacebook}
-                  ></i></a>
+                  <a>
+                    <i className="google plus square icon huge" onClick={this.loginWithGoogle} />
+                  </a>
+                  <a>
+                    <i className="facebook square icon huge" onClick={this.loginWithFacebook} />
+                  </a>
                 </div>
               </Segment>
-            </Portal>
-          )}
+            </Portal>}
         </div>
-
       </div>
-    )
-  }
+  )}
 }
 
 export default LoginButton
