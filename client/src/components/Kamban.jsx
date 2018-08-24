@@ -227,7 +227,7 @@ class Kamban extends React.Component {
                           float: "right",
                           backgroundImage:
                             this.props.temp[index].rain_chance === 0
-                              ? "url(https://i.imgur.com/gf8W6wy.jpg)"
+                              ? "url(https://c8.alamy.com/comp/E6DJXX/freedom-tower-one-world-trade-center-new-york-ny-skyscraper-in-ny-E6DJXX.jpg)"
                               : "url(https://78.media.tumblr.com/a9207e4a4e7c4680611259bfd6f3d341/tumblr_ns4cghz1OP1u7nuo6o1_500.jpg)"
                         }}
                       >
