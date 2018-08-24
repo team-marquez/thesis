@@ -10,7 +10,7 @@ class Graphs extends React.Component {
 			bindto: this.budget,
 			data: {
 				columns: [
-					['Budget Spent Today', 31.4]
+					['Budget Spent Today', this.props.budget]
 				],
 				type: 'gauge',
 			},
@@ -31,15 +31,17 @@ class Graphs extends React.Component {
 			bindto: this.walking,
 			data: {
 				columns: [
-						['data1', 30],
-						['data2', 120],
+						['BreakFast', this.props.breakfast],
+						['Lunch', this.props.lunch],
+						['Dinner', this.props.dinner],
 									],
 				type : 'donut',
 			},
 			donut: {
-				title: "Iris Petal Width"
+				title: "Food Budget BreakDown"
 			}
 		});
+		console.log(this.props.budget)
 	}
 
 	render () {
