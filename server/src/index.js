@@ -15,7 +15,7 @@ const rqs = recombee.requests
 
 const client = new recombee.ApiClient(
   'hack-reactor',
-  'KiTAOmy8RdNPzSZgspvDzVxivkFcsTxXtRA284YbtlyLUZvdoyq1UjVN2sFZhnCD'
+  '__key__'
 )
 const prisma = new Prisma({
   typeDefs: path.join(__dirname, 'generated/prisma.graphql'),
@@ -44,7 +44,8 @@ const resolvers = {
       let recs = restaurants.concat(activities)
       recs = shuffle(recs, {copy: true})
       test = await weather.weatherBoi(pref)
-      test = assembly.assemblyBoi(recs, test)
+      recs2 = budget.budgetBoi(recs, test)
+      test = assembly.assemblyBoi(recs2, test)
       return JSON.stringify(test, null, 2)
     },
     userRecs: (_, { id }, context, info) => {
