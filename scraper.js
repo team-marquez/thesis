@@ -642,7 +642,7 @@ let attractionSinglePage = website => {
 }
 
 let manualScrape = async () => {
-  let sites = [
+  let actSites = [
     'https://www.timeout.com/newyork/attractions/brooklyn-bridge-new-york-ny',
     'https://www.timeout.com/newyork/attractions/the-statue-of-liberty-manhattan-ny',
     'https://www.timeout.com/newyork/attractions/one-world-observatory-manhattan-ny',
@@ -658,12 +658,44 @@ let manualScrape = async () => {
     'https://www.timeout.com/newyork/attractions/chrysler-building-manhattan-ny',
     'https://www.timeout.com/newyork/attractions/st-patricks-cathedral',
     'https://www.timeout.com/newyork/attractions/washington-square-park',
-    'https://www.timeout.com/newyork/attractions/madame-tussauds-new-york'
+    'https://www.timeout.com/newyork/attractions/madame-tussauds-new-york',
+    'https://www.timeout.com/newyork/museums-institutions/the-cloisters',
+    'https://www.timeout.com/newyork/museums-institutions/queens-museum',
+    'https://www.timeout.com/newyork/museums/moma-ps1'
   ]
-  await sites.forEach(async site => {
+  let museumSites = [
+    'https://www.timeout.com/newyork/museums/the-metropolitan-museum-of-art',
+    'https://www.timeout.com/newyork/museums/brooklyn-museum',
+    'https://www.timeout.com/newyork/museums/whitney-museum-of-american-art-in-nyc',
+    'https://www.timeout.com/newyork/museums/new-york-historical-society-manhattan-ny',
+    'https://www.timeout.com/newyork/museums/guggenheim-new-york',
+    'https://www.timeout.com/newyork/attractions/new-york-botanical-garden-guide',
+    'https://www.timeout.com/newyork/museums/american-museum-art',
+    'https://www.timeout.com/newyork/museums/new-york-public--of-natural-history',
+    'https://www.timeout.com/newyork/museums/intrepid-sea-air-space-museum',
+    'https://www.timeout.com/newyork/museums/museum-of-modernlibrary-stephen-schwarzman-building',  
+  ]
+  let shoppingSites = [
+    'https://www.timeout.com/newyork/shopping/brookfield-place-manhattan-ny',
+    'https://www.timeout.com/newyork/shopping/chelsea-market-new-york-ny',
+    'https://www.timeout.com/newyork/shopping/macys-herald-square-midtown-west-ny',
+
+  ]
+  await actSites.forEach(async site => {
     let info = await attractionSinglePage(site)
     //whatever you want to do with the data, do it here
   })
+  await museumSites.forEach(async site => {
+    let museumInfo = await timeOutMuseums(site)
+    //do something with that here
+  })
+  await shoppingSites.forEach(async site => {
+    let shoppingInfo = await timeOutShopping(site)
+    //do something with that here
+  })
+  let sportsInfo = await timeOutSports('https://www.timeout.com/newyork/sport-fitness/yankee-stadium')
+  //do something with it here
+
 }
 //uncomment checker to run manualScrape
 // let checker = manualScrape()
