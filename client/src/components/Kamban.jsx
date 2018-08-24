@@ -14,6 +14,7 @@ import { FlexyFlipCard } from "flexy-flipcards"
 import Graphs from "./Graphs.jsx"
 import {ApolloConsumer} from "react-apollo"
 
+
 // Generates an array of the data we get back. Shows the name, cost, and the image.
 const getItems = (count, array) =>
   Array.from({ length: count }, (v, index) => index).map(index => ({
@@ -107,10 +108,33 @@ class Kamban extends React.Component {
       "item-2": false,
       "item-3": false,
       "item-4": false,
-      "item-5": false
+      "item-5": false,
+      totalBudget: (this.props.budget.totalBudget/100 * 4),
+      dayBudget: []
     }
     this.onDragEnd = this.onDragEnd.bind(this)
     this.handleClick = this.handleClick.bind(this)
+    this.getBudgets = this.getBudgets.bind(this)
+  }
+
+  componentDidMount () {
+    this.getBudgets()
+  }
+
+  getBudgets () {
+    let _days = this.props.days
+    let costOfDays = []
+    for (let i = 0; i < _days.length; i++) {
+      let cost = 0
+      let day = _days[i]
+      for (let j = 0; j < day.length; j++) {
+        cost += day[j].cost
+      }
+      costOfDays.push(cost)
+    }
+    this.setState({
+      dayBudget: costOfDays
+    })
   }
 
   onDragEnd(result) {
@@ -236,7 +260,7 @@ class Kamban extends React.Component {
                                 backBackgroundColor="rgba(0,0,0,0.0)"
                               >
                                 <div>
-                                  <p>{item.content}</p>
+                                  <div>{item.content}</div>
                                   <hr></hr>
                                   <Button
                                     onFocus={() => {
@@ -250,7 +274,7 @@ class Kamban extends React.Component {
                                   </Button>
                                 </div>
                                 <div>
-                                  <Graphs vis={this.state[item.id]} />
+                                  <Graphs vis={this.state[item.id]} budget={(this.state.dayBudget[index]/this.state.totalBudget)*100} />
                                   <br/>
                                   <br/>
                                   <hr></hr>

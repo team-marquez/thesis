@@ -10,7 +10,7 @@ class Graphs extends React.Component {
 			bindto: this.budget,
 			data: {
 				columns: [
-					['Budget Spent Today', 31.4]
+					['Budget Spent Today', this.props.budget]
 				],
 				type: 'gauge',
 			},
@@ -40,6 +40,7 @@ class Graphs extends React.Component {
 				title: "Iris Petal Width"
 			}
 		});
+		console.log(this.props.budget)
 	}
 
 	render () {
