@@ -110,7 +110,10 @@ class Kamban extends React.Component {
       "item-4": false,
       "item-5": false,
       totalBudget: (this.props.budget.totalBudget/100 * 4),
-      dayBudget: []
+      dayBudget: [],
+      breakfast: [],
+      lunch: [],
+      dinner: []
     }
     this.onDragEnd = this.onDragEnd.bind(this)
     this.handleClick = this.handleClick.bind(this)
@@ -124,16 +127,25 @@ class Kamban extends React.Component {
   getBudgets () {
     let _days = this.props.days
     let costOfDays = []
+    let breakfast = []
+    let lunch = []
+    let dinner = []
     for (let i = 0; i < _days.length; i++) {
       let cost = 0
       let day = _days[i]
       for (let j = 0; j < day.length; j++) {
         cost += day[j].cost
+        if (j === 0) breakfast.push(day[j].cost)
+        if (j === 2) lunch.push(day[j].cost)
+        if (j === 4) dinner.push(day[j].cost)
       }
       costOfDays.push(cost)
     }
     this.setState({
-      dayBudget: costOfDays
+      dayBudget: costOfDays,
+      breakfast: breakfast,
+      lunch: lunch,
+      dinner: dinner
     })
   }
 
@@ -274,7 +286,7 @@ class Kamban extends React.Component {
                                   </Button>
                                 </div>
                                 <div>
-                                  <Graphs vis={this.state[item.id]} budget={(this.state.dayBudget[index]/this.state.totalBudget)*100} />
+                                  <Graphs vis={this.state[item.id]} budget={(this.state.dayBudget[index]/this.state.totalBudget)*100} breakfast={this.state.breakfast[index]} lunch={this.state.lunch[index]} dinner={this.state.dinner[index]} />
                                   <br/>
                                   <br/>
                                   <hr></hr>
