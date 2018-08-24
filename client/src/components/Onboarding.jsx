@@ -32,7 +32,8 @@ class Onboarding extends React.Component {
       showSixth: false,
       showClosing: false,
       selectedOption: {},
-      chosenActivities: []
+      chosenActivities: [],
+      progress: 0
     }
     this.fillOnboardingArray = this.fillOnboardingArray.bind(this)
     this.showFirst = this.showFirst.bind(this)
@@ -153,7 +154,7 @@ class Onboarding extends React.Component {
 
             <Modal open={this.state.showFirst}>
               <Modal.Content>
-                <Progress value="0" total="6" progress="ratio" indicating />
+                <Progress value={this.state.progress.toString()} total="6" progress="ratio" indicating />
                 <OnboardingOptions
                   indoor={this.state.onboardingArray[0][0]}
                   outdoor={this.state.onboardingArray[0][1]}

@@ -1,8 +1,8 @@
 const cheerio = require('cheerio')
 const axios = require('axios')
 const Nightmare = require('nightmare')
-const models = require('./server/temp_db/models.js')
-let nightmare = new Nightmare()
+// const models = require('./server/temp_db/models.js')
+// let nightmare = new Nightmare()
 
 const { Prisma } = require('prisma-binding')
 
@@ -387,14 +387,16 @@ const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
 }
 
 //split out of attraction center
-let timeOutMuseums = attractionName => {
-  axios
-    .get('https://www.timeout.com/newyork/museums/' + attractionName)
+let timeOutMuseums = website => {
+  return axios
+    .get(website)
     .then(response => {
       let $ = cheerio.load(response.data)
+      let item = {}
       $('#content').each((index, element) => {
-        let item = {}
-        item.name = attractionName.split('-').join(' ')
+        item.name = $(element)
+          .find('.listing__header h1')
+          .text()
         item.borough = ''
         item.cost = 1
         $(element)
@@ -415,29 +417,32 @@ let timeOutMuseums = attractionName => {
           .find('.feature__article a')
           .last()
           .attr('href') //alt will be to go thru the H3's
-        item.timeOutWebsite =
-          'https://www.timeout.com/newyork/museums/' + attractionName
+        item.timeOutWebsite = website
         item.address = '' //google it?
         item.LTScore = 1
         item.IOScore = 0
-        data.push(item)
+        
       })
+      return item
     })
 }
 
-let timeOutShopping = (website, attractionName) => {
-  axios.get(website).then(response => {
+let timeOutShopping = (website) => {
+  return axios.get(website).then(response => {
     let $ = cheerio.load(response.data)
+    let item = {}
     $('#content').each((index, element) => {
-      let item = {}
-      item.name = attractionName.split('-').join(' ')
+      item.name = $(element)
+          .find('.listing__header h1')
+          .text()
       item.borough = ''
       item.cost = 1
-      item.review = $(element)
-        .find('.feature__article p')
-        .first()
-        .text()
-        .trim()
+      item.review = '' 
+      $(element)
+        .find('article p')
+        .each((ind, el) => {
+          item.review += $(el).text().trim() + ' '
+        })
       item.website = $(element)
         .find('.listing_details .lead_buttons')
         .children()
@@ -466,8 +471,8 @@ let timeOutShopping = (website, attractionName) => {
         })
       item.LTScore = 1
       item.IOScore = 0
-      data.push(item)
-    })
+      })
+      return item
   })
 }
 
@@ -527,9 +532,9 @@ let timeOutComedy = attractionName => {
     })
 }
 
-let timeOutSports = attractionName => {
-  axios
-    .get('https://www.timeout.com/newyork/sport-fitness/' + attractionName)
+let timeOutSports = website => {
+  return axios
+    .get(website)
     .then(response => {
       let $ = cheerio.load(response.data)
       $('#content').each((index, element) => {
@@ -555,8 +560,7 @@ let timeOutSports = attractionName => {
           .children()
           .first()
           .attr('href')
-        item.timeOutWebsite =
-          'https://www.timeout.com/newyork/comedy/' + attractionName
+        item.timeOutWebsite = website
         $(element)
           .find('.listing_details tr')
           .each((index, el) => {
@@ -578,10 +582,15 @@ let timeOutSports = attractionName => {
           })
         item.LTScore = 1
         item.IOScore = 0
-        data.push(item)
-      })
+        // data.push(item)
+        //SEND TO DATABASE HERE
+        //HERE
 
-      return data
+        
+      })
+      return item
+
+      // return data
     })
 }
 
@@ -682,23 +691,35 @@ let manualScrape = async () => {
 
   ]
   await actSites.forEach(async site => {
-    let info = await attractionSinglePage(site)
-    //whatever you want to do with the data, do it here
+    await attractionSinglePage(site)
   })
   await museumSites.forEach(async site => {
-    let museumInfo = await timeOutMuseums(site)
-    //do something with that here
+    await timeOutMuseums(site)
+    //write .then(data)
   })
   await shoppingSites.forEach(async site => {
-    let shoppingInfo = await timeOutShopping(site)
-    //do something with that here
+    await timeOutShopping(site)
+    //write .then(data)
   })
-  let sportsInfo = await timeOutSports('https://www.timeout.com/newyork/sport-fitness/yankee-stadium')
-  //do something with it here
+  await timeOutSports('https://www.timeout.com/newyork/sport-fitness/yankee-stadium')
+  //write .then(data)
 
 }
+
 //uncomment checker to run manualScrape
 // let checker = manualScrape()
+
+
+
+// attractionSinglePage('https://www.timeout.com/newyork/attractions/brooklyn-bridge-new-york-ny').then(data => {
+//   console.log(data)
+// })
+// timeOutShopping('https://www.timeout.com/newyork/shopping/chelsea-market-new-york-ny').then(data => console.log(data))
+
+// timeOutMuseums('https://www.timeout.com/newyork/museums/guggenheim-new-york').then(data => console.log(data))
+
+
+
 
 //////uncomment below function to run the scrapes
 // let timeOutCheck = timeOutListScrape(listURL)
