@@ -187,7 +187,8 @@ module.exports = {
       itinerary: [],
       weather: clientPreferences.weather.slice(),
       rainyActs: tripOptions.rainyActs.slice(),
-      tripDates: tripOptions.tripDates.slice()
+      tripDates: tripOptions.tripDates.slice(),
+      budget: {totalBudget: clientPreferences.pref.totalBudget, partySize: clientPreferences.pref.partySize}
     }
 
     let assembleItinerary = () => {

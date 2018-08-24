@@ -104,7 +104,8 @@ trueTripOptions = {
     {rain: 0, rain_chance: 0, max_temp: 89, min_temp: 85, avg_temp: 88},
   ],
   rainyActs: [{act1}, {act2}, {act3}],
-  tripDates ; [2018-11-12, 2018-11-13, 2018-11-14]
+  tripDates ; [2018-11-12, 2018-11-13, 2018-11-14],
+  budget: {total: 2250, partySize: 3}
 }
 
 those data objects are the objects from the Reccs objects above.
