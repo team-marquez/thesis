@@ -1,8 +1,8 @@
 const cheerio = require('cheerio')
 const axios = require('axios')
 const Nightmare = require('nightmare')
-const models = require('./server/temp_db/models.js')
-let nightmare = new Nightmare()
+// const models = require('./server/temp_db/models.js')
+// let nightmare = new Nightmare()
 
 const { Prisma } = require('prisma-binding')
 
@@ -387,14 +387,16 @@ const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
 }
 
 //split out of attraction center
-let timeOutMuseums = attractionName => {
-  axios
-    .get('https://www.timeout.com/newyork/museums/' + attractionName)
+let timeOutMuseums = website => {
+  return axios
+    .get(website)
     .then(response => {
       let $ = cheerio.load(response.data)
+      let item = {}
       $('#content').each((index, element) => {
-        let item = {}
-        item.name = attractionName.split('-').join(' ')
+        item.name = $(element)
+          .find('.listing__header h1')
+          .text()
         item.borough = ''
         item.cost = 1
         $(element)
@@ -415,29 +417,32 @@ let timeOutMuseums = attractionName => {
           .find('.feature__article a')
           .last()
           .attr('href') //alt will be to go thru the H3's
-        item.timeOutWebsite =
-          'https://www.timeout.com/newyork/museums/' + attractionName
+        item.timeOutWebsite = website
         item.address = '' //google it?
         item.LTScore = 1
         item.IOScore = 0
-        data.push(item)
+        
       })
+      return item
     })
 }
 
-let timeOutShopping = (website, attractionName) => {
-  axios.get(website).then(response => {
+let timeOutShopping = (website) => {
+  return axios.get(website).then(response => {
     let $ = cheerio.load(response.data)
+    let item = {}
     $('#content').each((index, element) => {
-      let item = {}
-      item.name = attractionName.split('-').join(' ')
+      item.name = $(element)
+          .find('.listing__header h1')
+          .text()
       item.borough = ''
       item.cost = 1
-      item.review = $(element)
-        .find('.feature__article p')
-        .first()
-        .text()
-        .trim()
+      item.review = '' 
+      $(element)
+        .find('article p')
+        .each((ind, el) => {
+          item.review += $(el).text().trim() + ' '
+        })
       item.website = $(element)
         .find('.listing_details .lead_buttons')
         .children()
@@ -466,8 +471,8 @@ let timeOutShopping = (website, attractionName) => {
         })
       item.LTScore = 1
       item.IOScore = 0
-      data.push(item)
-    })
+      })
+      return item
   })
 }
 
@@ -527,9 +532,9 @@ let timeOutComedy = attractionName => {
     })
 }
 
-let timeOutSports = attractionName => {
-  axios
-    .get('https://www.timeout.com/newyork/sport-fitness/' + attractionName)
+let timeOutSports = website => {
+  return axios
+    .get(website)
     .then(response => {
       let $ = cheerio.load(response.data)
       $('#content').each((index, element) => {
@@ -555,8 +560,7 @@ let timeOutSports = attractionName => {
           .children()
           .first()
           .attr('href')
-        item.timeOutWebsite =
-          'https://www.timeout.com/newyork/comedy/' + attractionName
+        item.timeOutWebsite = website
         $(element)
           .find('.listing_details tr')
           .each((index, el) => {
@@ -578,10 +582,15 @@ let timeOutSports = attractionName => {
           })
         item.LTScore = 1
         item.IOScore = 0
-        data.push(item)
-      })
+        // data.push(item)
+        //SEND TO DATABASE HERE
+        //HERE
 
-      return data
+        
+      })
+      return item
+
+      // return data
     })
 }
 
@@ -642,7 +651,7 @@ let attractionSinglePage = website => {
 }
 
 let manualScrape = async () => {
-  let sites = [
+  let actSites = [
     'https://www.timeout.com/newyork/attractions/brooklyn-bridge-new-york-ny',
     'https://www.timeout.com/newyork/attractions/the-statue-of-liberty-manhattan-ny',
     'https://www.timeout.com/newyork/attractions/one-world-observatory-manhattan-ny',
@@ -658,15 +667,59 @@ let manualScrape = async () => {
     'https://www.timeout.com/newyork/attractions/chrysler-building-manhattan-ny',
     'https://www.timeout.com/newyork/attractions/st-patricks-cathedral',
     'https://www.timeout.com/newyork/attractions/washington-square-park',
-    'https://www.timeout.com/newyork/attractions/madame-tussauds-new-york'
+    'https://www.timeout.com/newyork/attractions/madame-tussauds-new-york',
+    'https://www.timeout.com/newyork/museums-institutions/the-cloisters',
+    'https://www.timeout.com/newyork/museums-institutions/queens-museum',
+    'https://www.timeout.com/newyork/museums/moma-ps1'
   ]
-  await sites.forEach(async site => {
-    let info = await attractionSinglePage(site)
-    //whatever you want to do with the data, do it here
+  let museumSites = [
+    'https://www.timeout.com/newyork/museums/the-metropolitan-museum-of-art',
+    'https://www.timeout.com/newyork/museums/brooklyn-museum',
+    'https://www.timeout.com/newyork/museums/whitney-museum-of-american-art-in-nyc',
+    'https://www.timeout.com/newyork/museums/new-york-historical-society-manhattan-ny',
+    'https://www.timeout.com/newyork/museums/guggenheim-new-york',
+    'https://www.timeout.com/newyork/attractions/new-york-botanical-garden-guide',
+    'https://www.timeout.com/newyork/museums/american-museum-art',
+    'https://www.timeout.com/newyork/museums/new-york-public--of-natural-history',
+    'https://www.timeout.com/newyork/museums/intrepid-sea-air-space-museum',
+    'https://www.timeout.com/newyork/museums/museum-of-modernlibrary-stephen-schwarzman-building',  
+  ]
+  let shoppingSites = [
+    'https://www.timeout.com/newyork/shopping/brookfield-place-manhattan-ny',
+    'https://www.timeout.com/newyork/shopping/chelsea-market-new-york-ny',
+    'https://www.timeout.com/newyork/shopping/macys-herald-square-midtown-west-ny',
+
+  ]
+  await actSites.forEach(async site => {
+    await attractionSinglePage(site)
   })
+  await museumSites.forEach(async site => {
+    await timeOutMuseums(site)
+    //write .then(data)
+  })
+  await shoppingSites.forEach(async site => {
+    await timeOutShopping(site)
+    //write .then(data)
+  })
+  await timeOutSports('https://www.timeout.com/newyork/sport-fitness/yankee-stadium')
+  //write .then(data)
+
 }
+
 //uncomment checker to run manualScrape
 // let checker = manualScrape()
+
+
+
+// attractionSinglePage('https://www.timeout.com/newyork/attractions/brooklyn-bridge-new-york-ny').then(data => {
+//   console.log(data)
+// })
+// timeOutShopping('https://www.timeout.com/newyork/shopping/chelsea-market-new-york-ny').then(data => console.log(data))
+
+// timeOutMuseums('https://www.timeout.com/newyork/museums/guggenheim-new-york').then(data => console.log(data))
+
+
+
 
 //////uncomment below function to run the scrapes
 // let timeOutCheck = timeOutListScrape(listURL)
