@@ -7,6 +7,7 @@ import AllDays from './AllDays.jsx'
 import UserProfile from './UserProfile.jsx'
 import Onboarding from './Onboarding.jsx'
 import UserPreferences from './UserPreferences.jsx'
+import firebase from './firebase.js'
 
 class App extends React.Component {
   constructor(props) {
@@ -20,8 +21,10 @@ class App extends React.Component {
       visible: false,
       login: false,
       location: 'New York',
-      background: 'https://images.unsplash.com/photo-1523756025758-565a549d6eb6?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=d8663c5594055b93eb4401194c780668'
+      background:
+        'https://images.unsplash.com/photo-1523756025758-565a549d6eb6?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=d8663c5594055b93eb4401194c780668'
     }
+
     this.pickTrip = this.pickTrip.bind(this)
     this.goHome = this.goHome.bind(this)
     this.changeUser = this.changeUser.bind(this)
@@ -84,15 +87,32 @@ class App extends React.Component {
   locationChange(e) {
     var location = e.target.text
 
-    this.setState({location})
+    this.setState({ location })
 
     if (location === 'New York') {
-      this.setState({ background: 'https://images.unsplash.com/photo-1523756025758-565a549d6eb6?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=d8663c5594055b93eb4401194c780668'})
+      this.setState({
+        background:
+          'https://images.unsplash.com/photo-1523756025758-565a549d6eb6?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=d8663c5594055b93eb4401194c780668'
+      })
     } else if (location === 'Paris') {
-      this.setState({background: 'https://images.unsplash.com/photo-1500313830540-7b6650a74fd0?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=6e938f7571b1c14add60901d6b841307'})
+      this.setState({
+        background:
+          'https://images.unsplash.com/photo-1500313830540-7b6650a74fd0?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=6e938f7571b1c14add60901d6b841307'
+      })
     } else if (location === 'Tokyo') {
-      this.setState({background: 'https://images.unsplash.com/photo-1527596773609-5f8544271a51?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=e87e76e6629f4f774e01de9997672597'})
+      this.setState({
+        background:
+          'https://images.unsplash.com/photo-1527596773609-5f8544271a51?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=e87e76e6629f4f774e01de9997672597'
+      })
     }
+  }
+
+  logOut() {
+    firebase.auth().signOut()
+      .then(() => {
+        this.changeUser('Anonymous User', 'https://react.semantic-ui.com/images/avatar/large/patrick.png')
+        this.handleLogout()
+      })
   }
 
   render() {
@@ -112,7 +132,7 @@ class App extends React.Component {
             </Menu.Item>
             <Menu.Item>Current Trip</Menu.Item>
             <Menu.Item>Past Trips</Menu.Item>
-            <Menu.Item as="a" onClick={this.handleLogout}>
+            <Menu.Item as="a" onClick={this.logOut}>
               Logout
             </Menu.Item>
           </Sidebar>
@@ -161,8 +181,7 @@ class App extends React.Component {
                         <UserPreferences pickTrip={this.pickTrip} />
                       </div>
                     </div>
-                    {/* <Onboarding open={this.state.openOnboarding} closer = {this.closeFirstOnboard} /> */}{' '}
-                    */}
+                    {/* <Onboarding open={this.state.openOnboarding} closer = {this.closeFirstOnboard} /> */}
                   </div>
                 ) : (
                   <div style={{ textAlign: 'center' }}>
@@ -173,17 +192,22 @@ class App extends React.Component {
             ) : (
               <UserProfile home={this.goHome} user={this.state.user} />
             )}
-
-<div style={{position: 'absolute', bottom: '5%', left: '45%'}}>
-            <Breadcrumb>
-              <Breadcrumb.Section onClick={this.locationChange}>Tokyo</Breadcrumb.Section>
-              <Breadcrumb.Divider icon='map pin'/>
-              <Breadcrumb.Section onClick={this.locationChange}>Paris</Breadcrumb.Section>
-              <Breadcrumb.Divider icon='map pin'/>
-              <Breadcrumb.Section onClick={this.locationChange}>New York</Breadcrumb.Section>
-              <Breadcrumb.Divider icon='map pin'/>
-            </Breadcrumb>
-</div>
+            {/* <div style={{ position: 'absolute', bottom: '5%', left: '45%' }}>
+              <Breadcrumb>
+                <Breadcrumb.Section onClick={this.locationChange}>
+                  Tokyo
+                </Breadcrumb.Section>
+                <Breadcrumb.Divider icon="map pin" />
+                <Breadcrumb.Section onClick={this.locationChange}>
+                  Paris
+                </Breadcrumb.Section>
+                <Breadcrumb.Divider icon="map pin" />
+                <Breadcrumb.Section onClick={this.locationChange}>
+                  New York
+                </Breadcrumb.Section>
+                <Breadcrumb.Divider icon="map pin" />
+              </Breadcrumb>
+            </div> */}
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </div>
