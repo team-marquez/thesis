@@ -364,13 +364,13 @@ const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
         .find('.listing_details tr')
         .each((index, el) => {
           if (
-            $(element)
+            $(el)
               .children()
               .first()
               .text()
               .trim() === 'Address:'
           ) {
-            item.address = $(element)
+            item.address = $(el)
               .children()
               .last()
               .text()
@@ -399,6 +399,9 @@ let timeOutMuseums = website => {
           .text()
         item.borough = ''
         item.cost = 1
+        item.img = $(element)
+          .find('.image_wrapper img')
+          .attr('src')
         $(element)
           .find('listing__header ul li')
           .each((index, el) => {
@@ -436,6 +439,9 @@ let timeOutShopping = (website) => {
           .find('.listing__header h1')
           .text()
       item.borough = ''
+      item.img = $(element)
+        .find('.image_wrapper img')
+        .attr('src')
       item.cost = 1
       item.review = '' 
       $(element)
@@ -510,13 +516,13 @@ let timeOutComedy = attractionName => {
           .find('.listing_details tr')
           .each((index, el) => {
             if (
-              $(element)
+              $(el)
                 .children()
                 .first()
                 .text()
                 .trim() === 'Address:'
             ) {
-              item.address = $(element)
+              item.address = $(el)
                 .children()
                 .last()
                 .text()
@@ -543,6 +549,9 @@ let timeOutSports = website => {
           .find('.listing__header h1')
           .text()
         item.borough = ''
+        item.img = $(element)
+          .find('.image_wrapper img')
+          .attr('src')
         item.cost = 0
         $(element)
           .find('listing__header ul li')
@@ -565,13 +574,13 @@ let timeOutSports = website => {
           .find('.listing_details tr')
           .each((index, el) => {
             if (
-              $(element)
+              $(el)
                 .children()
                 .first()
                 .text()
                 .trim() === 'Address:'
             ) {
-              item.address = $(element)
+              item.address = $(el)
                 .children()
                 .last()
                 .text()
@@ -607,6 +616,9 @@ let attractionSinglePage = website => {
         .find('.listing__header h1')
         .text()
         .split('|')[1]
+      item.img = $(element)
+        .find('.image_wrapper img')
+        .attr('src')
       item.cost = 0
       $(element)
         .find('listing__header ul li')
@@ -629,13 +641,13 @@ let attractionSinglePage = website => {
         .find('.listing_details tr')
         .each((index, el) => {
           if (
-            $(element)
+            $(el)
               .children()
               .first()
               .text()
               .trim() === 'Address:'
           ) {
-            item.address = $(element)
+            item.address = $(el)
               .children()
               .last()
               .text()
