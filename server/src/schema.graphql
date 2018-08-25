@@ -33,8 +33,8 @@ type Query {
 
 type Mutation {
   createUsers(
-    username: String!
-    password: String!
+    username: String
+    password: String
     firebaseId: String!
   ): Users
   createWeather(

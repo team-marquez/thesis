@@ -1,6 +1,6 @@
 import React from 'react'
 import gql from 'graphql-tag'
-import { Query } from 'react-apollo'
+import { ApolloConsumer } from 'react-apollo'
 
 import { Modal, Input, Icon, Header, Button } from 'semantic-ui-react'
 
@@ -21,8 +21,8 @@ class Login extends React.Component {
 
   render() {
     return (
-      <Query query={FIREBASE_USER}>
-        {(loading, err, data) => (
+      <ApolloConsumer>
+        {client => (
           <div>
             <Modal onClose={this.props.closePopup} open={open} size="tiny">
               <Header style={{ textAlign: 'center' }}>Log In</Header>
@@ -51,17 +51,15 @@ class Login extends React.Component {
                 <Button
                   size="mini"
                   icon="world"
-                  onClick={e => {
-                    e.preventDefault()
-                    console.log('Clicked', data)
+                  onClick={async () => {
+                    this.props.loginWithEmail()
 
-                    // firebaseUser({
-                    //   variables: {
-                    //     firebaseId: "test"
-                    //   }
-                    // }, '{id}')
+                    const { data } = await client.query({
+                      query: FIREBASE_USER,
+                      variables: { firebaseId: 'test' }
+                    })
 
-                    this.props.loginWithEmail
+                    this.props.handleUserId(data.firebaseUser.id)
                   }}
                 />
                 <br />
@@ -70,7 +68,19 @@ class Login extends React.Component {
                 <a>
                   <i
                     className="google plus square icon huge"
-                    onClick={this.props.loginWithGoogle}
+                    onClick={async () => {
+                      await this.props.loginWithGoogle()
+                      console.log('Firebase ID', this.props.userId)
+
+                      const { data } = await client.query({
+                        query: FIREBASE_USER,
+                        variables: { firebaseId: 'test' }
+                      })
+
+                      console.log('Database ID', this.props.userId)
+
+                      // this.props.handleUserId(data.firebaseUser.id)
+                    }}
                   />
                 </a>
                 <a>
@@ -83,7 +93,7 @@ class Login extends React.Component {
             </Modal>
           </div>
         )}
-      </Query>
+      </ApolloConsumer>
     )
   }
 }

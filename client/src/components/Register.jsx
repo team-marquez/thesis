@@ -1,24 +1,24 @@
 import React from 'react'
-// import gql from 'graphql-tag'
-// import { Mutation } from 'react-apollo'
+import gql from 'graphql-tag'
+import { Mutation } from 'react-apollo'
 
 import { Modal, Input, Icon, Header, Button } from 'semantic-ui-react'
 
-// const CREATE_USERS = gql`
-//   mutation CreateUsers(
-//     $username: String
-//     $password: String
-//     $firebaseId: String
-//   ) {
-//     createUsers(
-//       username: $username
-//       password: $password
-//       firebaseId: $firebaseId
-//     ) {
-//       id
-//     }
-//   }
-// `
+const CREATE_USERS = gql`
+  mutation CreateUsers(
+    $username: String
+    $password: String
+    $firebaseId: String!
+  ) {
+    createUsers(
+      username: $username
+      password: $password
+      firebaseId: $firebaseId
+    ) {
+      id
+    }
+  }
+`
 
 class Register extends React.Component {
   constructor(props) {
@@ -29,8 +29,8 @@ class Register extends React.Component {
 
   render() {
     return (
-      // <Mutation mutation={CREATE_USERS}>
-      //   {(createUsers, { data }) => (
+      <Mutation mutation={CREATE_USERS}>
+        {(createUsers, { data }) => (
           <div>
             <Modal
               onClose={this.props.closePopup}
@@ -65,6 +65,14 @@ class Register extends React.Component {
                   icon="world"
                   onClick={() => {
                     this.props.createWithEmail()
+
+                    createUsers({
+                      variables: {
+                        username: this.props.username,
+                        password: this.props.password
+                      }
+                    })
+
                     this.props.openOnboarding()
                   }}
                 />
@@ -74,8 +82,15 @@ class Register extends React.Component {
                 <a>
                   <i
                     className="google plus square icon huge"
-                    onClick={() => {
+                    onClick={ () => {
                       this.props.loginWithGoogle()
+
+                      createUsers({
+                        variables: {
+                          firebaseId: this.props.userId
+                        }
+                      })
+
                       this.props.openOnboarding()
                     }}
                   />
@@ -85,6 +100,13 @@ class Register extends React.Component {
                     className="facebook square icon huge"
                     onClick={() => {
                       this.props.loginWithFacebook()
+
+                      createUsers({
+                        variables: {
+                          firebaseId: this.props.userId
+                        }
+                      })
+
                       this.props.openOnboarding()
                     }}
                   />
@@ -92,8 +114,8 @@ class Register extends React.Component {
               </div>
             </Modal>
           </div>
-        // )}
-      // </Mutation>
+        )}
+      </Mutation>
     )
   }
 }

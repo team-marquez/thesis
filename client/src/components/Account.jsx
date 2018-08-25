@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button, Portal, Segment, Header, Input, Icon, Image, Popup } from 'semantic-ui-react'
+import { Button, Image, Popup } from 'semantic-ui-react'
 import firebase from './firebase.js'
 import Login from './Login.jsx'
 import Register from './Register.jsx'
@@ -12,17 +12,23 @@ class Account extends React.Component {
       open: false,
       index: 0,
       email: '',
-      password: ''
+      password: '',
+      userId: ''
     }
     
     this.openSignIn = this.openSignIn.bind(this)
     this.openLogIn = this.openLogIn.bind(this)
     this.closePopup = this.closePopup.bind(this)
+
     this.loginWithGoogle = this.loginWithGoogle.bind(this)
     this.loginWithFacebook = this.loginWithFacebook.bind(this)
     this.loginWithEmail = this.loginWithEmail.bind(this)
     this.createWithEmail = this.createWithEmail.bind(this)
     this.checkUserLoggedIn = this.checkUserLoggedIn.bind(this)
+    
+    this.handleUserId = this.handleUserId.bind(this)
+    this.emailVariable = this.emailVariable.bind(this)
+    this.passwordVariable = this.passwordVariable.bind(this)
   }
 
   // Checks the session from the start, and will change the picture and username of the user if they are already logged in.
@@ -61,12 +67,19 @@ class Account extends React.Component {
     })
   }
 
+  handleUserId (id) {
+    this.setState({userId: id})
+    console.log(this.state.userId)
+  }
+
   // Firebase Auth with Google, not saving sessions.
   loginWithGoogle () {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
     .then(results => {
+      console.log(results)
       this.props.changeUser(results.additionalUserInfo.profile.given_name, results.additionalUserInfo.profile.picture)
+      this.handleUserId(results.additionalUserInfo.profile.id)
       this.props.handleLogin()
     })
     this.closePopup()
@@ -76,8 +89,10 @@ class Account extends React.Component {
   loginWithFacebook () {
     const provider = new firebase.auth.FacebookAuthProvider()
     firebase.auth().signInWithPopup(provider)
-    .then(results => {      
+    .then(results => {
+      console.log(results)
       this.props.changeUser(results.additionalUserInfo.profile.name, results.additionalUserInfo.profile.picture.data.url)
+      this.handleUserId(results.additionalUserInfo.profile.id)
       this.props.handleLogin()
     })
     .catch(err => console.log(err))
@@ -86,11 +101,13 @@ class Account extends React.Component {
 
   //Firebase Auth User Creation with Email/Password
   createWithEmail () {
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(response => {
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+    .then(response => {
+      console.log('Response from firebase', response)
     }).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
-    });
+    })
     this.closePopup()
   }
 
@@ -103,7 +120,7 @@ class Account extends React.Component {
     .catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
-    });
+    })
     this.closePopup()
   }
 
@@ -116,7 +133,7 @@ class Account extends React.Component {
       } else {
         this.props.handleLogout()
       }
-    });
+    })
   }
 
   render () {
@@ -136,12 +153,14 @@ class Account extends React.Component {
 
         <div>
           {this.state.index === 2 ? 
-          <Login index={this.state.index} closePopup={this.closePopup} open={this.state.open}
+          <Login closePopup={this.closePopup} open={this.state.open}
           emailVariable={this.emailVariable}
           passwordVariable={this.passwordVariable}
           loginWithFacebook={this.loginWithFacebook}
           loginWithGoogle={this.loginWithGoogle}
           loginWithEmail={this.loginWithEmail}
+          handleUserId={this.handleUserId}
+          userId={this.state.userId}
           /> : null}
 
           {this.state.index === 1 ?
@@ -152,6 +171,9 @@ class Account extends React.Component {
           loginWithFacebook={this.loginWithFacebook}
           loginWithGoogle={this.loginWithGoogle}
           openOnboarding={this.props.openOnboarding}
+          email={this.state.email}
+          password={this.state.password}
+          userId={this.state.userId}
           /> : null}
       </div>
     </div>

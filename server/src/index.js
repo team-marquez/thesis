@@ -62,8 +62,7 @@ const resolvers = {
     weather: (a, { date }, c, d) => {
       return c.db.query.weather({ where: { day: date } }, d)
     },
-    firebaseUser: (_, data, context, info) => {
-      console.log('Hit serverside', data)
+    firebaseUser: (_, { firebaseId }, context, info) => {
       return context.db.query.users({ where: { firebaseId } }, info)
     }
   },
