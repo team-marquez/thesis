@@ -22,7 +22,8 @@ class App extends React.Component {
       visible: false,
       login: false,
       location: 'New York',
-      background: ''
+      background: '',
+      backgroundNY: ''
     }
 
     this.pickTrip = this.pickTrip.bind(this)
@@ -43,7 +44,7 @@ class App extends React.Component {
   componentDidMount() {
     let img = images[Math.floor(Math.random() * images.length)]
     console.log(img)
-    this.setState({ background: img })
+    this.setState({ background: img, backgroundNY: img })
   }
 
   // Conditional rendering function for displaying the home page and the trip page. Works on LocationModals 'Next' button.
@@ -98,8 +99,7 @@ class App extends React.Component {
 
     if (location === 'New York') {
       this.setState({
-        background:
-          'https://images.unsplash.com/photo-1523756025758-565a549d6eb6?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=d8663c5594055b93eb4401194c780668'
+        background: this.state.backgroundNY
       })
     } else if (location === 'Paris') {
       this.setState({
