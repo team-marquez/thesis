@@ -109,7 +109,7 @@ class App extends React.Component {
     } else if (location === 'Tokyo') {
       this.setState({
         background:
-          'https://images.unsplash.com/photo-1527596773609-5f8544271a51?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=e87e76e6629f4f774e01de9997672597'
+          'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ebd34ddde3f2b4ea6dcdc9b7d329b774&auto=format&fit=crop&w=2850&q=80'
       })
     }
   }
@@ -185,20 +185,20 @@ class App extends React.Component {
                     >
                       {this.state.location === 'New York' ? (
                         <div>
-                          <div style={{ marginBottom: '8%' }}>New York</div>
+                          <div style={{ marginBottom: '8%', textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black' }}>New York</div>
                           <div style={{ width: '29%', margin: 'auto' }}>
                             <UserPreferences pickTrip={this.pickTrip} able={false}/>
                           </div>
                         </div>
                       ) : this.state.location === 'Tokyo' ? (
                         <div>
-                          <div style={{ marginBottom: '13%' }}>Tokyo</div>
+                          <div style={{ marginBottom: '13%', textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black' }}>Tokyo</div>
                           <div style={{ width: '47%', margin: 'auto' }}>
                             <UserPreferences pickTrip={this.pickTrip} able={true}/>
                           </div>
                         </div>
                       ) : (<div>
-                        <div style={{ marginBottom: '15%' }}>Paris</div>
+                        <div style={{ marginBottom: '15%',textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black' }}>Paris</div>
                         <div style={{ width: '57%', margin: 'auto' }}>
                           <UserPreferences pickTrip={this.pickTrip} able={true}/>
                         </div>
