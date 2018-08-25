@@ -211,3 +211,5 @@ class DayCard extends React.Component {
 }
 
 export default DayCard
+
+// Refactor ternary to conditional, handle in componentDidMount function if/else
