@@ -23,7 +23,8 @@ class Cont extends React.Component {
     super(props)
     this.state = {
       dayCardUp: false,
-      day: {}
+      day: {},
+      counter: 0
     }
     this.genDayCard = this.genDayCard.bind(this)
     this.flip = this.flip.bind(this)

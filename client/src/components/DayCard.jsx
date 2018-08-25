@@ -19,11 +19,20 @@ const getItems = (count, array) =>
   }))
 
 // a little function to help us with reordering the result
+// const reorder = (list, startIndex, endIndex) => {
+//   const result = Array.from(list)
+//   const [removed] = result.splice(startIndex, 1)
+//   result.splice(endIndex, 0, removed)
+
+//   return result
+// }
+
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list)
-  const [removed] = result.splice(startIndex, 1)
-  result.splice(endIndex, 0, removed)
-
+  let start = result[startIndex]
+  let end = result[endIndex]
+  result[startIndex] = end
+  result[endIndex] = start
   return result
 }
 
@@ -60,15 +69,21 @@ class DayCard extends React.Component {
   }
 
   onDragEnd(result) {
+    console.table(JSON.stringify(result, null, 2))
     // dropped outside the list
     if (!result.destination) {
+      return
+    }
+    if (result.source.index % 2 !== result.destination.index % 2) {
+      console.log(`result.source % 2 = ${result.source % 2}
+      result.destination % 2 = ${result.destination % 2}`)
       return
     }
 
     const items = reorder(
       this.state.items,
       result.source.index,
-      result.destination.index
+      result.destination.index  
     )
 
     this.setState({

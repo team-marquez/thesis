@@ -33,3 +33,15 @@
 .onboardingButton {
     width: 45%
 }
+
+.expandIcon:hover {
+    color: green
+}
+
+.rainy:hover {
+    color: blue
+}
+
+.sunny:hover {
+    color: orange
+}
