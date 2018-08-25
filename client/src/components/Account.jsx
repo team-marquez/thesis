@@ -143,6 +143,7 @@ class Account extends React.Component {
           createWithEmail={this.createWithEmail}
           loginWithFacebook={this.loginWithFacebook}
           loginWithGoogle={this.loginWithGoogle}
+          openOnboarding={this.props.openOnboarding}
           />
 
           <Login index={this.state.index} closePopup={this.closePopup} open={this.state.open}
