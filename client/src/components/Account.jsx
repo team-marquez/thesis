@@ -142,7 +142,7 @@ class Account extends React.Component {
        <div>
         {this.props.loggedIn === true ? <div>
             <Popup trigger={
-              <Image src={this.props.image} avatar onClick={this.props.handleButtonClick} style={{position: 'absolute', top: '4%', left: '94%'}} />
+              <Image src={this.props.image} avatar onClick={this.props.handleButtonClick} style={{height: '9%', width: '5%', position: 'absolute', top: '3%', left: '93%', cursor:'pointer'}} />
             } content='User Profile'/>
           </div> : <div style={{position: 'absolute', top: '4%', left: '86%'}}>
             <Button.Group>
