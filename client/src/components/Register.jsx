@@ -66,7 +66,7 @@ class Register extends React.Component {
                     icon="world"
                     onClick={() => {
                       this.props.createWithEmail()
-                      // this.props.openOnboarding()
+                      this.props.openOnboarding()
                     }}
                   />
                   <br />
@@ -77,7 +77,7 @@ class Register extends React.Component {
                       className="google plus square icon huge"
                       onClick={() => {
                         this.props.loginWithGoogle()
-                        // this.props.openOnboarding()
+                        this.props.openOnboarding()
                       }}
                     />
                   </a>
@@ -86,7 +86,7 @@ class Register extends React.Component {
                       className="facebook square icon huge"
                       onClick={() => {
                         this.props.loginWithFacebook()
-                        // this.props.openOnboarding()
+                        this.props.openOnboarding()
                       }}
                     />
                   </a>
