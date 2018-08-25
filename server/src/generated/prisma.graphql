@@ -1,5 +1,5 @@
 # source: http://34.234.236.21:4466
-# timestamp: Thu Aug 23 2018 10:58:09 GMT-0400 (EDT)
+# timestamp: Fri Aug 24 2018 16:34:14 GMT-0400 (EDT)
 
 type Activity implements Node {
   id: ID!
@@ -1417,6 +1417,7 @@ input TripWhereUniqueInput {
 
 type Users implements Node {
   id: ID!
+  firebaseId: String
   username: String!
   password: String!
   age: Int!
@@ -1435,6 +1436,7 @@ type UsersConnection {
 }
 
 input UsersCreateInput {
+  firebaseId: String
   username: String!
   password: String!
   age: Int!
@@ -1454,6 +1456,8 @@ type UsersEdge {
 enum UsersOrderByInput {
   id_ASC
   id_DESC
+  firebaseId_ASC
+  firebaseId_DESC
   username_ASC
   username_DESC
   password_ASC
@@ -1470,6 +1474,7 @@ enum UsersOrderByInput {
 
 type UsersPreviousValues {
   id: ID!
+  firebaseId: String
   username: String!
   password: String!
   age: Int!
@@ -1516,6 +1521,7 @@ input UsersSubscriptionWhereInput {
 }
 
 input UsersUpdateInput {
+  firebaseId: String
   username: String
   password: String
   age: Int
@@ -1572,6 +1578,46 @@ input UsersWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  firebaseId: String
+
+  """All values that are not equal to given value."""
+  firebaseId_not: String
+
+  """All values that are contained in given list."""
+  firebaseId_in: [String!]
+
+  """All values that are not contained in given list."""
+  firebaseId_not_in: [String!]
+
+  """All values less than the given value."""
+  firebaseId_lt: String
+
+  """All values less than or equal the given value."""
+  firebaseId_lte: String
+
+  """All values greater than the given value."""
+  firebaseId_gt: String
+
+  """All values greater than or equal the given value."""
+  firebaseId_gte: String
+
+  """All values containing the given string."""
+  firebaseId_contains: String
+
+  """All values not containing the given string."""
+  firebaseId_not_contains: String
+
+  """All values starting with the given string."""
+  firebaseId_starts_with: String
+
+  """All values not starting with the given string."""
+  firebaseId_not_starts_with: String
+
+  """All values ending with the given string."""
+  firebaseId_ends_with: String
+
+  """All values not ending with the given string."""
+  firebaseId_not_ends_with: String
   username: String
 
   """All values that are not equal to given value."""
@@ -1703,6 +1749,7 @@ input UsersWhereInput {
 
 input UsersWhereUniqueInput {
   id: ID
+  firebaseId: String
 }
 
 type Weather implements Node {

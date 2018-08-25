@@ -5,7 +5,6 @@ class UserProfile extends React.Component {
   constructor(props) {
 		super(props)
 		this.state = {
-			visible: false,
 			trip: 'current',
 			pastTrips: [{img: 'https://i.imgur.com/SDrLtgc.jpg'}, {img: 'https://i.imgur.com/L9ov00i.jpg'}, {img: 'https://i.imgur.com/z6GNhq3.jpg'}]
 		}
@@ -40,42 +39,10 @@ class UserProfile extends React.Component {
 	}
 
 	render () {
-		const { visible } = this.state
 		return (
 			<div>
 				<div>
-					<Segment clearing style={{backgroundImage: 'linear-gradient(lightCyan, white)'}}>
-						<Header as='h2' icon='user circle' content={this.props.user} floated='right'/>
-						<Button onClick={this.handleButtonClick} floated='left' style={{marginTop: '3px'}}>Settings</Button>
-					</Segment>
-				</div>
-
-				<div>
-					<Sidebar.Pushable as={Segment}>
-						<Sidebar
-							as={Menu}
-							animation='overlay'
-							icon='labeled'
-							inverted
-							onHide={this.handleSidebarHide}
-							vertical
-							visible={visible}
-							width='thin'
-						>
-							<Menu.Item as='a' onClick = {this.props.home}>
-								<Icon name='home' />
-								Home
-							</Menu.Item>
-							<Menu.Item as='a' onClick = {this.changeToCurrent}>
-								<Icon name='paper plane' />
-								Current Trip
-							</Menu.Item>
-							<Menu.Item as='a' onClick = {this.changeToPast}>
-								<Icon name='camera' />
-								Past Trips
-							</Menu.Item>
-						</Sidebar>
-
+					<Sidebar.Pushable>
 						{this.state.trip === 'current' ? (
 						<Sidebar.Pusher dimmed={visible}>
 							<Segment basic>
@@ -111,7 +78,7 @@ class UserProfile extends React.Component {
 							)
 						})}						
 						</div>
-					)}	
+					)}
 					</Sidebar.Pushable>
 				</div>
 
