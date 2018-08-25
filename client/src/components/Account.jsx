@@ -1,6 +1,4 @@
 import React from 'react'
-import gql from 'graphql-tag'
-import { Query, Mutation } from 'react-apollo'
 
 import { Button, Portal, Segment, Header, Input, Icon, Image, Popup } from 'semantic-ui-react'
 import firebase from './firebase.js'
@@ -137,6 +135,16 @@ class Account extends React.Component {
           </div>}
 
         <div>
+          {this.state.index === 2 ? 
+          <Login index={this.state.index} closePopup={this.closePopup} open={this.state.open}
+          emailVariable={this.emailVariable}
+          passwordVariable={this.passwordVariable}
+          loginWithFacebook={this.loginWithFacebook}
+          loginWithGoogle={this.loginWithGoogle}
+          loginWithEmail={this.loginWithEmail}
+          /> : null}
+
+          {this.state.index === 1 ?
           <Register index={this.state.index} closePopup={this.closePopup} open={this.state.open}
           emailVariable={this.emailVariable}
           passwordVariable={this.passwordVariable}
@@ -144,17 +152,9 @@ class Account extends React.Component {
           loginWithFacebook={this.loginWithFacebook}
           loginWithGoogle={this.loginWithGoogle}
           openOnboarding={this.props.openOnboarding}
-          />
-
-          <Login index={this.state.index} closePopup={this.closePopup} open={this.state.open}
-          emailVariable={this.emailVariable}
-          passwordVariable={this.passwordVariable}
-          loginWithFacebook={this.loginWithFacebook}
-          loginWithGoogle={this.loginWithGoogle}
-          loginWithEmail={this.loginWithEmail}
-          />
-        </div>
+          /> : null}
       </div>
+    </div>
   )}
 }
 
