@@ -1,6 +1,6 @@
 import React from 'react'
 import gql from 'graphql-tag'
-import { Mutation } from 'react-apollo'
+import { Mutation, ApolloConsumer } from 'react-apollo'
 
 import { Modal, Input, Icon, Header, Button } from 'semantic-ui-react'
 
@@ -29,7 +29,11 @@ class Register extends React.Component {
 
   render() {
     return (
-      <Mutation mutation={CREATE_USERS}>
+      <Mutation mutation={CREATE_USERS} update={(cache, {data: {createUsers}}) => {
+        console.log(createUsers.id)
+        console.log('it works')
+        cache.writeData({data:{userId: createUsers.id}})
+      }}>
         {(createUsers, { data }) => (
           <div>
             <Modal
@@ -88,8 +92,7 @@ class Register extends React.Component {
                       await createUsers({
                         variables: {
                           firebaseId: this.props.userId
-                        }
-                      })
+                        }},"{id}")
 
                       this.props.openOnboarding()
                     }}

@@ -12,6 +12,8 @@ const FIREBASE_USER = gql`
   }
 `
 
+
+
 class Login extends React.Component {
   constructor(props) {
     super(props)
@@ -78,8 +80,8 @@ class Login extends React.Component {
                       })
 
                       console.log('Database ID', this.props.userId)
-
-                      this.props.handleUserId(data.firebaseUser.id)
+                      client.writeData({data: {userId: data.firebaseUser.id}})
+                      // this.props.handleUserId(data.firebaseUser.id)
                     }}
                   />
                 </a>
@@ -88,13 +90,15 @@ class Login extends React.Component {
                     className="facebook square icon huge"
                     onClick={async () => {
                       await this.props.loginWithFacebook()
-
+                      console.log(data)
                       const { data } = await client.query({
                         query: FIREBASE_USER,
                         variables: { firebaseId: 'test' }
                       })
 
-                      this.props.handleUserId(data.firebaseUser.id)
+                      client.writeData({data: {userId: data.firebaseUser.id}})
+                
+                      // this.props.handleUserId(data.firebaseUser.id)
                     }}
                   />
                 </a>
