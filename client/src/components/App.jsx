@@ -181,7 +181,7 @@ class App extends React.Component {
                         <UserPreferences pickTrip={this.pickTrip} />
                       </div>
                     </div>
-                    {/* <Onboarding open={this.state.openOnboarding} closer = {this.closeFirstOnboard} /> */}
+                    <Onboarding open={this.state.openOnboarding} closer = {this.closeFirstOnboard} />
                   </div>
                 ) : (
                   <div style={{ textAlign: 'center' }}>
