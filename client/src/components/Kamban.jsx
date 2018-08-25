@@ -29,7 +29,7 @@ const getItems = (count, array) =>
                 fontWeight: "bold",
               }}
             >
-              {activity.name.length > 20 ? activity.name.substring(0, 40) : activity.name}
+              {activity.name.length > 20 ? activity.name.substring(0, 30) : activity.name}
             </div>
             <br />
             <div
@@ -77,7 +77,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: "none",
   padding: "10px",
-  margin: 0,
+  margin: '-11px 0px 0px',
 
   // change background colour if dragging
   background: isDragging ? "lightgreen" : "rgba(0,0,0,0.0)",
@@ -89,7 +89,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? "rgba(0,0,0,0.0)" : "rgba(0,0,0,0.0)",
   display: "flex",
-  padding: grid,
+  padding: '20px 0px',
   overflow: "auto"
 })
 
@@ -171,7 +171,7 @@ class Kamban extends React.Component {
       <ApolloConsumer>
       {(client) => {
       return (
-      <div>
+      <div style={{marginBottom: '15px'}}>
         <div>
           <Segment
             clearing
@@ -217,7 +217,7 @@ class Kamban extends React.Component {
                         key={index}
                         style={{
                           border: "2px solid gray",
-                          height: "725px",
+                          height: "100%",
                           width: "300px",
                           marginRight: "10px",
                           float: "right",
@@ -228,7 +228,7 @@ class Kamban extends React.Component {
                         }}
                       >
                         <div>
-                          <div style={{display: 'inline-block', float: 'right', marginLeft: '-20px'}}>
+                          <div style={{display: 'inline-block', float: 'right', margin: '10px 5px 0px -20px'}}>
                             {this.props.temp[index].rain_chance === 0
                                 ? <Icon name="rain" size='large'/>
                                 : <Icon name='sun' size='large'/>}
@@ -247,7 +247,6 @@ class Kamban extends React.Component {
                               ? "Little to No chance of rain"
                               : "High chance of rain"}
                           </div>
-                          <Button onClick={() => this.props.flip(item.orig, index)}>Modal</Button>
                           <hr />
                         </div>
                         <br />
@@ -285,9 +284,10 @@ class Kamban extends React.Component {
                                   >
                                     STATS
                                   </Button>
+                                  <Button onClick={() => this.props.flip(item.orig, index)}>EXPAND</Button>
                                 </div>
                                 <div>
-                                  <Graphs vis={this.state[item.id]} budget={(this.state.dayBudget[index]/this.state.totalBudget)*100} breakfast={this.state.breakfast[index]} lunch={this.state.lunch[index]} dinner={this.state.dinner[index]} />
+                                  <Graphs style={{marginTop: '-10px'}} vis={this.state[item.id]} budget={(this.state.dayBudget[index]/this.state.totalBudget)*100} breakfast={this.state.breakfast[index]} lunch={this.state.lunch[index]} dinner={this.state.dinner[index]} />
                                   <br/>
                                   <br/>
                                   <hr></hr>
@@ -304,6 +304,7 @@ class Kamban extends React.Component {
                                   >
                                     TRIP
                                   </Button>
+                                  <Button onClick={() => this.props.flip(item.orig, index)}>EXPAND</Button>
                                 </div>
                               </FlexyFlipCard>
                             </div>
@@ -316,6 +317,7 @@ class Kamban extends React.Component {
                 )
               }}
             </Droppable>
+            <Button color='red' style={{width: '90%', marginTop: '-8px'}}>Confirm Trip</Button>
           </DragDropContext>
         </Grid>
       </div>)}}
