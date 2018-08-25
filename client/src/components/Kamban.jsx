@@ -26,9 +26,7 @@ const getItems = (count, array) =>
             <div
               style={{
                 float: "right",
-                color: "rgb(245, 255, 246)",
                 fontWeight: "bold",
-                textShadow: "2px 0px black"
               }}
             >
               {activity.name.length > 20 ? activity.name.substring(0, 40) : activity.name}
@@ -37,9 +35,7 @@ const getItems = (count, array) =>
             <div
               style={{
                 float: "right",
-                color: "rgb(245, 255, 246)",
                 fontWeight: "bold",
-                textShadow: "2px 0px black"
               }}
             >
               {activity.cost === null || 0
@@ -221,17 +217,22 @@ class Kamban extends React.Component {
                         key={index}
                         style={{
                           border: "2px solid gray",
-                          height: "750px",
+                          height: "725px",
                           width: "300px",
                           marginRight: "10px",
                           float: "right",
-                          backgroundImage:
+                          backgroundColor:
                             this.props.temp[index].rain_chance === 0
-                              ? "url(https://c8.alamy.com/comp/E6DJXX/freedom-tower-one-world-trade-center-new-york-ny-skyscraper-in-ny-E6DJXX.jpg)"
-                              : "url(https://78.media.tumblr.com/a9207e4a4e7c4680611259bfd6f3d341/tumblr_ns4cghz1OP1u7nuo6o1_500.jpg)"
+                              ? "rgba(58, 160, 175, 0.11)"
+                              : "rgba(108, 101, 80, 0.18)"
                         }}
                       >
                         <div>
+                          <div style={{display: 'inline-block', float: 'right', marginLeft: '-20px'}}>
+                            {this.props.temp[index].rain_chance === 0
+                                ? <Icon name="rain" size='large'/>
+                                : <Icon name='sun' size='large'/>}
+                          </div>
                           <div>
                             {`${this.props.temp[index].max_temp
                               .toString()

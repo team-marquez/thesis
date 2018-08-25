@@ -34,7 +34,7 @@ class Login extends React.Component {
         //   {(createUsers, { data }) => (
         <div>
           {this.props.index === 2 ? (
-            <Modal onClose={this.props.closePopup} open={open} size='tiny'>
+            <Modal onClose={this.props.closePopup} open={open} size="tiny">
                 <Header style={{ textAlign: 'center' }}>Log In</Header>
                 <div style={{ textAlign: 'center' }}>
                   <Input iconPosition="left" placeholder="Email" size="mini">
