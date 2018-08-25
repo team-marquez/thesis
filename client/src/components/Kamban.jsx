@@ -109,11 +109,15 @@ class Kamban extends React.Component {
       dayBudget: [],
       breakfast: [],
       lunch: [],
-      dinner: []
+      dinner: [],
+      counter: 0,
+      checkmarkColor: ['grey', 'grey', 'grey', 'grey']
     }
     this.onDragEnd = this.onDragEnd.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.getBudgets = this.getBudgets.bind(this)
+    this.incrementCounter = this.incrementCounter.bind(this)
+    this.decrementCounter = this.decrementCounter.bind(this)
   }
 
   componentDidMount () {
@@ -164,6 +168,27 @@ class Kamban extends React.Component {
 
   handleClick(int) {
     this.setState({ vis: !this.state.vis })
+  }
+
+
+  incrementCounter (index) {
+    let count = this.state.counter + 1
+    let color = this.state.checkmarkColor
+    color[index] = 'green'
+    this.setState({
+      counter: count,
+      checkmarkColor: color
+    })
+  }
+
+  decrementCounter (index) {
+    let count = this.state.counter - 1
+    let color =  this.state.checkmarkColor
+    color[index] = 'grey'
+    this.setState({
+      counter: count,
+      checkmarkColor: color
+    })
   }
 
   render() {
@@ -228,10 +253,13 @@ class Kamban extends React.Component {
                         }}
                       >
                         <div>
-                          <div style={{display: 'inline-block', float: 'right', margin: '10px 5px 0px -20px'}}>
+                          <div style={{display: 'inline-block', float: 'left', margin: '10px 0px 0px 7px'}}>
                             {this.props.temp[index].rain_chance === 0
                                 ? <Icon name="rain" size='large'/>
                                 : <Icon name='sun' size='large'/>}
+                          </div>
+                          <div style={{display: 'inline-block', float: 'right', margin: '8px 3px 0px 0px'}} onClick={() => this.props.flip(item.orig, index)}>
+                            <Icon name="expand arrows alternate" size='large'/>
                           </div>
                           <div>
                             {`${this.props.temp[index].max_temp
@@ -275,6 +303,7 @@ class Kamban extends React.Component {
                                   <div>{item.content}</div>
                                   <hr></hr>
                                   <Button
+                                    style={{float: 'left'}}
                                     onFocus={() => {
                                       let newstate = {}
                                       newstate[item.id] = !this.state[item.id]
@@ -284,7 +313,7 @@ class Kamban extends React.Component {
                                   >
                                     STATS
                                   </Button>
-                                  <Button onClick={() => this.props.flip(item.orig, index)}>EXPAND</Button>
+                                  {this.state.checkmarkColor[index] === 'grey' ? (<Icon onClick={() => this.incrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>) : (<Icon onClick={() => this.decrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>)}
                                 </div>
                                 <div>
                                   <Graphs style={{marginTop: '-10px'}} vis={this.state[item.id]} budget={(this.state.dayBudget[index]/this.state.totalBudget)*100} breakfast={this.state.breakfast[index]} lunch={this.state.lunch[index]} dinner={this.state.dinner[index]} />
@@ -304,7 +333,6 @@ class Kamban extends React.Component {
                                   >
                                     TRIP
                                   </Button>
-                                  <Button onClick={() => this.props.flip(item.orig, index)}>EXPAND</Button>
                                 </div>
                               </FlexyFlipCard>
                             </div>
@@ -317,7 +345,7 @@ class Kamban extends React.Component {
                 )
               }}
             </Droppable>
-            <Button color='red' style={{width: '90%', marginTop: '-8px'}}>Confirm Trip</Button>
+            {this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px'}}>Confirm All Trips</Button>)}
           </DragDropContext>
         </Grid>
       </div>)}}
