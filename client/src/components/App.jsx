@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Icon, Sidebar, Menu, Breadcrumb } from 'semantic-ui-react'
 
-import LoginButton from './LoginButton.jsx'
+import Account from './Account.jsx'
 import Footer from './Footer.jsx'
 import AllDays from './AllDays.jsx'
 import UserProfile from './UserProfile.jsx'
@@ -153,7 +153,7 @@ class App extends React.Component {
                       src={this.state.background}
                     />
                     <div>
-                      <LoginButton
+                      <Account
                         user={this.state.user}
                         image={this.state.image}
                         changeUser={this.changeUser}
