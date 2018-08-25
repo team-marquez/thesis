@@ -118,7 +118,7 @@ class Onboarding extends React.Component {
       let oldProgress = this.state.progress
       this.setState({progress: ++oldProgress, selectedOption: option, optionSelected: true})
     }
-  }U
+  }
 
   render() {
     const { open } = this.props
