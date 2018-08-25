@@ -187,20 +187,20 @@ class App extends React.Component {
                         <div>
                           <div style={{ marginBottom: '8%' }}>New York</div>
                           <div style={{ width: '29%', margin: 'auto' }}>
-                            <UserPreferences pickTrip={this.pickTrip} />
+                            <UserPreferences pickTrip={this.pickTrip} able={false}/>
                           </div>
                         </div>
                       ) : this.state.location === 'Tokyo' ? (
                         <div>
                           <div style={{ marginBottom: '13%' }}>Tokyo</div>
                           <div style={{ width: '47%', margin: 'auto' }}>
-                            <UserPreferences pickTrip={this.pickTrip} />
+                            <UserPreferences pickTrip={this.pickTrip} able={true}/>
                           </div>
                         </div>
                       ) : (<div>
-                        <div style={{ marginBottom: '13%' }}>Paris</div>
+                        <div style={{ marginBottom: '15%' }}>Paris</div>
                         <div style={{ width: '57%', margin: 'auto' }}>
-                          <UserPreferences pickTrip={this.pickTrip} />
+                          <UserPreferences pickTrip={this.pickTrip} able={true}/>
                         </div>
                         </div>)}
                     </div>
