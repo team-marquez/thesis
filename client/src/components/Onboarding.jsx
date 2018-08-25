@@ -299,7 +299,7 @@ class Onboarding extends React.Component {
                     e.preventDefault()
                     updateUsers({
                       variables: {
-                        id: 'cjl5f4vh800ak0846azmgib7b',
+                        id: this.props.userId,
                         trips: this.state.chosenActivities
                       }
                     })

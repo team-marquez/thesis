@@ -35,7 +35,7 @@ type Mutation {
   createUsers(
     username: String
     password: String
-    firebaseId: String!
+    firebaseId: String
   ): Users
   createWeather(
     day: String!

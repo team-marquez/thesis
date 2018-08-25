@@ -8,7 +8,7 @@ const CREATE_USERS = gql`
   mutation CreateUsers(
     $username: String
     $password: String
-    $firebaseId: String!
+    $firebaseId: String
   ) {
     createUsers(
       username: $username
@@ -63,12 +63,12 @@ class Register extends React.Component {
                 <Button
                   size="mini"
                   icon="world"
-                  onClick={() => {
-                    this.props.createWithEmail()
+                  onClick={ async () => {
+                    await this.props.createWithEmail()
 
-                    createUsers({
+                    await createUsers({
                       variables: {
-                        username: this.props.username,
+                        username: this.props.email,
                         password: this.props.password
                       }
                     })
@@ -82,10 +82,10 @@ class Register extends React.Component {
                 <a>
                   <i
                     className="google plus square icon huge"
-                    onClick={ () => {
-                      this.props.loginWithGoogle()
+                    onClick={ async () => {
+                      await this.props.loginWithGoogle()
 
-                      createUsers({
+                      await createUsers({
                         variables: {
                           firebaseId: this.props.userId
                         }
@@ -98,10 +98,10 @@ class Register extends React.Component {
                 <a>
                   <i
                     className="facebook square icon huge"
-                    onClick={() => {
-                      this.props.loginWithFacebook()
+                    onClick={ async () => {
+                      await this.props.loginWithFacebook()
 
-                      createUsers({
+                      await createUsers({
                         variables: {
                           firebaseId: this.props.userId
                         }

@@ -85,10 +85,13 @@ const resolvers = {
       )
 
       client.send(new rqs.AddUser(creation.id)).then(() => {
+        console.log('Created Recombee user')
         return creation
       })
     },
     updateUsers: (_, { id, trips }, context, info) => {
+      console.log('Updated trips for user', id)
+
       trips.forEach(trip => {
         context.db.mutation.updateUsers(
           {

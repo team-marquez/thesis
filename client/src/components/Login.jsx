@@ -52,12 +52,12 @@ class Login extends React.Component {
                   size="mini"
                   icon="world"
                   onClick={async () => {
-                    this.props.loginWithEmail()
+                    await this.props.loginWithEmail()
 
-                    const { data } = await client.query({
-                      query: FIREBASE_USER,
-                      variables: { firebaseId: 'test' }
-                    })
+                    // const { data } = await client.query({
+                    //   query: FIREBASE_USER,
+                    //   variables: { firebaseId: 'test' }
+                    // })
 
                     this.props.handleUserId(data.firebaseUser.id)
                   }}
@@ -79,14 +79,23 @@ class Login extends React.Component {
 
                       console.log('Database ID', this.props.userId)
 
-                      // this.props.handleUserId(data.firebaseUser.id)
+                      this.props.handleUserId(data.firebaseUser.id)
                     }}
                   />
                 </a>
                 <a>
                   <i
                     className="facebook square icon huge"
-                    onClick={this.props.loginWithFacebook}
+                    onClick={async () => {
+                      await this.props.loginWithFacebook()
+
+                      const { data } = await client.query({
+                        query: FIREBASE_USER,
+                        variables: { firebaseId: 'test' }
+                      })
+
+                      this.props.handleUserId(data.firebaseUser.id)
+                    }}
                   />
                 </a>
               </div>

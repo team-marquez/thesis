@@ -75,55 +75,56 @@ class Account extends React.Component {
   // Firebase Auth with Google, not saving sessions.
   loginWithGoogle () {
     const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider)
+    return firebase.auth().signInWithPopup(provider)
     .then(results => {
       console.log(results)
       this.props.changeUser(results.additionalUserInfo.profile.given_name, results.additionalUserInfo.profile.picture)
       this.handleUserId(results.additionalUserInfo.profile.id)
       this.props.handleLogin()
+
+      this.closePopup()
     })
-    this.closePopup()
   }
 
   // Firebase Auth with Facebook, not saving sessions.
   loginWithFacebook () {
     const provider = new firebase.auth.FacebookAuthProvider()
-    firebase.auth().signInWithPopup(provider)
+    return firebase.auth().signInWithPopup(provider)
     .then(results => {
       console.log(results)
       this.props.changeUser(results.additionalUserInfo.profile.name, results.additionalUserInfo.profile.picture.data.url)
       this.handleUserId(results.additionalUserInfo.profile.id)
       this.props.handleLogin()
+      
+      this.closePopup()
     })
     .catch(err => console.log(err))
-    this.closePopup()
   }
 
   //Firebase Auth User Creation with Email/Password
   createWithEmail () {
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+    return firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
     .then(response => {
-      console.log('Response from firebase', response)
+      console.log('Created user successfully', response)
+      this.closePopup()
     }).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
+      console.error('Error creating user', error)
     })
-    this.closePopup()
   }
 
   //Firebase Auth User Login with Email/Password
   loginWithEmail () {
-    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    return firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
     .then(results => {
       this.props.handleLogin()
+      this.closePopup()
     })
     .catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
     })
-    this.closePopup()
   }
-
+  
   //Check if user is logged in
   checkUserLoggedIn () {
     firebase.auth().onAuthStateChanged((user) => {
