@@ -255,11 +255,11 @@ class Kamban extends React.Component {
                         <div>
                           <div style={{display: 'inline-block', float: 'left', margin: '10px 0px 0px 7px'}}>
                             {this.props.temp[index].rain_chance === 0
-                                ? <Icon name="rain" size='large'/>
-                                : <Icon name='sun' size='large'/>}
+                                ? <Icon className='sunny' name='sun' size='large'/>
+                                : <Icon className='rainy' name="rain" size='large'/>}
                           </div>
                           <div style={{display: 'inline-block', float: 'right', margin: '8px 3px 0px 0px'}} onClick={() => this.props.flip(item.orig, index)}>
-                            <Icon name="expand arrows alternate" size='large'/>
+                            <Icon className='expandIcon' name="expand arrows alternate" size='large'/>
                           </div>
                           <div>
                             {`${this.props.temp[index].max_temp
@@ -304,6 +304,8 @@ class Kamban extends React.Component {
                                   <hr></hr>
                                   <Button
                                     style={{float: 'left'}}
+                                    basic 
+                                    color='rgba(58, 160, 175, 0.11)'
                                     onFocus={() => {
                                       let newstate = {}
                                       newstate[item.id] = !this.state[item.id]
@@ -321,6 +323,8 @@ class Kamban extends React.Component {
                                   <br/>
                                   <hr></hr>
                                   <Button
+                                    basic 
+                                    color='rgba(58, 160, 175, 0.11)'
                                     onFocus={() => {
                                       console.log(item.id)
                                       setTimeout(() => {
