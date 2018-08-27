@@ -392,6 +392,7 @@ let timeOutMuseums = website => {
     .get(website)
     .then(response => {
       let $ = cheerio.load(response.data)
+      console.log(response.data)
       let item = {}
       $('#content').each((index, element) => {
         item.name = $(element)
@@ -728,7 +729,7 @@ let manualScrape = async () => {
 // })
 // timeOutShopping('https://www.timeout.com/newyork/shopping/chelsea-market-new-york-ny').then(data => console.log(data))
 
-// timeOutMuseums('https://www.timeout.com/newyork/museums/guggenheim-new-york').then(data => console.log(data))
+timeOutMuseums('https://www.timeout.com/newyork/museums/guggenheim-new-york')
 
 
 
