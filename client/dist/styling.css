@@ -97,6 +97,7 @@
 
 .titleCost {
 	display: inline-block;
+	margin-bottom: 7%;
 }
 
 .actCost {
@@ -118,6 +119,24 @@
 	margin-top: -5%
 }
 
+.freeTime {
+	float: left;
+	color: red;
+}
+
+.freeTime:hover {
+	transform: scale(1.2)
+}
+
+.nextAct {
+	float: right;
+	color: green;
+}
+
+.nextAct:hover {
+	transform: scale(1.2)
+}
+
 /**************************
         Footer 
 **************************/
@@ -127,7 +146,7 @@
 }
 
 /**************************
-					Kamban
+		  Kamban
 **************************/
 
 .kambanAct {
