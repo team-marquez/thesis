@@ -8,6 +8,7 @@ import UserProfile from './UserProfile.jsx'
 import Onboarding from './Onboarding.jsx'
 import UserPreferences from './UserPreferences.jsx'
 import firebase from './firebase.js'
+import { images } from './helpers/splashImages.js'
 
 class App extends React.Component {
   constructor(props) {
@@ -21,8 +22,8 @@ class App extends React.Component {
       visible: false,
       login: false,
       location: 'New York',
-      background:
-        'https://images.unsplash.com/photo-1523756025758-565a549d6eb6?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=d8663c5594055b93eb4401194c780668'
+      background: '',
+      backgroundNY: ''
     }
 
     this.pickTrip = this.pickTrip.bind(this)
@@ -37,6 +38,13 @@ class App extends React.Component {
     this.handleLogout = this.handleLogout.bind(this)
 
     this.locationChange = this.locationChange.bind(this)
+  }
+
+  // Set random background image from our helper splashImage file.
+  componentDidMount() {
+    let img = images[Math.floor(Math.random() * images.length)]
+    console.log(img)
+    this.setState({ background: img, backgroundNY: img })
   }
 
   // Conditional rendering function for displaying the home page and the trip page. Works on LocationModals 'Next' button.
@@ -91,8 +99,7 @@ class App extends React.Component {
 
     if (location === 'New York') {
       this.setState({
-        background:
-          'https://images.unsplash.com/photo-1523756025758-565a549d6eb6?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=d8663c5594055b93eb4401194c780668'
+        background: this.state.backgroundNY
       })
     } else if (location === 'Paris') {
       this.setState({
@@ -102,7 +109,7 @@ class App extends React.Component {
     } else if (location === 'Tokyo') {
       this.setState({
         background:
-          'https://images.unsplash.com/photo-1527596773609-5f8544271a51?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=e87e76e6629f4f774e01de9997672597'
+          'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ebd34ddde3f2b4ea6dcdc9b7d329b774&auto=format&fit=crop&w=2850&q=80'
       })
     }
   }
@@ -148,7 +155,7 @@ class App extends React.Component {
                       style={{
                         minWidth: '100vw',
                         minHeight: '100vh',
-                        filter: 'grayscale(100%)'
+                        filter: 'grayscale(75%)'
                       }}
                       src={this.state.background}
                     />
@@ -176,10 +183,26 @@ class App extends React.Component {
                         transform: 'translate(-50%, -50%)'
                       }}
                     >
-                      <div style={{ marginBottom: '8%' }}>New York</div>
-                      <div style={{ width: '29%', margin: 'auto' }}>
-                        <UserPreferences pickTrip={this.pickTrip} />
-                      </div>
+                      {this.state.location === 'New York' ? (
+                        <div>
+                          <div style={{ marginBottom: '8%', textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black' }}>New York</div>
+                          <div style={{ width: '29%', margin: 'auto' }}>
+                            <UserPreferences pickTrip={this.pickTrip} able={false}/>
+                          </div>
+                        </div>
+                      ) : this.state.location === 'Tokyo' ? (
+                        <div>
+                          <div style={{ marginBottom: '13%', textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black' }}>Tokyo</div>
+                          <div style={{ width: '47%', margin: 'auto' }}>
+                            <UserPreferences pickTrip={this.pickTrip} able={true}/>
+                          </div>
+                        </div>
+                      ) : (<div>
+                        <div style={{ marginBottom: '15%',textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black' }}>Paris</div>
+                        <div style={{ width: '57%', margin: 'auto' }}>
+                          <UserPreferences pickTrip={this.pickTrip} able={true}/>
+                        </div>
+                        </div>)}
                     </div>
                     <Onboarding open={this.state.openOnboarding} closer = {this.closeFirstOnboard} />
                   </div>
@@ -192,22 +215,24 @@ class App extends React.Component {
             ) : (
               <UserProfile home={this.goHome} user={this.state.user} />
             )}
-            {/* <div style={{ position: 'absolute', bottom: '5%', left: '45%' }}>
-              <Breadcrumb>
-                <Breadcrumb.Section onClick={this.locationChange}>
-                  Tokyo
-                </Breadcrumb.Section>
-                <Breadcrumb.Divider icon="map pin" />
-                <Breadcrumb.Section onClick={this.locationChange}>
-                  Paris
-                </Breadcrumb.Section>
-                <Breadcrumb.Divider icon="map pin" />
-                <Breadcrumb.Section onClick={this.locationChange}>
-                  New York
-                </Breadcrumb.Section>
-                <Breadcrumb.Divider icon="map pin" />
-              </Breadcrumb>
-            </div> */}
+            {this.state.pickedTrip === false ? (
+              <div style={{ position: 'absolute', bottom: '5%', left: '45%' }}>
+                <Breadcrumb>
+                  <Breadcrumb.Section onClick={this.locationChange}>
+                    Tokyo
+                  </Breadcrumb.Section>
+                  <Breadcrumb.Divider icon="map pin" />
+                  <Breadcrumb.Section onClick={this.locationChange}>
+                    Paris
+                  </Breadcrumb.Section>
+                  <Breadcrumb.Divider icon="map pin" />
+                  <Breadcrumb.Section onClick={this.locationChange}>
+                    New York
+                  </Breadcrumb.Section>
+                  <Breadcrumb.Divider icon="map pin" />
+                </Breadcrumb>
+              </div>
+            ) : (<div></div>)}
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </div>
