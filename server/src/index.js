@@ -12,7 +12,7 @@ const fs = require('fs')
 const recombee = require('recombee-api-client')
 const rqs = recombee.requests
 
-const client = new recombee.ApiClient('hack-reactor', 'KiTAOmy8RdNPzSZgspvDzVxivkFcsTxXtRA284YbtlyLUZvdoyq1UjVN2sFZhnCD')
+const client = new recombee.ApiClient('hack-reactor', '__key__')
 const prisma = new Prisma({
   typeDefs: path.join(__dirname, 'generated/prisma.graphql'),
   endpoint: 'http://34.234.236.21:4466'
