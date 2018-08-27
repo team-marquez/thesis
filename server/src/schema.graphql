@@ -12,6 +12,7 @@ input Pref {
   IO: Int!
   FA: Int!
   kidFriendly: Boolean !
+  userId: String
 }
 
 input Dates{

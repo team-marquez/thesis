@@ -8,11 +8,11 @@ const integrity = require('./bois/integrity_boi.js')
 const budget = require('./bois/budget_boi.js')
 const recommendation = require('./bois/recommendation_boi.js')
 const shuffle = require('shuffle-array')
-
+const fs = require('fs')
 const recombee = require('recombee-api-client')
 const rqs = recombee.requests
 
-const client = new recombee.ApiClient('hack-reactor', '__key__')
+const client = new recombee.ApiClient('hack-reactor', 'KiTAOmy8RdNPzSZgspvDzVxivkFcsTxXtRA284YbtlyLUZvdoyq1UjVN2sFZhnCD')
 const prisma = new Prisma({
   typeDefs: path.join(__dirname, 'generated/prisma.graphql'),
   endpoint: 'http://34.234.236.21:4466'
@@ -46,8 +46,20 @@ prisma.query
 const resolvers = {
   Query: {
     userPrefs: async (_, pref, context, info) => {
-      let recs = restaurants.concat(activities)
-      recs = shuffle(recs, { copy: true })
+      let {userId} = pref.pref;
+      if (userId !== 'anon'){
+        console.log('logged in paths')
+        try {
+        var recs = await recommendation.getRecs(userId)
+        recs = shuffle(recs.concat(restaurants), {copy: true})
+      } catch (e){
+        console.error(e)
+      }
+      } else {
+        console.log('anon paths')
+        var recs = restaurants.concat(activities)
+        recs = shuffle(recs, { copy: true })
+      }
       test = await weather.weatherBoi(pref)
       recs2 = budget.budgetBoi(recs, test)
       test = assembly.assemblyBoi(recs2, test)
@@ -88,6 +100,8 @@ const resolvers = {
         console.log('Created Recombee user')
         return creation
       })
+
+      return creation
     },
     updateUsers: (_, { id, trips }, context, info) => {
       console.log('Updated trips for user', id)
