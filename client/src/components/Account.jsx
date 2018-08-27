@@ -1,8 +1,6 @@
 import React from 'react'
-import gql from 'graphql-tag'
-import { Query, Mutation } from 'react-apollo'
 
-import { Button, Portal, Segment, Header, Input, Icon, Image, Popup } from 'semantic-ui-react'
+import { Button, Image, Popup } from 'semantic-ui-react'
 import firebase from './firebase.js'
 import Login from './Login.jsx'
 import Register from './Register.jsx'
@@ -14,17 +12,23 @@ class Account extends React.Component {
       open: false,
       index: 0,
       email: '',
-      password: ''
+      password: '',
+      userId: ''
     }
     
     this.openSignIn = this.openSignIn.bind(this)
     this.openLogIn = this.openLogIn.bind(this)
     this.closePopup = this.closePopup.bind(this)
+
     this.loginWithGoogle = this.loginWithGoogle.bind(this)
     this.loginWithFacebook = this.loginWithFacebook.bind(this)
     this.loginWithEmail = this.loginWithEmail.bind(this)
     this.createWithEmail = this.createWithEmail.bind(this)
     this.checkUserLoggedIn = this.checkUserLoggedIn.bind(this)
+    
+    this.handleUserId = this.handleUserId.bind(this)
+    this.emailVariable = this.emailVariable.bind(this)
+    this.passwordVariable = this.passwordVariable.bind(this)
   }
 
   // Checks the session from the start, and will change the picture and username of the user if they are already logged in.
@@ -63,52 +67,64 @@ class Account extends React.Component {
     })
   }
 
+  handleUserId (id) {
+    this.setState({userId: id})
+    console.log(this.state.userId)
+  }
+
   // Firebase Auth with Google, not saving sessions.
   loginWithGoogle () {
     const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider)
+    return firebase.auth().signInWithPopup(provider)
     .then(results => {
+      console.log(results)
       this.props.changeUser(results.additionalUserInfo.profile.given_name, results.additionalUserInfo.profile.picture)
+      this.handleUserId(results.additionalUserInfo.profile.id)
       this.props.handleLogin()
+
+      this.closePopup()
     })
-    this.closePopup()
   }
 
   // Firebase Auth with Facebook, not saving sessions.
   loginWithFacebook () {
     const provider = new firebase.auth.FacebookAuthProvider()
-    firebase.auth().signInWithPopup(provider)
-    .then(results => {      
+    return firebase.auth().signInWithPopup(provider)
+    .then(results => {
+      console.log(results)
       this.props.changeUser(results.additionalUserInfo.profile.name, results.additionalUserInfo.profile.picture.data.url)
+      this.handleUserId(results.additionalUserInfo.profile.id)
       this.props.handleLogin()
+      
+      this.closePopup()
     })
     .catch(err => console.log(err))
-    this.closePopup()
   }
 
   //Firebase Auth User Creation with Email/Password
   createWithEmail () {
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(response => {
+    return firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+    .then(response => {
+      console.log('Created user successfully', response)
+      this.closePopup()
     }).catch(function(error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-    });
-    this.closePopup()
+      console.error('Error creating user', error)
+    })
   }
 
   //Firebase Auth User Login with Email/Password
   loginWithEmail () {
-    firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    return firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
     .then(results => {
       this.props.handleLogin()
+      this.closePopup()
     })
     .catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
-    });
-    this.closePopup()
+    })
   }
-
+  
   //Check if user is logged in
   checkUserLoggedIn () {
     firebase.auth().onAuthStateChanged((user) => {
@@ -118,7 +134,7 @@ class Account extends React.Component {
       } else {
         this.props.handleLogout()
       }
-    });
+    })
   }
 
   render () {
@@ -137,6 +153,18 @@ class Account extends React.Component {
           </div>}
 
         <div>
+          {this.state.index === 2 ? 
+          <Login closePopup={this.closePopup} open={this.state.open}
+          emailVariable={this.emailVariable}
+          passwordVariable={this.passwordVariable}
+          loginWithFacebook={this.loginWithFacebook}
+          loginWithGoogle={this.loginWithGoogle}
+          loginWithEmail={this.loginWithEmail}
+          handleUserId={this.handleUserId}
+          userId={this.state.userId}
+          /> : null}
+
+          {this.state.index === 1 ?
           <Register index={this.state.index} closePopup={this.closePopup} open={this.state.open}
           emailVariable={this.emailVariable}
           passwordVariable={this.passwordVariable}
@@ -144,17 +172,12 @@ class Account extends React.Component {
           loginWithFacebook={this.loginWithFacebook}
           loginWithGoogle={this.loginWithGoogle}
           openOnboarding={this.props.openOnboarding}
-          />
-
-          <Login index={this.state.index} closePopup={this.closePopup} open={this.state.open}
-          emailVariable={this.emailVariable}
-          passwordVariable={this.passwordVariable}
-          loginWithFacebook={this.loginWithFacebook}
-          loginWithGoogle={this.loginWithGoogle}
-          loginWithEmail={this.loginWithEmail}
-          />
-        </div>
+          email={this.state.email}
+          password={this.state.password}
+          userId={this.state.userId}
+          /> : null}
       </div>
+    </div>
   )}
 }
 
