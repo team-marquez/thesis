@@ -153,7 +153,7 @@ class DayCard extends React.Component {
                                 <strong>{item.content.name}</strong>
                               </div>
                               <div className='actCost'>
-                                {item.content.cost === 0
+                                {item.content.cost === null || 0
                                   ? "Free"
                                   : item.content.cost === 1
                                     ? "$"
