@@ -71,7 +71,6 @@ class Account extends React.Component {
 
   handleUserId (id) {
     this.setState({userId: id})
-    console.log(this.state.userId)
   }
 
   // Firebase Auth with Google, not saving sessions.
@@ -133,9 +132,7 @@ class Account extends React.Component {
       if (user) {
         this.props.changeUser(user.displayName, user.photoURL)
         this.props.handleLogin()
-        console.log(user.uid)
         client.writeData({data: {userId: user.uid}})
-        //todo: fix the bug
       } else {
         this.props.handleLogout()
       }
