@@ -21,6 +21,11 @@ module.exports = {
         use: {
           loader: 'babel-loader'
         }
+      },
+      {
+        type: "javascript/auto",
+        test: /\.mjs$/,
+        include: /node_modules/
       }
     ]
   },

@@ -118,7 +118,7 @@ class Onboarding extends React.Component {
       let oldProgress = this.state.progress
       this.setState({progress: ++oldProgress, selectedOption: option, optionSelected: true})
     }
-  }U
+  }
 
   render() {
     const { open } = this.props
@@ -299,7 +299,7 @@ class Onboarding extends React.Component {
                     e.preventDefault()
                     updateUsers({
                       variables: {
-                        id: 'cjl5f4vh800ak0846azmgib7b',
+                        id: this.props.userId,
                         trips: this.state.chosenActivities
                       }
                     })
