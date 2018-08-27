@@ -36,24 +36,6 @@ class Login extends React.Component {
                       }}
                     />
                   </Input>
-                  <Input
-                    iconPosition="left"
-                    type="password"
-                    placeholder="Password"
-                    size="mini"
-                  >
-                    <Icon name="key" />
-                    <input
-                      onChange={e => {
-                        this.props.passwordVariable(e)
-                      }}
-                    />
-                  </Input>
-                  <Button
-                    size="mini"
-                    icon="world"
-                    onClick={this.props.loginWithEmail}
-                  />
                 <Input
                   iconPosition="left"
                   type="password"

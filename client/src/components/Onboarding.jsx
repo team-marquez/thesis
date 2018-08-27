@@ -134,7 +134,7 @@ class Onboarding extends React.Component {
           <div>
             <Modal open={open} size={'tiny'}>
               <Header
-                className='centerText'
+                style={{textAlign: 'center'}}
                 content={`Welcome to Let's Go To!`}
               />
               <Modal.Content style={{ fontSize: '18px' }}>
@@ -150,7 +150,7 @@ class Onboarding extends React.Component {
                   To get started, just press <em>Next</em>!
                 </p>
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   primary
                   className="onboardingButton"
@@ -173,7 +173,7 @@ class Onboarding extends React.Component {
                   selectOption={this.handleOptionSelect}
                 />
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   color="green"
                   onClick={this.showSecond}
@@ -194,7 +194,7 @@ class Onboarding extends React.Component {
                   selectOption={this.handleOptionSelect}
                   />
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   color="green"
                   onClick={this.showThird}
@@ -215,7 +215,7 @@ class Onboarding extends React.Component {
                   selectOption={this.handleOptionSelect}
                   />
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   color="green"
                   onClick={this.showFourth}
@@ -236,7 +236,7 @@ class Onboarding extends React.Component {
                   selectOption={this.handleOptionSelect}
                   />
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   color="green"
                   onClick={this.showFifth}
@@ -257,7 +257,7 @@ class Onboarding extends React.Component {
                   selectOption={this.handleOptionSelect}
                   />
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   color="green"
                   onClick={this.showSixth}
@@ -278,7 +278,7 @@ class Onboarding extends React.Component {
                   selectOption={this.handleOptionSelect}
                   />
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   color="green"
                   onClick={this.closeSixth}
@@ -298,7 +298,7 @@ class Onboarding extends React.Component {
 
                 <p>Please select the city you would Like To Go To!</p>
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   primary
                   onClick={async (e) => {
