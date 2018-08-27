@@ -60,8 +60,8 @@ class UserProfile extends React.Component {
 												<Image className='pastTripImage' src={trip.img}></Image>
 											</div>
 											<Rating icon='heart' defaultRating={3} maxRating={5} size='large'/>
-											<hr/>
 										</div>
+										<hr/>
 									</Segment>
 							)
 						})}						
