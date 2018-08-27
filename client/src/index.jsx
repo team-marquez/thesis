@@ -10,7 +10,7 @@ const defaults = {
   userId: 'anon',
 };
 
-const client = new ApolloClient({ uri: 'http://10.16.3.118:4000/graphql', clientState: {defaults} })
+const client = new ApolloClient({ uri: 'http://localhost:4000/graphql', clientState: {defaults} })
 
 render(
   <ApolloProvider client={client}>
