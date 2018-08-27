@@ -1,6 +1,6 @@
 import React from "react"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
-import { Image, Button } from "semantic-ui-react"
+import { Image, Button, Icon } from "semantic-ui-react"
 import { ApolloConsumer } from "react-apollo";
 
 // Generates an array of the amount of days selected. Content displays the image, name, cost, location, description, and link.
@@ -42,7 +42,8 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: "none",
   padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
+  margin: `${grid}px auto 0px`,
+  width: '90%',
 
   // change background colour if dragging
   background: isDragging ? "lightgreen" : "white",
@@ -55,8 +56,8 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 // Styling for when the card is being dragged.
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? "white" : "white",
-  padding: grid,
-  width: "100%"
+  width: "90%",
+  margin: 'auto'
 })
 
 class DayCard extends React.Component {
@@ -97,16 +98,6 @@ class DayCard extends React.Component {
       {(client) => {
       return (
       <div>
-        <Button
-          onClick={() => {
-            this.props.flip(this.props.day)
-            let temp = this.props.itinerary.slice()
-            temp[this.props.index] = this.state.items.map(elem => elem.orig)
-            client.writeData({ data: { itinerary: JSON.stringify(temp) } })
-          }}
-        >
-          Close
-        </Button>
         <DragDropContext onDragEnd={this.onDragEnd}>
           <Droppable droppableId="droppable">
             {(provided, snapshot) => (
@@ -115,8 +106,8 @@ class DayCard extends React.Component {
                 style={getListStyle(snapshot.isDraggingOver)}
               >
                 {this.state.items.map((item, index) => (
-                  <div>
-                    <p style={{ textAlign: "center" }}>
+                  <div key={index}>
+                    <p style={{marginTop: '10px'}} className='costAmount'>
                       {index === 0
                         ? "Breakfast"
                         : index === 1
@@ -131,6 +122,8 @@ class DayCard extends React.Component {
                                   ? "Dinner Activity"
                                   : null}
                     </p>
+                    <Icon className='freeTime' style={{marginTop: '4%'}} size='big' name='x'></Icon>
+                    <Icon className='nextAct' style={{marginTop: '3%'}} size='huge' name='triangle right'></Icon>
                     <Draggable
                       key={item.id}
                       draggableId={item.id}
@@ -147,31 +140,20 @@ class DayCard extends React.Component {
                           )}
                         >
                           <div>
-                            <div style={{ textAlign: 'left' }}>
+                            <div className='imageAlign'>
                               <a href={item.content.link} target="_blank">
                                 <Image
-                                  style={{ width: "150px", height: "100px" }}
+                                  className='dayImage'
                                   src={item.content.image}
                                 />
                               </a>
                             </div>
-                            <div
-                              style={{
-                                width: "100%",
-                                float: "right",
-                                marginTop: "-8%",
-                              }}
-                            >
-                              <div style={{ display: "inline-block" }}>
+                            <div className='actTitle'>
+                              <div className='titleCost'>
                                 <strong>{item.content.name}</strong>
                               </div>
-                              <div
-                                style={{
-                                  opacity: ".6",
-                                  float: "right"
-                                }}
-                              >
-                                {item.content.cost === 0
+                              <div className='actCost'>
+                                {item.content.cost === null || 0
                                   ? "Free"
                                   : item.content.cost === 1
                                     ? "$"
@@ -184,24 +166,10 @@ class DayCard extends React.Component {
                                           : null}
                               </div>
                             </div>
-                            <div
-                              style={{
-                                opacity: ".6",
-                                width: "100%",
-                                float: "right",
-                                marginTop: "-7%",
-                              }}
-                            >
+                            <div className='actLocation'>
                               <em>{item.content.location}</em>
                             </div>
-                            <div
-                              style={{
-                                textAlign: 'left',
-                                width: "88%",
-                                float: "right",
-                                marginTop: "-5%"
-                              }}
-                            >
+                            <div className='actDescription'>
                               {item.content.description.length > 450
                                 ? item.content.description.substring(0, 450) +
                                   " ..."
@@ -218,6 +186,17 @@ class DayCard extends React.Component {
             )}
           </Droppable>
         </DragDropContext>
+        <Button
+          style={{margin: '1%'}}
+          onClick={() => {
+            this.props.flip(this.props.day)
+            let temp = this.props.itinerary.slice()
+            temp[this.props.index] = this.state.items.map(elem => elem.orig)
+            client.writeData({ data: { itinerary: JSON.stringify(temp) } })
+          }}
+        >
+          Close
+        </Button>
       </div>)
       }}
       </ApolloConsumer>

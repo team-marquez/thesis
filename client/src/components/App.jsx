@@ -158,17 +158,8 @@ class App extends React.Component {
             {this.state.home === false ? (
               <div>
                 {this.state.pickedTrip === false ? (
-                  <div
-                    style={{ display: 'flex', width: '100vw', height: '100vh' }}
-                  >
-                    <img
-                      style={{
-                        minWidth: '100vw',
-                        minHeight: '100vh',
-                        filter: 'grayscale(75%)'
-                      }}
-                      src={this.state.background}
-                    />
+                  <div className='splash'>
+                    <img className='splashImage' src={this.state.background}/>
                     <div>
                       <Account
                         user={this.state.user}
@@ -181,35 +172,24 @@ class App extends React.Component {
                         loggedIn={this.state.login}
                       />
                     </div>
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        font: 'arial',
-                        color: 'white',
-                        fontSize: '100px',
-                        fontWeight: 'bold',
-                        transform: 'translate(-50%, -50%)'
-                      }}
-                    >
+                    <div className='cityName'>
                       {this.state.location === 'New York' ? (
                         <div>
-                          <div style={{ marginBottom: '8%', textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black' }}>New York</div>
-                          <div style={{ width: '29%', margin: 'auto' }}>
+                          <div className='newYork'>New York</div>
+                          <div className='newYorkTrip'>
                             <UserPreferences pickTrip={this.pickTrip} able={false}/>
                           </div>
                         </div>
                       ) : this.state.location === 'Tokyo' ? (
                         <div>
-                          <div style={{ marginBottom: '13%', textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black' }}>Tokyo</div>
-                          <div style={{ width: '47%', margin: 'auto' }}>
+                          <div className='tokyo'>Tokyo</div>
+                          <div className='tokyoTrip'>
                             <UserPreferences pickTrip={this.pickTrip} able={true}/>
                           </div>
                         </div>
                       ) : (<div>
-                        <div style={{ marginBottom: '15%',textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black' }}>Paris</div>
-                        <div style={{ width: '57%', margin: 'auto' }}>
+                        <div className='paris'>Paris</div>
+                        <div className='parisTrip'>
                           <UserPreferences pickTrip={this.pickTrip} able={true}/>
                         </div>
                         </div>)}
@@ -217,7 +197,7 @@ class App extends React.Component {
                     <Onboarding open={this.state.openOnboarding} closer = {this.closeFirstOnboard} />
                   </div>
                 ) : (
-                  <div style={{ textAlign: 'center' }}>
+                  <div className='allDaysComp'>
                     <AllDays home={this.goHome} user={this.state.user} />
                   </div>
                 )}
@@ -239,7 +219,7 @@ class App extends React.Component {
             )}
 
             {this.state.pickedTrip === false ? (
-              <div style={{ position: 'absolute', bottom: '5%', left: '45%' }}>
+              <div className='breadCrumbs'>
                 <Breadcrumb>
                   <Breadcrumb.Section onClick={this.locationChange}>
                     Tokyo
