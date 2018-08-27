@@ -36,11 +36,25 @@ module.exports = {
       let currentLT = LTAllocation.local > LTAllocation.tourist ? 0 : 1
       let localCount = 0
       let touristCount = 0
-      for (let meal in recs) {
-        let type = recs[meal].type
+      let hist = {}
+
+      for (let i = 0; i < recs.length; i++) {
+        let j = Math.floor(Math.random() * recs.length)
+        
+        if (hist.hasOwnProperty(j)) {
+          i--;
+          continue
+        } else hist[j] = null
+
+
+
+        let type = recs[j].type
         if (type[0] === 'restaurant') {
-          if (type[1].meal.includes(mealType) && recs[meal].LT === currentLT) {
-            tripOptions[mealType].push(recs[meal])
+
+          // console.log('some info on rests: ', recs[j].mealtime, recs[j].local_tourist, currentLT, tripOptions[mealType].length)
+
+          if (recs[j].mealtime.includes(mealType) && recs[j].local_tourist === currentLT) {
+            tripOptions[mealType].push(recs[j])
 
             //finish function if max size reached
             if (tripOptions[mealType].length === arrayMax) break
@@ -87,20 +101,24 @@ module.exports = {
       let indoorCount = 0
       let outdoorCount = 0
       
-      for (let act in recs) {
-        //this section can be fixed after MVP
-        //this whole seciton doesn't work
-        // if (recs[act].local_tourist === 'local') recs[act].local_tourist = 0
-        // if (recs[act].local_tourist === 'tourist') recs[act].local_tourist = 1
-        // if (recs[act].local_tourist === null) continue
+      let hist = {}
+      for (let i = 0; i < recs.length; i++) {
+
+        let j = Math.floor(Math.random() * recs.length)
+
+        if (hist.hasOwnProperty(j)) {
+          i--;
+          continue
+        } else hist[j] = null
+
+        // console.log('type, lt, clt, io, cio', recs[j].type[0], recs[j].local_tourist, currentLT, recs[j].indoor_outdoor, currentIO)
+
         
-        // if (recs[act].indoor_outdoor === 'indoor') recs[act].indoor_outdoor = 0
-        // if (recs[act].indoor_outdoor === 'outdoor') recs[act].indoor_outdoor = 1
-        // if (recs[act].indoor_outdoor === null) continue
-        
-        
-        if (recs[act].type[0] === 'activity' && recs[act].LT === currentLT && recs[act].IO == currentIO) {
-          tripOptions[actTime].push(recs[act])
+        if (recs[j].type[0] === 'activity' && recs[j].local_tourist === currentLT && recs[j].indoor_outdoor === currentIO) {
+          // console.log('inside Activity creation: ', recs[j])
+
+          // console.log('some acts info: ', currentLT, currentIO, tripOptions[actTime].length)
+          tripOptions[actTime].push(recs[j])
 
           //finish function if max size reached
           if (tripOptions[actTime].length === arrayMax) break
@@ -126,7 +144,11 @@ module.exports = {
       let hist = {}
       for (let i = 0; i < recs.length; i++) {
         let j = Math.floor(Math.random() * recs.length)
-        if (hist.hasOwnProperty(j)) continue
+        if (hist.hasOwnProperty(j)) {
+          i--
+          continue
+        }
+
         if (recs[j].type[0] === 'activity' && recs[j].indoor_outdoor === 'indoor') {
           tripOptions.rainyActs.push(recs[j])
 
@@ -211,6 +233,7 @@ module.exports = {
     // return tripOptions
 
     //new output.
+    console.log('end of assembly: ', trueTripOptions)
     return trueTripOptions
   }
 }
