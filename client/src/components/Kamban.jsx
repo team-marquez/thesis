@@ -183,7 +183,7 @@ class Kamban extends React.Component {
       <ApolloConsumer>
       {(client) => {
       return (
-      <div className='mainPage'>
+      <div>
         <div>
           <Segment
             clearing
@@ -222,15 +222,15 @@ class Kamban extends React.Component {
                         style={{
                           backgroundImage:
                             this.props.temp[index].rain_chance === 0
-                              ? "linear-gradient(rgba(255,255,255,0.6) 0%,rgba(255,255,255,255.6) 100%), url(https://previews.123rf.com/images/sgorin/sgorin1607/sgorin160700042/62126745-picturesque-waterfall-in-sunny-day-vertical.jpg)"
-                              : "linear-gradient(rgba(255,255,255,0.6) 0%,rgba(255,255,255,255.6) 100%), url(https://previews.123rf.com/images/charnsitr/charnsitr1504/charnsitr150400122/39393935-view-through-the-raindrop-window-on-rainy-day-in-vertical.jpg)"
+                              ? "linear-gradient(rgba(255,255,255,0.4) 100%,rgba(255,255,255) 0%), url(https://i.amz.mshcdn.com/CEj-0M6jJbdMpl7mfz0F99jLfNw=/fit-in/1200x9600/http%3A%2F%2Fmashable.com%2Fwp-content%2Fuploads%2F2013%2F04%2Fbeach-waves.gif)"
+                              : "linear-gradient(rgba(255,255,255,0.6) 0%,rgba(255,255,255,255.6) 100%), url(http://bestanimations.com/Nature/Water/rain/rain-nature-animated-gif-32.gif)"
                         }}
                       >
                         <div>
                           <div className='weatherIcon'>
                             {this.props.temp[index].rain_chance === 0
-                                ? <Icon name="rain" className='rainy' size='large'/>
-                                : <Icon name='sun' className='sunny' size='large'/>}
+                                ? <Icon name="sun" className='sunny' size='large'/>
+                                : <Icon name='rain' className='rainy' size='large'/>}
                           </div>
                           <div className='expandIcon' onClick={() => this.props.flip(item.orig, index)}>
                             <Icon className='expandIcon' name="expand arrows alternate" size='large'/>
@@ -323,7 +323,7 @@ class Kamban extends React.Component {
                 )
               }}
             </Droppable>
-            {this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px'}}>Confirm All Trips</Button>)}
+            {this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm All Trips</Button>)}
           </DragDropContext>
         </Grid>
       </div>)}}
