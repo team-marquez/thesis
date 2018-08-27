@@ -220,10 +220,10 @@ class Kamban extends React.Component {
                         className='gridBorder'
                         key={index}
                         style={{
-                          backgroundColor:
+                          backgroundImage:
                             this.props.temp[index].rain_chance === 0
-                              ? "rgba(58, 160, 175, 0.11)"
-                              : "rgba(108, 101, 80, 0.18)"
+                              ? "linear-gradient(rgba(255,255,255,0.6) 0%,rgba(255,255,255,255.6) 100%), url(https://previews.123rf.com/images/sgorin/sgorin1607/sgorin160700042/62126745-picturesque-waterfall-in-sunny-day-vertical.jpg)"
+                              : "linear-gradient(rgba(255,255,255,0.6) 0%,rgba(255,255,255,255.6) 100%), url(https://previews.123rf.com/images/charnsitr/charnsitr1504/charnsitr150400122/39393935-view-through-the-raindrop-window-on-rainy-day-in-vertical.jpg)"
                         }}
                       >
                         <div>
