@@ -4,8 +4,16 @@ import { Button, Image, Popup } from 'semantic-ui-react'
 import firebase from './firebase.js'
 import Login from './Login.jsx'
 import client from '../index.jsx'
-
+import gql from 'graphql-tag'
 import Register from './Register.jsx'
+
+const FIREBASE_USER = gql`
+  query FirebaseUser($firebaseId: String) {
+    firebaseUser(firebaseId: $firebaseId) {
+      id
+    }
+  }
+`
 
 class Account extends React.Component {
   constructor(props) {
@@ -70,7 +78,7 @@ class Account extends React.Component {
   }
 
   handleUserId (id) {
-    this.setState({userId: id})
+   
   }
 
   // Firebase Auth with Google, not saving sessions.
@@ -108,6 +116,7 @@ class Account extends React.Component {
     .then(response => {
       console.log('Created user successfully', response)
       this.closePopup()
+      return response.user.uid
     }).catch(function(error) {
       console.error('Error creating user', error)
     })
@@ -127,12 +136,17 @@ class Account extends React.Component {
   }
   
   //Check if user is logged in
-  checkUserLoggedIn () {
-    firebase.auth().onAuthStateChanged((user) => {
+  checkUserLoggedIn() {
+    firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         this.props.changeUser(user.displayName, user.photoURL)
         this.props.handleLogin()
-        client.writeData({data: {userId: user.uid}})
+        const { data } = await client.query({
+                      query: FIREBASE_USER,
+                      variables: { firebaseId: user.uid }
+                    })
+        console.log(data.firebaseUser.id)
+        client.writeData({data: {userId: data.firebaseUser.id}})
       } else {
         this.props.handleLogout()
       }

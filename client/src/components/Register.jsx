@@ -1,7 +1,7 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { Mutation, ApolloConsumer } from 'react-apollo'
-
+// import client from '../index.jsx'
 import { Modal, Input, Icon, Header, Button } from 'semantic-ui-react'
 
 const CREATE_USERS = gql`
@@ -68,15 +68,18 @@ class Register extends React.Component {
                   size="mini"
                   icon="world"
                   onClick={ async () => {
-                    await this.props.createWithEmail()
-
-                    await createUsers({
+                    let temp = await this.props.createWithEmail()
+                    
+                    let {data} = await createUsers({
                       variables: {
                         username: this.props.email,
-                        password: this.props.password
+                        password: this.props.password,
+                        firebaseId: temp
                       }
-                    })
+                    }, "{id}")
 
+                    // client.writeData({data: {userId: }})
+                    //why does this work???
                     this.props.openOnboarding()
                   }}
                 />

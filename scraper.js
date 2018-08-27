@@ -4,6 +4,14 @@ const Nightmare = require('nightmare')
 const models = require('./server/temp_db/models.js')
 // let nightmare = new Nightmare()
 
+const FIREBASE_USER = gql`
+  query FirebaseUser($firebaseId: String) {
+    firebaseUser(firebaseId: $firebaseId) {
+      id
+    }
+  }
+`
+
 const { Prisma } = require('prisma-binding')
 
 const prisma = new Prisma({
