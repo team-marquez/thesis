@@ -4,7 +4,7 @@ import OnboardingOptions from './OnboardingOptions.jsx'
 
 const { onboardingActivities } = require('./helpers/onboardingActivities.js')
 
-import { Mutation } from 'react-apollo'
+import { Mutation, ApolloConsumer} from 'react-apollo'
 import gql from 'graphql-tag'
 
 const ProgressBar = () => {
@@ -16,6 +16,12 @@ const UPDATE_USERS = gql`
     updateUsers(id: $id, trips: $trips) {
       id
     }
+  }
+`
+
+let GET_ID = gql`
+  {
+    userId @client
   }
 `
 
@@ -123,8 +129,8 @@ class Onboarding extends React.Component {
   render() {
     const { open } = this.props
     return (
-      <Mutation mutation={UPDATE_USERS}>
-        {(updateUsers, { data }) => (
+      <ApolloConsumer>
+        {client => (
           <div>
             <Modal open={open} size={'tiny'}>
               <Header
@@ -295,11 +301,15 @@ class Onboarding extends React.Component {
               <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   primary
-                  onClick={e => {
+                  onClick={async (e) => {
+                    let {data} = await client.query({query: GET_ID})
+                    let {userId} = data
+                    console.log(`userid ${userId}`)
+                    console.log(`trips ${JSON.stringify(this.state.chosenActivities, null, 2)}`)                
                     e.preventDefault()
-                    updateUsers({
+                    await client.mutate({mutation: UPDATE_USERS,
                       variables: {
-                        id: this.props.userId,
+                        id: userId,
                         trips: this.state.chosenActivities
                       }
                     })
@@ -313,7 +323,7 @@ class Onboarding extends React.Component {
             </Modal>
           </div>
         )}
-      </Mutation>
+      </ApolloConsumer>
     )
   }
 }

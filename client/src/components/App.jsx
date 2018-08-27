@@ -50,6 +50,13 @@ class App extends React.Component {
     this.setState({ background: img, backgroundNY: img })
   }
 
+  // Set random background image from our helper splashImage file.
+  componentDidMount() {
+    let img = images[Math.floor(Math.random() * images.length)]
+    console.log(img)
+    this.setState({ background: img, backgroundNY: img })
+  }
+
   // Conditional rendering function for displaying the home page and the trip page. Works on LocationModals 'Next' button.
   pickTrip() {
     this.setState({

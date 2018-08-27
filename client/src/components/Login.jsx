@@ -1,7 +1,6 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { ApolloConsumer } from 'react-apollo'
-
 import { Modal, Input, Icon, Header, Button } from 'semantic-ui-react'
 
 const FIREBASE_USER = gql`
@@ -11,6 +10,8 @@ const FIREBASE_USER = gql`
     }
   }
 `
+
+
 
 class Login extends React.Component {
   constructor(props) {
@@ -78,8 +79,10 @@ class Login extends React.Component {
                       })
 
                       console.log('Database ID', this.props.userId)
-
-                      this.props.handleUserId(data.firebaseUser.id)
+                      client.writeData({data: {userId: data.firebaseUser.id}})
+                      console.log('logged in with google?')
+                      
+                      // this.props.handleUserId(data.firebaseUser.id)
                     }}
                   />
                 </a>
@@ -88,13 +91,13 @@ class Login extends React.Component {
                     className="facebook square icon huge"
                     onClick={async () => {
                       await this.props.loginWithFacebook()
-
                       const { data } = await client.query({
                         query: FIREBASE_USER,
                         variables: { firebaseId: 'test' }
                       })
-
-                      this.props.handleUserId(data.firebaseUser.id)
+                      client.writeData({data: {userId: data.firebaseUser.id}})
+                      console.log('logged in with fb?')
+                      // this.props.handleUserId(data.firebaseUser.id)
                     }}
                   />
                 </a>

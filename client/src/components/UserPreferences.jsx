@@ -211,7 +211,14 @@ class UserPreferences extends React.Component {
                       icon="right arrow"
                       labelPosition="right"
                       onClick={async () => {
-                        const { data } = await client.query({
+                        let whatever = await client.query({query: gql`
+                        {
+                          userId @client
+                        }
+                        `});
+                        const {userId} = whatever.data;
+                        console.log(`THE FUCKING USERID`, userId)
+                        let { data } = await client.query({
                           query: PREF_QUERY,
                           variables: {
                             pref: {
@@ -226,7 +233,8 @@ class UserPreferences extends React.Component {
                               LT: this.state.l_t,
                               IO: this.state.i_o,
                               FA: this.state.f_a,
-                              kidFriendly: this.state.NSFW
+                              kidFriendly: this.state.NSFW,
+                              userId: userId
                             }
                           }
                         })
