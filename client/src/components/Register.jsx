@@ -28,77 +28,95 @@ class Register extends React.Component {
   }
 
   render() {
-    if (this.props.index === 1) {
-      return (
-        <Mutation mutation={CREATE_USERS}>
-          {(createUsers, { data }) => (
-            <div>
-              <Modal
-                onClose={this.props.closePopup}
-                open={this.props.open}
-                size="tiny"
-              >
-                <Header className='registerButton'>Sign Up</Header>
-                <div className='registerButton'>
-                  <Input iconPosition="left" placeholder="Email" size="mini">
-                    <Icon name="at" />
-                    <input
-                      onChange={e => {
-                        this.props.emailVariable(e)
-                      }}
-                    />
-                  </Input>
-                  <Input
-                    iconPosition="left"
-                    type="password"
-                    placeholder="Password"
-                    size="mini"
-                  >
-                    <Icon name="key" />
-                    <input
-                      onChange={e => {
-                        this.props.passwordVariable(e)
-                      }}
-                    />
-                  </Input>
-                  <Button
-                    size="mini"
-                    icon="world"
-                    onClick={() => {
-                      this.props.createWithEmail()
+    return (
+      <Mutation mutation={CREATE_USERS}>
+        {(createUsers, { data }) => (
+          <div>
+            <Modal
+              onClose={this.props.closePopup}
+              open={this.props.open}
+              size="tiny"
+            >
+              <Header style={{ textAlign: 'center' }}>Sign Up</Header>
+              <div style={{ textAlign: 'center' }}>
+                <Input iconPosition="left" placeholder="Email" size="mini">
+                  <Icon name="at" />
+                  <input
+                    onChange={e => {
+                      this.props.emailVariable(e)
+                    }}
+                  />
+                </Input>
+                <Input
+                  iconPosition="left"
+                  type="password"
+                  placeholder="Password"
+                  size="mini"
+                >
+                  <Icon name="key" />
+                  <input
+                    onChange={e => {
+                      this.props.passwordVariable(e)
+                    }}
+                  />
+                </Input>
+                <Button
+                  size="mini"
+                  icon="world"
+                  onClick={ async () => {
+                    await this.props.createWithEmail()
+
+                    await createUsers({
+                      variables: {
+                        username: this.props.email,
+                        password: this.props.password
+                      }
+                    })
+
+                    this.props.openOnboarding()
+                  }}
+                />
+                <br />
+                <br />
+                <p>Or Sign Up With Google/Facebook</p>
+                <a>
+                  <i
+                    className="google plus square icon huge"
+                    onClick={ async () => {
+                      await this.props.loginWithGoogle()
+
+                      await createUsers({
+                        variables: {
+                          firebaseId: this.props.userId
+                        }
+                      })
+
                       this.props.openOnboarding()
                     }}
                   />
-                  <br />
-                  <br />
-                  <p>Or Sign Up With Google/Facebook</p>
-                  <a>
-                    <i
-                      className="google plus square icon huge"
-                      onClick={() => {
-                        this.props.loginWithGoogle()
-                        this.props.openOnboarding()
-                      }}
-                    />
-                  </a>
-                  <a>
-                    <i
-                      className="facebook square icon huge"
-                      onClick={() => {
-                        this.props.loginWithFacebook()
-                        this.props.openOnboarding()
-                      }}
-                    />
-                  </a>
-                </div>
-              </Modal>
-            </div>
-          )}
-        </Mutation>
-      )
-    } else {
-      return null
-    }
+                </a>
+                <a>
+                  <i
+                    className="facebook square icon huge"
+                    onClick={ async () => {
+                      await this.props.loginWithFacebook()
+
+                      await createUsers({
+                        variables: {
+                          firebaseId: this.props.userId
+                        }
+                      })
+
+                      this.props.openOnboarding()
+                    }}
+                  />
+                </a>
+              </div>
+            </Modal>
+          </div>
+        )}
+      </Mutation>
+    )
   }
 }
 

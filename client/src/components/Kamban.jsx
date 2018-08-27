@@ -189,16 +189,7 @@ class Kamban extends React.Component {
             clearing
             style={{ backgroundImage: "linear-gradient(lightCyan, white)" }}
           >
-            {this.props.user === "Welcome User" ? (
-              <Header as="h2" icon="user circle" floated="right" />
-            ) : (
-              <Header
-                as="h2"
-                icon="user circle"
-                onClick={this.props.home}
-                floated="right"
-              />
-            )}
+            <Header as="h2" icon="user circle" floated="right" />
           </Segment>
         </div>
 
@@ -238,8 +229,8 @@ class Kamban extends React.Component {
                         <div>
                           <div className='weatherIcon'>
                             {this.props.temp[index].rain_chance === 0
-                                ? <Icon className='sunny' name='sun' size='large'/>
-                                : <Icon className='rainy' name="rain" size='large'/>}
+                                ? <Icon name="rain" className='rainy' size='large'/>
+                                : <Icon name='sun' className='sunny' size='large'/>}
                           </div>
                           <div className='expandIcon' onClick={() => this.props.flip(item.orig, index)}>
                             <Icon className='expandIcon' name="expand arrows alternate" size='large'/>
