@@ -42,9 +42,7 @@ class UserProfile extends React.Component {
 		return (
 			<div>
 				<div>
-					<Sidebar.Pushable>
 						{this.state.trip === 'current' ? (
-						<Sidebar.Pusher dimmed={visible}>
 							<Segment basic>
 								<Header style={{textAlign: 'center'}} as='h3'>Current Trip</Header>
 								<div style={{textAlign: 'center', border: '2px solid black', height: '300px', width: '100%'}}>
@@ -53,18 +51,14 @@ class UserProfile extends React.Component {
 									</div><br/>
 								</div>
 							</Segment>
-						</Sidebar.Pusher>
 						) : (
 						<div>
-						<Sidebar.Pusher dimmed={visible}>
 							<Segment basic>
 								<Header style={{textAlign: 'center'}} as='h3'>Past Trips</Header>
 							</Segment>
-						</Sidebar.Pusher>
 
 						{this.state.pastTrips.map((trip, index) => {
 							return (
-								<Sidebar.Pusher dimmed={visible}>
 									<Segment basic>
 										<div style={{textAlign: 'center', height: '500px', width: '100%'}}>
 											<div>
@@ -74,12 +68,10 @@ class UserProfile extends React.Component {
 											<hr/>
 										</div>
 									</Segment>
-								</Sidebar.Pusher>
 							)
 						})}						
 						</div>
 					)}
-					</Sidebar.Pushable>
 				</div>
 
 			</div>

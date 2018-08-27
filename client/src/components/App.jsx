@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Icon, Sidebar, Menu, Breadcrumb } from 'semantic-ui-react'
+import { Button, Icon, Sidebar, Menu, Breadcrumb, Header, Segment } from 'semantic-ui-react'
 
 import Account from './Account.jsx'
 import Footer from './Footer.jsx'
@@ -23,7 +23,8 @@ class App extends React.Component {
       login: false,
       location: 'New York',
       background: '',
-      backgroundNY: ''
+      backgroundNY: '',
+      trip: ''
     }
 
     this.pickTrip = this.pickTrip.bind(this)
@@ -38,6 +39,7 @@ class App extends React.Component {
     this.handleLogout = this.handleLogout.bind(this)
 
     this.locationChange = this.locationChange.bind(this)
+    this.changeToCurrent = this.changeToCurrent.bind(this)
   }
 
   // Set random background image from our helper splashImage file.
@@ -57,6 +59,12 @@ class App extends React.Component {
   goHome() {
     this.setState({
       home: false
+    })
+  }
+
+  changeToCurrent() {
+    this.setState({
+      home: true
     })
   }
 
@@ -125,6 +133,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
+
+        
         <Sidebar.Pushable>
           <Sidebar
             as={Menu}
@@ -134,10 +144,10 @@ class App extends React.Component {
             visible={this.state.visible}
             width="thin"
           >
-            <Menu.Item as="a" onClick={this.switchHome}>
+            <Menu.Item as="a" onClick={this.goHome}>
               Home
             </Menu.Item>
-            <Menu.Item>Current Trip</Menu.Item>
+            <Menu.Item as="a" onClick={this.changeToCurrent}>Current Trip</Menu.Item>
             <Menu.Item>Past Trips</Menu.Item>
             <Menu.Item as="a" onClick={this.logOut}>
               Logout
@@ -213,8 +223,21 @@ class App extends React.Component {
                 )}
               </div>
             ) : (
+              <div>
               <UserProfile home={this.goHome} user={this.state.user} />
+                  <Account
+                    user={this.state.user}
+                    image={this.state.image}
+                    changeUser={this.changeUser}
+                    openOnboarding={this.openOnboarding}
+                    handleButtonClick={this.handleButtonClick}
+                    handleLogin={this.handleLogin}
+                    handleLogout={this.handleLogout}
+                    loggedIn={this.state.login}
+                  />
+              </div>
             )}
+
             {this.state.pickedTrip === false ? (
               <div style={{ position: 'absolute', bottom: '5%', left: '45%' }}>
                 <Breadcrumb>
