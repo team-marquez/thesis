@@ -229,8 +229,8 @@ class Kamban extends React.Component {
                         <div>
                           <div className='weatherIcon'>
                             {this.props.temp[index].rain_chance === 0
-                                ? <Icon name="rain" size='large'/>
-                                : <Icon name='sun' size='large'/>}
+                                ? <Icon name="rain" className='rainy' size='large'/>
+                                : <Icon name='sun' className='sunny' size='large'/>}
                           </div>
                           <div className='expandIcon' onClick={() => this.props.flip(item.orig, index)}>
                             <Icon className='expandIcon' name="expand arrows alternate" size='large'/>
@@ -278,6 +278,8 @@ class Kamban extends React.Component {
                                   <hr></hr>
                                   <Button
                                     style={{float: 'left'}}
+                                    basic 
+                                    color='rgba(58, 160, 175, 0.11)'
                                     onFocus={() => {
                                       let newstate = {}
                                       newstate[item.id] = !this.state[item.id]
@@ -295,6 +297,8 @@ class Kamban extends React.Component {
                                   <br/>
                                   <hr></hr>
                                   <Button
+                                    basic 
+                                    color='rgba(58, 160, 175, 0.11)'
                                     onFocus={() => {
                                       console.log(item.id)
                                       setTimeout(() => {
