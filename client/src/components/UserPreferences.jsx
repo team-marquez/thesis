@@ -217,7 +217,6 @@ class UserPreferences extends React.Component {
                         }
                         `});
                         const {userId} = whatever.data;
-                        console.log(`THE FUCKING USERID`, userId)
                         let { data } = await client.query({
                           query: PREF_QUERY,
                           variables: {
