@@ -26,16 +26,34 @@ class Login extends React.Component {
         {client => (
           <div>
             <Modal onClose={this.props.closePopup} open={open} size="tiny">
-              <Header style={{ textAlign: 'center' }}>Log In</Header>
-              <div style={{ textAlign: 'center' }}>
-                <Input iconPosition="left" placeholder="Email" size="mini">
-                  <Icon name="at" />
-                  <input
-                    onChange={e => {
-                      this.props.emailVariable(e)
-                    }}
+                <Header className='logInButton'>Log In</Header>
+                <div className='logInButton'>
+                  <Input iconPosition="left" placeholder="Email" size="mini">
+                    <Icon name="at" />
+                    <input
+                      onChange={e => {
+                        this.props.emailVariable(e)
+                      }}
+                    />
+                  </Input>
+                  <Input
+                    iconPosition="left"
+                    type="password"
+                    placeholder="Password"
+                    size="mini"
+                  >
+                    <Icon name="key" />
+                    <input
+                      onChange={e => {
+                        this.props.passwordVariable(e)
+                      }}
+                    />
+                  </Input>
+                  <Button
+                    size="mini"
+                    icon="world"
+                    onClick={this.props.loginWithEmail}
                   />
-                </Input>
                 <Input
                   iconPosition="left"
                   type="password"

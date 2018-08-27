@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Icon, Sidebar, Menu, Breadcrumb } from 'semantic-ui-react'
+import { Button, Icon, Sidebar, Menu, Breadcrumb, Header, Segment } from 'semantic-ui-react'
 
 import Account from './Account.jsx'
 import Footer from './Footer.jsx'
@@ -23,7 +23,8 @@ class App extends React.Component {
       login: false,
       location: 'New York',
       background: '',
-      backgroundNY: ''
+      backgroundNY: '',
+      trip: 'current'
     }
 
     this.pickTrip = this.pickTrip.bind(this)
@@ -38,6 +39,15 @@ class App extends React.Component {
     this.handleLogout = this.handleLogout.bind(this)
 
     this.locationChange = this.locationChange.bind(this)
+    this.changeToCurrent = this.changeToCurrent.bind(this)
+    this.changeToPast = this.changeToPast.bind(this)
+  }
+
+  // Set random background image from our helper splashImage file.
+  componentDidMount() {
+    let img = images[Math.floor(Math.random() * images.length)]
+    console.log(img)
+    this.setState({ background: img, backgroundNY: img })
   }
 
   // Set random background image from our helper splashImage file.
@@ -56,7 +66,22 @@ class App extends React.Component {
 
   goHome() {
     this.setState({
-      home: false
+      home: false,
+      trip: 'current'
+    })
+  }
+
+  changeToCurrent() {
+    this.setState({
+      home: true,
+      trip: 'current'
+    })
+  }
+
+  changeToPast() {
+    this.setState({
+      home: true,
+      trip: 'past'
     })
   }
 
@@ -125,6 +150,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
+
+        
         <Sidebar.Pushable>
           <Sidebar
             as={Menu}
@@ -134,14 +161,16 @@ class App extends React.Component {
             visible={this.state.visible}
             width="thin"
           >
-            <Menu.Item as="a" onClick={this.switchHome}>
+            <Menu.Item as="a" onClick={this.goHome}>
               Home
             </Menu.Item>
-            <Menu.Item>Current Trip</Menu.Item>
-            <Menu.Item>Past Trips</Menu.Item>
+            <Menu.Item as="a" onClick={this.changeToCurrent}>Current Trip</Menu.Item>
+            <Menu.Item as='a' onClick={this.changeToPast}>Past Trips</Menu.Item>
+            
+            {this.state.home === false &&             
             <Menu.Item as="a" onClick={this.logOut}>
               Logout
-            </Menu.Item>
+            </Menu.Item> }
           </Sidebar>
 
           <Sidebar.Pusher>
@@ -153,6 +182,8 @@ class App extends React.Component {
                     <div>
                       <Account
                         user={this.state.user}
+                        trip={this.state.trip}
+                        styled={{height: '9%', width: '5%', position: 'absolute', top: '3%', left: '93%', cursor:'pointer'}}
                         image={this.state.image}
                         changeUser={this.changeUser}
                         openOnboarding={this.openOnboarding}
@@ -188,14 +219,30 @@ class App extends React.Component {
                   </div>
                 ) : (
                   <div className='allDaysComp'>
-                    <AllDays home={this.goHome} user={this.state.user} />
+                    <AllDays home={this.goHome} user={this.state.user}/>
                   </div>
                 )}
               </div>
             ) : (
-              <UserProfile home={this.goHome} user={this.state.user} />
+              <div>
+                <UserProfile home={this.goHome} user={this.state.user} image={this.state.image} trip={this.state.trip}/>
+                <Account
+                  styled={{height: '13%', width: '4%', position: 'absolute', top: '1%', left: '94%', cursor:'pointer'}}
+                  styled2={{height: '3%', width: '4%', position: 'absolute', top: '5px', left: '94%', cursor:'pointer'}}
+                  trip={this.state.trip}
+                  user={this.state.user}
+                  image={this.state.image}
+                  changeUser={this.changeUser}
+                  openOnboarding={this.openOnboarding}
+                  handleButtonClick={this.handleButtonClick}
+                  handleLogin={this.handleLogin}
+                  handleLogout={this.handleLogout}
+                  loggedIn={this.state.login}
+                />
+              </div>
             )}
-            {this.state.pickedTrip === false ? (
+
+            {(this.state.pickedTrip === false && this.state.home === false) ? (
               <div className='breadCrumbs'>
                 <Breadcrumb>
                   <Breadcrumb.Section onClick={this.locationChange}>
