@@ -116,7 +116,7 @@ class DayCard extends React.Component {
               >
                 {this.state.items.map((item, index) => (
                   <div>
-                    <p style={{ textAlign: "center" }}>
+                    <p className='costAmount'>
                       {index === 0
                         ? "Breakfast"
                         : index === 1
@@ -147,30 +147,19 @@ class DayCard extends React.Component {
                           )}
                         >
                           <div>
-                            <div style={{ textAlign: 'left' }}>
+                            <div className='imageAlign'>
                               <a href={item.content.link} target="_blank">
                                 <Image
-                                  style={{ width: "150px", height: "100px" }}
+                                  className='dayImage'
                                   src={item.content.image}
                                 />
                               </a>
                             </div>
-                            <div
-                              style={{
-                                width: "100%",
-                                float: "right",
-                                marginTop: "-8%",
-                              }}
-                            >
-                              <div style={{ display: "inline-block" }}>
+                            <div className='actTitle'>
+                              <div className='titleCost'>
                                 <strong>{item.content.name}</strong>
                               </div>
-                              <div
-                                style={{
-                                  opacity: ".6",
-                                  float: "right"
-                                }}
-                              >
+                              <div className='actCost'>
                                 {item.content.cost === 0
                                   ? "Free"
                                   : item.content.cost === 1
@@ -184,24 +173,10 @@ class DayCard extends React.Component {
                                           : null}
                               </div>
                             </div>
-                            <div
-                              style={{
-                                opacity: ".6",
-                                width: "100%",
-                                float: "right",
-                                marginTop: "-7%",
-                              }}
-                            >
+                            <div className='actLocation'>
                               <em>{item.content.location}</em>
                             </div>
-                            <div
-                              style={{
-                                textAlign: 'left',
-                                width: "88%",
-                                float: "right",
-                                marginTop: "-5%"
-                              }}
-                            >
+                            <div className='actDescription'>
                               {item.content.description.length > 450
                                 ? item.content.description.substring(0, 450) +
                                   " ..."

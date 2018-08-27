@@ -35,8 +35,8 @@ class Login extends React.Component {
         <div>
           {this.props.index === 2 ? (
             <Modal onClose={this.props.closePopup} open={open} size="tiny">
-                <Header style={{ textAlign: 'center' }}>Log In</Header>
-                <div style={{ textAlign: 'center' }}>
+                <Header className='logInButton'>Log In</Header>
+                <div className='logInButton'>
                   <Input iconPosition="left" placeholder="Email" size="mini">
                     <Icon name="at" />
                     <input

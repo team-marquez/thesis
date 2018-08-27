@@ -23,21 +23,11 @@ const getItems = (count, array) =>
       return (
         <div>
           <div>
-            <div
-              style={{
-                float: "right",
-                fontWeight: "bold",
-              }}
-            >
+            <div className='kambanAct'>
               {activity.name.length > 20 ? activity.name.substring(0, 30) : activity.name}
             </div>
             <br />
-            <div
-              style={{
-                float: "right",
-                fontWeight: "bold",
-              }}
-            >
+            <div className='kambanAct' >
               {activity.cost === null || 0
                 ? "Free"
                 : activity.cost === 1
@@ -50,10 +40,7 @@ const getItems = (count, array) =>
                         ? "$$$$"
                         : null}
             </div>
-            <Image
-              style={{ width: "50px", height: "50px" }}
-              src={activity.image}
-            />
+            <Image className='kambanImage' src={activity.image}/>
           </div>{" "}
           <br />
         </div>
@@ -196,7 +183,7 @@ class Kamban extends React.Component {
       <ApolloConsumer>
       {(client) => {
       return (
-      <div style={{marginBottom: '15px'}}>
+      <div className='mainPage'>
         <div>
           <Segment
             clearing
@@ -239,13 +226,9 @@ class Kamban extends React.Component {
                   >
                     {this.state.items.map((item, index) => (
                       <div
+                        className='gridBorder'
                         key={index}
                         style={{
-                          border: "2px solid gray",
-                          height: "100%",
-                          width: "300px",
-                          marginRight: "10px",
-                          float: "right",
                           backgroundColor:
                             this.props.temp[index].rain_chance === 0
                               ? "rgba(58, 160, 175, 0.11)"
@@ -253,12 +236,12 @@ class Kamban extends React.Component {
                         }}
                       >
                         <div>
-                          <div style={{display: 'inline-block', float: 'left', margin: '10px 0px 0px 7px'}}>
+                          <div className='weatherIcon'>
                             {this.props.temp[index].rain_chance === 0
                                 ? <Icon className='sunny' name='sun' size='large'/>
                                 : <Icon className='rainy' name="rain" size='large'/>}
                           </div>
-                          <div style={{display: 'inline-block', float: 'right', margin: '8px 3px 0px 0px'}} onClick={() => this.props.flip(item.orig, index)}>
+                          <div className='expandIcon' onClick={() => this.props.flip(item.orig, index)}>
                             <Icon className='expandIcon' name="expand arrows alternate" size='large'/>
                           </div>
                           <div>
@@ -318,7 +301,7 @@ class Kamban extends React.Component {
                                   {this.state.checkmarkColor[index] === 'grey' ? (<Icon onClick={() => this.incrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>) : (<Icon onClick={() => this.decrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>)}
                                 </div>
                                 <div>
-                                  <Graphs style={{marginTop: '-10px'}} vis={this.state[item.id]} budget={(this.state.dayBudget[index]/this.state.totalBudget)*100} breakfast={this.state.breakfast[index]} lunch={this.state.lunch[index]} dinner={this.state.dinner[index]} />
+                                  <Graphs vis={this.state[item.id]} budget={(this.state.dayBudget[index]/this.state.totalBudget)*100} breakfast={this.state.breakfast[index]} lunch={this.state.lunch[index]} dinner={this.state.dinner[index]} />
                                   <br/>
                                   <br/>
                                   <hr></hr>
