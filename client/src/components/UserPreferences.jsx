@@ -72,7 +72,7 @@ class UserPreferences extends React.Component {
             <Modal
               size={'mini'}
               trigger={
-                <Button animated="fade" onClick={this.pickTrip}>
+                <Button disabled={this.props.able} animated="fade" onClick={this.pickTrip}>
                   <Button.Content visible>Take us away</Button.Content>
                   <Button.Content hidden>
                     <Icon name="plane" />
@@ -80,11 +80,11 @@ class UserPreferences extends React.Component {
                 </Button>
               }
             >
-              <Modal.Header style={{ textAlign: 'center' }}>
+              <Modal.Header className='centerPrefs'>
                 Set Your Preferences
               </Modal.Header>
               <Modal.Content>
-                <div style={{ textAlign: 'center' }}>
+                <div className='centerPrefs'>
                   <DateRange
                     maxDate={moment(this.state.maxDate)}
                     onChange={changes => {
@@ -97,7 +97,7 @@ class UserPreferences extends React.Component {
                   />
                 </div>
                 <br />
-                <div style={{ textAlign: 'center' }}>
+                <div className='centerPrefs'>
                   <Input
                     labelPosition="right"
                     type="number"
@@ -116,10 +116,10 @@ class UserPreferences extends React.Component {
                 </div>
                 <br />
                 <Modal.Description>
-                  <div style={{ float: 'right', display: 'inline-block' }}>
+                  <div className='sliderRight'>
                     {'Activities' + ` ${this.state.f_a}%`}
                   </div>
-                  <div style={{ textAlign: 'left', display: 'inline-block' }}>
+                  <div className='sliderLeft'>
                     {'Food' + ` ${100 - this.state.f_a}%`}
                   </div>
                   <Slider
@@ -138,10 +138,10 @@ class UserPreferences extends React.Component {
                       }
                     }}
                   />
-                  <div style={{ float: 'right', display: 'inline-block' }}>
+                  <div className='sliderRight'>
                     {'Outdoors' + ` ${this.state.i_o}%`}
                   </div>
-                  <div style={{ textAlign: 'left', display: 'inline-block' }}>
+                  <div className='sliderLeft'>
                     {'Indoors' + ` ${100 - this.state.i_o}%`}
                   </div>
                   <Slider
@@ -160,10 +160,10 @@ class UserPreferences extends React.Component {
                       }
                     }}
                   />
-                  <div style={{ float: 'right', display: 'inline-block' }}>
+                  <div className='sliderRight'>
                     {'Touristy' + ` ${this.state.l_t}%`}
                   </div>
-                  <div style={{ textAlign: 'left', display: 'inline-block' }}>
+                  <div className='sliderLeft'>
                     {'Local' + ` ${100 - this.state.l_t}%`}
                   </div>
                   <Slider
@@ -183,7 +183,7 @@ class UserPreferences extends React.Component {
                     }}
                   />{' '}
                   <br />
-                  <div style={{ display: 'inline-block', marginRight: '95px' }}>
+                  <div className='party'>
                     <Input
                       icon="users"
                       size="mini"
@@ -198,20 +198,27 @@ class UserPreferences extends React.Component {
                       }
                     />
                   </div>
-                  <div style={{ display: 'inline-block' }}>
+                  <div className='nsfw'>
                     <Checkbox
                       label="Family Friendly"
                       onChange={() => this.setState({ NSFW: !this.state.NSFW })}
                     />
                   </div>
-                  <div style={{ textAlign: 'right' }}>
+                  <div className='nextButton'>
                     <br />
                     <Button
                       content="Next"
                       icon="right arrow"
                       labelPosition="right"
                       onClick={async () => {
-                        const { data } = await client.query({
+                        let whatever = await client.query({query: gql`
+                        {
+                          userId @client
+                        }
+                        `});
+                        const {userId} = whatever.data;
+                        console.log(`THE FUCKING USERID`, userId)
+                        let { data } = await client.query({
                           query: PREF_QUERY,
                           variables: {
                             pref: {
@@ -226,7 +233,8 @@ class UserPreferences extends React.Component {
                               LT: this.state.l_t,
                               IO: this.state.i_o,
                               FA: this.state.f_a,
-                              kidFriendly: this.state.NSFW
+                              kidFriendly: this.state.NSFW,
+                              userId: userId
                             }
                           }
                         })

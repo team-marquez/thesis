@@ -1,7 +1,6 @@
 import React from "react"
 
 import Kamban from "./Kamban.jsx"
-import DayModal from "./DayModal.jsx"
 import DayCard from "./DayCard.jsx"
 
 import { compose, graphql } from "react-apollo"

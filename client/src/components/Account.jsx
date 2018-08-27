@@ -3,6 +3,8 @@ import React from 'react'
 import { Button, Image, Popup } from 'semantic-ui-react'
 import firebase from './firebase.js'
 import Login from './Login.jsx'
+import client from '../index.jsx'
+
 import Register from './Register.jsx'
 
 class Account extends React.Component {
@@ -131,6 +133,9 @@ class Account extends React.Component {
       if (user) {
         this.props.changeUser(user.displayName, user.photoURL)
         this.props.handleLogin()
+        console.log(user.uid)
+        client.writeData({data: {userId: user.uid}})
+        //todo: fix the bug
       } else {
         this.props.handleLogout()
       }
@@ -144,7 +149,7 @@ class Account extends React.Component {
             <Popup trigger={
               <Image src={this.props.image} avatar onClick={this.props.handleButtonClick} style={{height: '9%', width: '5%', position: 'absolute', top: '3%', left: '93%', cursor:'pointer'}} />
             } content='User Profile'/>
-          </div> : <div style={{position: 'absolute', top: '4%', left: '86%'}}>
+          </div> : <div className='loginRegisterButton'>
             <Button.Group>
               <Button onClick={this.openLogIn}>Login</Button>
               <Button.Or />
