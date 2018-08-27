@@ -189,16 +189,7 @@ class Kamban extends React.Component {
             clearing
             style={{ backgroundImage: "linear-gradient(lightCyan, white)" }}
           >
-            {this.props.user === "Welcome User" ? (
-              <Header as="h2" icon="user circle" floated="right" />
-            ) : (
-              <Header
-                as="h2"
-                icon="user circle"
-                onClick={this.props.home}
-                floated="right"
-              />
-            )}
+            <Header as="h2" icon="user circle" floated="right" />
           </Segment>
         </div>
 

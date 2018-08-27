@@ -141,9 +141,14 @@ class Account extends React.Component {
     return (
        <div>
         {this.props.loggedIn === true ? <div>
+            {this.props.trip === 'current' ? 
             <Popup trigger={
-              <Image src={this.props.image} avatar onClick={this.props.handleButtonClick} style={{height: '9%', width: '5%', position: 'absolute', top: '3%', left: '93%', cursor:'pointer'}} />
-            } content='User Profile'/>
+              <Image src={this.props.image} avatar onClick={this.props.handleButtonClick} style={this.props.styled} />
+            } content='User Profile'/> : 
+            <Popup trigger={
+              <Image src={this.props.image} avatar onClick={this.props.handleButtonClick} style={this.props.styled2} />
+            } content='User Profile'/>}
+            
           </div> : <div className='loginRegisterButton'>
             <Button.Group>
               <Button onClick={this.openLogIn}>Login</Button>

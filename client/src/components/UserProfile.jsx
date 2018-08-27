@@ -10,8 +10,6 @@ class UserProfile extends React.Component {
 		}
 		this.handleButtonClick = this.handleButtonClick.bind(this)
 		this.handleSidebarHide = this.handleSidebarHide.bind(this)
-		this.changeToCurrent = this.changeToCurrent.bind(this)
-		this.changeToPast = this.changeToPast.bind(this)
 	}
 
 	handleButtonClick () {
@@ -26,23 +24,20 @@ class UserProfile extends React.Component {
 		})
 	}
 	
-	changeToCurrent () {
-		this.setState({
-			trip: 'current'
-		})
-	}
-
-	changeToPast () {
-		this.setState({
-			trip: 'past'
-		})
-	}
 
 	render () {
 		return (
 			<div>
 				<div>
-						{this.state.trip === 'current' ? (
+				<div>
+          <Segment
+            clearing
+            style={{ backgroundImage: "linear-gradient(lightCyan, white)" }}
+          >
+            <Header as="h2" icon="user circle" floated="right" />
+          </Segment>
+        </div>
+						{this.props.trip === 'current' ? (
 							<Segment basic>
 								<Header className='centerUserPro' as='h3'>Current Trip</Header>
 								<div className='userProBox'>
