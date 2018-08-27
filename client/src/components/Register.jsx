@@ -38,8 +38,8 @@ class Register extends React.Component {
                 open={this.props.open}
                 size="tiny"
               >
-                <Header style={{ textAlign: 'center' }}>Sign Up</Header>
-                <div style={{ textAlign: 'center' }}>
+                <Header className='registerButton'>Sign Up</Header>
+                <div className='registerButton'>
                   <Input iconPosition="left" placeholder="Email" size="mini">
                     <Icon name="at" />
                     <input

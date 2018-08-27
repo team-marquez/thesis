@@ -1,47 +1,291 @@
-.onboardingOptions {
-    display: inline-block;
-    text-align: center;
-    height: 500px;
+/**************************
+          	App 
+**************************/
+
+.splash {
+	display: flex;
+	height: 100vh;
 }
 
-.leftOption {
-    float: left;
-    margin: 10px;
-    width: 43%;
-    height: 100%;
-    padding: 5px;
+.splashImage {
+	min-width: 100vw;
+	filter: grayscale(75%);
 }
 
-.rightOption {
-    float: right;
-    margin: 10px;
-    width: 43%;
-    height: 100%;
-    padding: 5px;
+.cityName {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font: arial;
+	color: white;
+	font-size: 100px;
+	font-weight: bold;
+	transform: translate(-50%, -50%);
 }
 
-.optionImage {
-    width: 80%;
-    height: auto;
-    transition: transform .2s
+.newYork {
+	margin-bottom: 8%;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
-.optionImage:hover {
-    transform: scale(1.15)
+.newYorkTrip {
+	width: 30%;
+	margin: auto;
 }
 
-.onboardingButton {
-    width: 45%
+.tokyo {
+	margin-bottom: 13%;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.tokyoTrip {
+	width: 48%;
+	margin: auto;
+}
+
+.paris {
+	margin-bottom: 15%;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.parisTrip {
+	width: 57%;
+	margin: auto;
+}
+
+.allDaysComp {
+	text-align: center;
+}
+
+.breadCrumbs {
+	position: absolute;
+	bottom: 5%;
+	left: 44%;
+}
+
+/**************************
+        	Account 
+**************************/
+
+.loginRegisterButton {
+	position: absolute;
+	top: 4%;
+	left: 86%;
+}
+
+/**************************
+        Day Card 
+**************************/
+
+.costAmount {
+	text-align: center
+}
+
+.imageAlign {
+	text-align: left
+}
+
+.dayImage {
+	width: 10%
+}
+
+.actTitle {
+	width: 100%;
+	float: right;
+	margin-top: -8%;
+}
+
+.titleCost {
+	display: inline-block;
+}
+
+.actCost {
+	opacity: 0.6;
+	float: right;
+}
+
+.actLocation {
+	opacity: 0.6;
+	width: 100%;
+	float: right;
+	margin-top: -7%
+}
+
+.actDescription {
+	text-align: left;
+	width: 88%;
+	float: right;
+	margin-top: -5%
+}
+
+/**************************
+        Footer 
+**************************/
+
+.footer {
+	margin: 10px, 10px, 10px, 0px
+}
+
+/**************************
+					Kamban
+**************************/
+
+.kambanAct {
+	float: right;
+	font-weight: bold;
+}
+
+.kambanImage {
+	width: 50px;
+	height: 50px;
+}
+
+.mainPage {
+	margin-bottom: 15px;
+}
+
+.gridBorder {
+	border: 2px solid gray;
+	height: 100%;
+	width: 300px;
+	margin-right: 10px;
+	float: right;
+}
+
+.weatherIcon {
+	float: left;
+	margin: 10px 0px 0px 7px;
+}
+
+.expandIcon {
+	float: right;
+	margin: 8px 3px 0px 0px;
 }
 
 .expandIcon:hover {
-    color: green
+	color: green
 }
 
 .rainy:hover {
-    color: blue
+	color: blue
 }
 
 .sunny:hover {
-    color: orange
+	color: orange
+}
+
+/**************************
+        	Login 
+**************************/
+
+.logInButton {
+	text-align: center;
+}
+
+/**************************
+         Register 
+**************************/
+
+.registerButton {
+	text-align: center;
+}
+
+/**************************
+        Onboarding 
+**************************/
+
+.onboardingOptions {
+	display: inline-block;
+	text-align: center;
+	height: 500px;
+}
+
+.leftOption {
+	float: left;
+	margin: 10px;
+	width: 43%;
+	height: 100%;
+	padding: 5px;
+}
+
+.rightOption {
+	float: right;
+	margin: 10px;
+	width: 43%;
+	height: 100%;
+	padding: 5px;
+}
+
+.optionImage {
+	width: 80%;
+	height: auto;
+	transition: transform .2s
+}
+
+.optionImage:hover {
+	transform: scale(1.15)
+}
+
+.onboardingButton {
+	width: 45%
+}
+
+.centerText {
+	text-align: center;
+}
+
+/**************************
+        User Prefs 
+**************************/
+
+.centerPrefs {
+	text-align: center;
+}
+
+.sliderRight {
+	float: right
+}
+
+.sliderLeft {
+	text-align: left;
+	display: inline-block;
+}
+
+.party {
+	display: inline-block;
+	margin-right: 30%;
+}
+
+.nsfw {
+	display: inline-block;
+}
+
+.nextButton {
+	text-align: right;
+}
+
+/**************************
+       User Profile 
+**************************/
+
+.centerUserPro {
+	text-align: center;
+}
+
+.userProBox {
+	text-align: center;
+	border: 2px solid black;
+	height: 300px;
+	width: 100%;
+}
+
+.pastTripBox {
+	text-align: center;
+	height: 500px;
+	width: 100%
+}
+
+.pastTripImage {
+	margin: 5px auto;
+	height: 450px
 }

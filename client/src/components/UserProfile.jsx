@@ -46,8 +46,8 @@ class UserProfile extends React.Component {
 						{this.state.trip === 'current' ? (
 						<Sidebar.Pusher dimmed={visible}>
 							<Segment basic>
-								<Header style={{textAlign: 'center'}} as='h3'>Current Trip</Header>
-								<div style={{textAlign: 'center', border: '2px solid black', height: '300px', width: '100%'}}>
+								<Header className='centerUserPro' as='h3'>Current Trip</Header>
+								<div className='userProBox'>
 									<div>
 									Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 									</div><br/>
@@ -58,7 +58,7 @@ class UserProfile extends React.Component {
 						<div>
 						<Sidebar.Pusher dimmed={visible}>
 							<Segment basic>
-								<Header style={{textAlign: 'center'}} as='h3'>Past Trips</Header>
+								<Header className='centerUserPro' as='h3'>Past Trips</Header>
 							</Segment>
 						</Sidebar.Pusher>
 
@@ -66,9 +66,9 @@ class UserProfile extends React.Component {
 							return (
 								<Sidebar.Pusher dimmed={visible}>
 									<Segment basic>
-										<div style={{textAlign: 'center', height: '500px', width: '100%'}}>
+										<div className='pastTripBox'>
 											<div>
-												<Image style={{margin: '5px auto', height: '450px'}} src={trip.img}></Image>
+												<Image className='pastTripImage' src={trip.img}></Image>
 											</div>
 											<Rating icon='heart' defaultRating={3} maxRating={5} size='large'/>
 											<hr/>

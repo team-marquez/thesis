@@ -128,7 +128,7 @@ class Account extends React.Component {
             <Popup trigger={
               <Image src={this.props.image} avatar onClick={this.props.handleButtonClick} style={{height: '9%', width: '5%', position: 'absolute', top: '3%', left: '93%', cursor:'pointer'}} />
             } content='User Profile'/>
-          </div> : <div style={{position: 'absolute', top: '4%', left: '86%'}}>
+          </div> : <div className='loginRegisterButton'>
             <Button.Group>
               <Button onClick={this.openLogIn}>Login</Button>
               <Button.Or />
