@@ -38,7 +38,7 @@ class Graphs extends React.Component {
 				type : 'donut',
 			},
 			donut: {
-				title: "Food Budget BreakDown"
+				title: "Budget BreakDown"
 			}
 		});
 		console.log(this.props.budget)

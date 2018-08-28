@@ -7,7 +7,8 @@ import {
   Image,
   Menu,
   Segment,
-  Sidebar
+  Sidebar,
+  Modal
 } from "semantic-ui-react"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { FlexyFlipCard } from "flexy-flipcards"
@@ -24,21 +25,19 @@ const getItems = (count, array) =>
         <div>
           <div>
             <div className='kambanAct'>
-              {activity.name.length > 20 ? activity.name.substring(0, 30) : activity.name}
+              {activity.name.replace(/(([^\s]+\s\s*){3})(.*)/,"$1…")}
             </div>
             <br />
             <div className='kambanAct' >
-              {activity.cost === null || 0
-                ? "Free"
-                : activity.cost === 1
-                  ? "$"
-                  : activity.cost === 2
-                    ? "$$"
-                    : activity.cost === 3
-                      ? "$$$"
-                      : activity.cost === 4
-                        ? "$$$$"
-                        : null}
+              {activity.cost === 1
+                ? "$"
+                : activity.cost === 2
+                  ? "$$"
+                  : activity.cost === 3
+                    ? "$$$"
+                    : activity.cost === 4
+                      ? "$$$$"
+                      : 'Free'}
             </div>
             <Image className='kambanImage' src={activity.image}/>
           </div>{" "}
@@ -123,8 +122,11 @@ class Kamban extends React.Component {
       for (let j = 0; j < day.length; j++) {
         cost += day[j].cost
         if (j === 0) breakfast.push(day[j].cost)
+        if (j === 1) breakfast[0] = breakfast[0] + day[j].cost
         if (j === 2) lunch.push(day[j].cost)
+        if (j === 3) lunch[0] = lunch[0] + day[j].cost
         if (j === 4) dinner.push(day[j].cost)
+        if (j === 5) dinner[0] = dinner[0] + day[j].cost
       }
       costOfDays.push(cost)
     }
@@ -183,22 +185,13 @@ class Kamban extends React.Component {
       <ApolloConsumer>
       {(client) => {
       return (
-      <div className='mainPage'>
+      <div>
         <div>
           <Segment
             clearing
             style={{ backgroundImage: "linear-gradient(lightCyan, white)" }}
           >
-            {this.props.user === "Welcome User" ? (
-              <Header as="h2" icon="user circle" floated="right" />
-            ) : (
-              <Header
-                as="h2"
-                icon="user circle"
-                onClick={this.props.home}
-                floated="right"
-              />
-            )}
+            <Header as="h2" icon="user circle" floated="right" />
           </Segment>
         </div>
 
@@ -229,17 +222,17 @@ class Kamban extends React.Component {
                         className='gridBorder'
                         key={index}
                         style={{
-                          backgroundColor:
+                          backgroundImage:
                             this.props.temp[index].rain_chance === 0
-                              ? "rgba(58, 160, 175, 0.11)"
-                              : "rgba(108, 101, 80, 0.18)"
+                              ? "linear-gradient(rgba(255,255,255,0.4) 100%,rgba(255,255,255) 0%), url(https://i.amz.mshcdn.com/CEj-0M6jJbdMpl7mfz0F99jLfNw=/fit-in/1200x9600/http%3A%2F%2Fmashable.com%2Fwp-content%2Fuploads%2F2013%2F04%2Fbeach-waves.gif)"
+                              : "linear-gradient(rgba(255,255,255,0.6) 0%,rgba(255,255,255,255.6) 100%), url(http://bestanimations.com/Nature/Water/rain/rain-nature-animated-gif-32.gif)"
                         }}
                       >
                         <div>
                           <div className='weatherIcon'>
                             {this.props.temp[index].rain_chance === 0
-                                ? <Icon className='sunny' name='sun' size='large'/>
-                                : <Icon className='rainy' name="rain" size='large'/>}
+                                ? <Icon name="sun" className='sunny' size='large'/>
+                                : <Icon name='rain' className='rainy' size='large'/>}
                           </div>
                           <div className='expandIcon' onClick={() => this.props.flip(item.orig, index)}>
                             <Icon className='expandIcon' name="expand arrows alternate" size='large'/>
@@ -332,7 +325,16 @@ class Kamban extends React.Component {
                 )
               }}
             </Droppable>
-            {this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px'}}>Confirm All Trips</Button>)}
+            <Modal 
+              onOpen={() => {
+                setTimeout(() => {this.props.goCurrentAndHome()}, 5500)
+              }}
+              trigger={this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm All Trips</Button>)}>
+              <Modal.Content style={{position: 'relative', textAlign: 'center', backgroundColor: '#cceaf7'}}>
+                <Image size='medium' src='https://cdn.dribbble.com/users/398490/screenshots/2189858/airplane-for-dribbble.gif' style={{width: '100%'}}/>
+                <h2 style={{position: 'absolute', bottom: '6%', left: '37%'}}>Confirming Your Trip</h2>
+              </Modal.Content>
+            </Modal>
           </DragDropContext>
         </Grid>
       </div>)}}
