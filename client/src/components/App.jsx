@@ -1,34 +1,30 @@
 import React from 'react'
-import { Button, Icon, Sidebar, Menu, Breadcrumb, Header, Segment } from 'semantic-ui-react'
+import { Sidebar, Menu, Breadcrumb } from 'semantic-ui-react'
+import { Switch, Route, Link } from 'react-router-dom'
 
 import Account from './Account.jsx'
 import Footer from './Footer.jsx'
 import AllDays from './AllDays.jsx'
-import UserProfile from './UserProfile.jsx'
 import Onboarding from './Onboarding.jsx'
 import UserPreferences from './UserPreferences.jsx'
+import Landing from './Landing.jsx'
+import CurrentTrip from './CurrentTrip.jsx'
+import PastTrip from './PastTrip.jsx'
+
 import firebase from './firebase.js'
-import { images } from './helpers/splashImages.js'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      pickedTrip: false,
       home: false,
       user: 'Welcome User',
       image: 'https://react.semantic-ui.com/images/avatar/large/patrick.png',
-      openOnboarding: false,
       visible: false,
       login: false,
-      location: 'New York',
-      background: '',
-      backgroundNY: '',
       trip: 'current'
     }
 
-    this.pickTrip = this.pickTrip.bind(this)
-    this.goHome = this.goHome.bind(this)
     this.changeUser = this.changeUser.bind(this)
     this.openOnboarding = this.openOnboarding.bind(this)
     this.closeFirstOnboard = this.closeFirstOnboard.bind(this)
@@ -37,52 +33,6 @@ class App extends React.Component {
     this.handleSidebarHide = this.handleSidebarHide.bind(this)
     this.handleLogin = this.handleLogin.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
-
-    this.locationChange = this.locationChange.bind(this)
-    this.changeToCurrent = this.changeToCurrent.bind(this)
-    this.changeToPast = this.changeToPast.bind(this)
-  }
-
-  // Set random background image from our helper splashImage file.
-  componentDidMount() {
-    let img = images[Math.floor(Math.random() * images.length)]
-    console.log(img)
-    this.setState({ background: img, backgroundNY: img })
-  }
-
-  // Set random background image from our helper splashImage file.
-  componentDidMount() {
-    let img = images[Math.floor(Math.random() * images.length)]
-    console.log(img)
-    this.setState({ background: img, backgroundNY: img })
-  }
-
-  // Conditional rendering function for displaying the home page and the trip page. Works on LocationModals 'Next' button.
-  pickTrip() {
-    this.setState({
-      pickedTrip: !this.state.pickedTrip
-    })
-  }
-
-  goHome() {
-    this.setState({
-      home: false,
-      trip: 'current'
-    })
-  }
-
-  changeToCurrent() {
-    this.setState({
-      home: true,
-      trip: 'current'
-    })
-  }
-
-  changeToPast() {
-    this.setState({
-      home: true,
-      trip: 'past'
-    })
   }
 
   //Set username
@@ -117,28 +67,6 @@ class App extends React.Component {
     this.setState({ login: false })
   }
 
-  locationChange(e) {
-    var location = e.target.text
-
-    this.setState({ location })
-
-    if (location === 'New York') {
-      this.setState({
-        background: this.state.backgroundNY
-      })
-    } else if (location === 'Paris') {
-      this.setState({
-        background:
-          'https://images.unsplash.com/photo-1500313830540-7b6650a74fd0?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=6e938f7571b1c14add60901d6b841307'
-      })
-    } else if (location === 'Tokyo') {
-      this.setState({
-        background:
-          'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ebd34ddde3f2b4ea6dcdc9b7d329b774&auto=format&fit=crop&w=2850&q=80'
-      })
-    }
-  }
-
   logOut() {
     firebase.auth().signOut()
       .then(() => {
@@ -149,9 +77,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-
-        
+      <div>        
         <Sidebar.Pushable>
           <Sidebar
             as={Menu}
@@ -161,107 +87,52 @@ class App extends React.Component {
             visible={this.state.visible}
             width="thin"
           >
-            <Menu.Item as="a" onClick={this.goHome}>
-              Home
+            <Menu.Item as="a">
+              <Link to='/'>
+                Home
+              </Link>
             </Menu.Item>
-            <Menu.Item as="a" onClick={this.changeToCurrent}>Current Trip</Menu.Item>
-            <Menu.Item as='a' onClick={this.changeToPast}>Past Trips</Menu.Item>
-            
-            {this.state.home === false &&             
+            <Menu.Item as="a">
+              <Link to='/current'>
+                Current Trip
+              </Link>
+            </Menu.Item>
+            <Menu.Item as='a'>
+              <Link to='/past'>
+                Past Trips
+              </Link>
+            </Menu.Item>
             <Menu.Item as="a" onClick={this.logOut}>
-              Logout
-            </Menu.Item> }
+              <Link to='/'>
+                Logout
+              </Link>
+            </Menu.Item>
           </Sidebar>
 
           <Sidebar.Pusher>
-            {this.state.home === false ? (
-              <div>
-                {this.state.pickedTrip === false ? (
-                  <div className='splash'>
-                    <img className='splashImage' src={this.state.background}/>
-                    <div>
-                      <Account
-                        user={this.state.user}
-                        trip={this.state.trip}
-                        styled={{height: '9%', width: '5%', position: 'absolute', top: '3%', left: '93%', cursor:'pointer'}}
-                        image={this.state.image}
-                        changeUser={this.changeUser}
-                        openOnboarding={this.openOnboarding}
-                        handleButtonClick={this.handleButtonClick}
-                        handleLogin={this.handleLogin}
-                        handleLogout={this.handleLogout}
-                        loggedIn={this.state.login}
-                      />
-                    </div>
-                    <div className='cityName'>
-                      {this.state.location === 'New York' ? (
-                        <div>
-                          <div className='newYork'>New York</div>
-                          <div className='newYorkTrip'>
-                            <UserPreferences pickTrip={this.pickTrip} able={false}/>
-                          </div>
-                        </div>
-                      ) : this.state.location === 'Tokyo' ? (
-                        <div>
-                          <div className='tokyo'>Tokyo</div>
-                          <div className='tokyoTrip'>
-                            <UserPreferences pickTrip={this.pickTrip} able={true}/>
-                          </div>
-                        </div>
-                      ) : (<div>
-                        <div className='paris'>Paris</div>
-                        <div className='parisTrip'>
-                          <UserPreferences pickTrip={this.pickTrip} able={true}/>
-                        </div>
-                        </div>)}
-                    </div>
-                    <Onboarding open={this.state.openOnboarding} closer = {this.closeFirstOnboard} />
-                  </div>
-                ) : (
-                  <div className='allDaysComp'>
-                    <AllDays home={this.goHome} user={this.state.user}/>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div>
-                <UserProfile home={this.goHome} user={this.state.user} image={this.state.image} trip={this.state.trip}/>
-                <Account
-                  styled={{height: '13%', width: '4%', position: 'absolute', top: '1%', left: '94%', cursor:'pointer'}}
-                  styled2={{height: '3%', width: '4%', position: 'absolute', top: '5px', left: '94%', cursor:'pointer'}}
-                  trip={this.state.trip}
-                  user={this.state.user}
-                  image={this.state.image}
-                  changeUser={this.changeUser}
-                  openOnboarding={this.openOnboarding}
-                  handleButtonClick={this.handleButtonClick}
-                  handleLogin={this.handleLogin}
-                  handleLogout={this.handleLogout}
-                  loggedIn={this.state.login}
-                />
-              </div>
-            )}
 
-            {(this.state.pickedTrip === false && this.state.home === false) ? (
-              <div className='breadCrumbs'>
-                <Breadcrumb>
-                  <Breadcrumb.Section onClick={this.locationChange}>
-                    Tokyo
-                  </Breadcrumb.Section>
-                  <Breadcrumb.Divider icon="map pin" />
-                  <Breadcrumb.Section onClick={this.locationChange}>
-                    Paris
-                  </Breadcrumb.Section>
-                  <Breadcrumb.Divider icon="map pin" />
-                  <Breadcrumb.Section onClick={this.locationChange}>
-                    New York
-                  </Breadcrumb.Section>
-                  <Breadcrumb.Divider icon="map pin" />
-                </Breadcrumb>
-              </div>
-            ) : (<div></div>)}
+            <Switch>
+              <Route exact path='/' render={props => <Landing /> } />
+              <Route exact path='/current' render={props => <CurrentTrip /> } />
+              <Route exact path='/past' render={props => <PastTrip /> } />
+              <Route exact path='/trip' render={props => <AllDays {...props} user={this.state.user} />} />
+            </Switch>
+
           </Sidebar.Pusher>
         </Sidebar.Pushable>
+
+        <Account
+          user={this.state.user}
+          trip={this.state.trip}
+          styled={{ height: '9%', width: '5%', position: 'absolute', top: '3%', left: '93%', cursor: 'pointer' }}
+          image={this.state.image}
+          changeUser={this.changeUser}
+          openOnboarding={this.openOnboarding}
+          handleButtonClick={this.handleButtonClick}
+          handleLogin={this.handleLogin}
+          handleLogout={this.handleLogout}
+          loggedIn={this.state.login}
+        />
       </div>
     )
   }

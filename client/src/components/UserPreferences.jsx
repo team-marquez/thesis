@@ -15,6 +15,8 @@ import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { ApolloConsumer } from 'react-apollo'
 
+import { Link } from 'react-router-dom'
+
 let PREF_QUERY = gql`
   query PREF_QUERY($pref: Pref) {
     userPrefs(pref: $pref)
@@ -39,23 +41,15 @@ class UserPreferences extends React.Component {
       party_size: 1,
       budget: 0,
       tripDates: null,
-      maxDate: null
+      maxDate: null,
+      modal: false
     }
-    this.mouseEnter = this.mouseEnter.bind(this)
-    this.mouseExit = this.mouseExit.bind(this)
+    this.handleModal = this.handleModal.bind(this)
   }
 
-  // Mouse enter event to the make the brightness higher on the location we are selecting.
-  mouseEnter() {
+  handleModal() {
     this.setState({
-      bright: 'brightness(125%)'
-    })
-  }
-
-  // Mouse exit event to return the brightness back to original when not on the location.
-  mouseExit() {
-    this.setState({
-      bright: 'brightness(100%)'
+      modal: !this.state.modal
     })
   }
 
@@ -65,6 +59,7 @@ class UserPreferences extends React.Component {
       endDate: new Date(),
       key: 'selection'
     }
+    
     return (
       <ApolloConsumer>
         {client => (
@@ -72,7 +67,7 @@ class UserPreferences extends React.Component {
             <Modal
               size={'mini'}
               trigger={
-                <Button disabled={this.props.able} animated="fade" onClick={this.pickTrip}>
+                <Button disabled={this.props.able} animated="fade" onClick={this.handleModal}>
                   <Button.Content visible>Take us away</Button.Content>
                   <Button.Content hidden>
                     <Icon name="plane" />
@@ -206,6 +201,7 @@ class UserPreferences extends React.Component {
                   </div>
                   <div className='nextButton'>
                     <br />
+                    <Link to='/trip'>
                     <Button
                       content="Next"
                       icon="right arrow"
@@ -239,12 +235,15 @@ class UserPreferences extends React.Component {
                         })
                         client.writeData({ data })
                         let itin = JSON.parse(data.userPrefs)
+
                         client.writeData({
-                          data: { itinerary: JSON.stringify(itin.itinerary) }
+                          data: { itinerary: itin.itinerary }
                         })
-                        this.props.pickTrip()
+
+                        this.handleModal()
                       }}
                     />
+                    </Link>
                   </div>
                 </Modal.Description>
               </Modal.Content>
