@@ -15,6 +15,9 @@ import { FlexyFlipCard } from "flexy-flipcards"
 import Graphs from "./Graphs.jsx"
 import {ApolloConsumer} from "react-apollo"
 
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf'
+
 
 // Generates an array of the data we get back. Shows the name, cost, and the image.
 const getItems = (count, array) =>
@@ -97,17 +100,30 @@ class Kamban extends React.Component {
       lunch: [],
       dinner: [],
       counter: 0,
-      checkmarkColor: ['grey', 'grey', 'grey', 'grey']
+      checkmarkColor: ['grey', 'grey', 'grey', 'grey'],
+      screenshot: false
     }
     this.onDragEnd = this.onDragEnd.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.getBudgets = this.getBudgets.bind(this)
     this.incrementCounter = this.incrementCounter.bind(this)
     this.decrementCounter = this.decrementCounter.bind(this)
+    this.takeScreenshot = this.takeScreenshot.bind(this)
   }
 
   componentDidMount () {
     this.getBudgets()
+  }
+
+  takeScreenshot(){
+    this.setState({screenshot: true})
+    html2canvas(document.querySelector("#carter")).then((canvas) => {
+      var imgData = canvas.toDataURL("image/jpeg", 1.0);
+      var pdf = new jsPDF("l", "mm", "a4");
+      pdf.addImage(imgData, 'JPEG', 0,0, 300, 200);
+      pdf.save("download.pdf");
+      this.setState({screenshot: false})
+    })
   }
 
   getBudgets () {
@@ -294,7 +310,7 @@ class Kamban extends React.Component {
                                   {this.state.checkmarkColor[index] === 'grey' ? (<Icon onClick={() => this.incrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>) : (<Icon onClick={() => this.decrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>)}
                                 </div>
                                 <div>
-                                  <Graphs vis={this.state[item.id]} budget={(this.state.dayBudget[index]/this.state.totalBudget)*100} breakfast={this.state.breakfast[index]} lunch={this.state.lunch[index]} dinner={this.state.dinner[index]} />
+                                  {this.state.screenshot = true ? <div><Graphs vis={this.state[item.id]} budget={(this.state.dayBudget[index]/this.state.totalBudget)*100} breakfast={this.state.breakfast[index]} lunch={this.state.lunch[index]} dinner={this.state.dinner[index]} />
                                   <br/>
                                   <br/>
                                   <hr></hr>
@@ -312,7 +328,7 @@ class Kamban extends React.Component {
                                     ref="flipper"
                                   >
                                     TRIP
-                                  </Button>
+                                  </Button></div> : <div></div>}
                                 </div>
                               </FlexyFlipCard>
                             </div>

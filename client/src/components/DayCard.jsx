@@ -124,8 +124,8 @@ class Four extends React.Component {
     // else act
     let buffer = null
     if (index % 2 === 0) buffer = this.props.b.food
-    if (index === 0) buffer = this.props.b.food.filter(elem => elem.mealtime.includes("breakfast"))
     else buffer = this.props.a.activities
+    if (index === 0) buffer = this.props.b.food.filter(elem => elem.mealtime.includes("breakfast"))
     let temp = this.state.items.slice()
     let buff = getItems(1, [this.refresh(buffer)])
     console.log(buff)
@@ -167,7 +167,7 @@ class Four extends React.Component {
       return (
       <div>
         <DragDropContext onDragEnd={this.onDragEnd}>
-          <Droppable droppableId="droppable">
+          <Droppable droppableId="droppable" direction='vertical'>
             {(provided, snapshot) => (
               <div
                 ref={provided.innerRef}
