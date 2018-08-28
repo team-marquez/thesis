@@ -6,12 +6,10 @@ class UserProfile extends React.Component {
 		super(props)
 		this.state = {
 			trip: 'current',
-			pastTrips: [{img: 'https://i.imgur.com/SDrLtgc.jpg'}, {img: 'https://i.imgur.com/L9ov00i.jpg'}, {img: 'https://i.imgur.com/z6GNhq3.jpg'}]
+			pastTrips: [{img: 'https://i.imgur.com/SDrLtgc.jpg', rating: 4}, {img: 'https://i.imgur.com/L9ov00i.jpg', rating: 3}, {img: 'https://i.imgur.com/z6GNhq3.jpg', rating: 5}]
 		}
 		this.handleButtonClick = this.handleButtonClick.bind(this)
 		this.handleSidebarHide = this.handleSidebarHide.bind(this)
-		this.changeToCurrent = this.changeToCurrent.bind(this)
-		this.changeToPast = this.changeToPast.bind(this)
 	}
 
 	handleButtonClick () {
@@ -26,25 +24,20 @@ class UserProfile extends React.Component {
 		})
 	}
 	
-	changeToCurrent () {
-		this.setState({
-			trip: 'current'
-		})
-	}
-
-	changeToPast () {
-		this.setState({
-			trip: 'past'
-		})
-	}
 
 	render () {
 		return (
 			<div>
 				<div>
-					<Sidebar.Pushable>
-						{this.state.trip === 'current' ? (
-						<Sidebar.Pusher dimmed={visible}>
+				<div>
+          <Segment
+            clearing
+            style={{ backgroundImage: "linear-gradient(lightCyan, white)" }}
+          >
+            <Header as="h2" icon="user circle" floated="right" />
+          </Segment>
+        </div>
+						{this.props.trip === 'current' ? (
 							<Segment basic>
 								<Header className='centerUserPro' as='h3'>Current Trip</Header>
 								<div className='userProBox'>
@@ -53,33 +46,27 @@ class UserProfile extends React.Component {
 									</div><br/>
 								</div>
 							</Segment>
-						</Sidebar.Pusher>
 						) : (
 						<div>
-						<Sidebar.Pusher dimmed={visible}>
 							<Segment basic>
 								<Header className='centerUserPro' as='h3'>Past Trips</Header>
 							</Segment>
-						</Sidebar.Pusher>
 
 						{this.state.pastTrips.map((trip, index) => {
 							return (
-								<Sidebar.Pusher dimmed={visible}>
 									<Segment basic>
 										<div className='pastTripBox'>
 											<div>
 												<Image className='pastTripImage' src={trip.img}></Image>
 											</div>
-											<Rating icon='heart' defaultRating={3} maxRating={5} size='large'/>
-											<hr/>
+											<Rating icon='heart' defaultRating={trip.rating} maxRating={5} size='large'/>
 										</div>
+										<hr/>
 									</Segment>
-								</Sidebar.Pusher>
 							)
 						})}						
 						</div>
 					)}
-					</Sidebar.Pushable>
 				</div>
 
 			</div>

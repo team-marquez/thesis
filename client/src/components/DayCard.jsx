@@ -153,27 +153,22 @@ class DayCard extends React.Component {
                                 <strong>{item.content.name}</strong>
                               </div>
                               <div className='actCost'>
-                                {item.content.cost === null || 0
-                                  ? "Free"
-                                  : item.content.cost === 1
-                                    ? "$"
-                                    : item.content.cost === 2
-                                      ? "$$"
-                                      : item.content.cost === 3
-                                        ? "$$$"
-                                        : item.content.cost === 4
-                                          ? "$$$$"
-                                          : null}
+                                {item.content.cost === 1
+                                  ? "$"
+                                  : item.content.cost === 2
+                                    ? "$$"
+                                    : item.content.cost === 3
+                                      ? "$$$"
+                                      : item.content.cost === 4
+                                        ? "$$$$"
+                                        : 'Free'}
                               </div>
                             </div>
                             <div className='actLocation'>
-                              <em>{item.content.location}</em>
+                              <em>{item.content.location = item.content.location.replace(/([A-Z])/g, ' $1').trim()}</em>
                             </div>
                             <div className='actDescription'>
-                              {item.content.description.length > 450
-                                ? item.content.description.substring(0, 450) +
-                                  " ..."
-                                : item.content.description}
+                              {item.content.description.replace(/(([^\s]+\s\s*){70})(.*)/,"$1…")}
                             </div>
                           </div>
                         </div>

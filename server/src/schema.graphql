@@ -12,6 +12,7 @@ input Pref {
   IO: Int!
   FA: Int!
   kidFriendly: Boolean !
+  userId: String
 }
 
 input Dates{
@@ -28,15 +29,14 @@ type Query {
   activities(indoor_outdoor: Int): [Activity]
   userPrefs(pref: Pref): String
   userRecs(id: String): Json
-  firebaseUser(id: String): Users
+  firebaseUser(firebaseId: String): Users
 }
 
 type Mutation {
   createUsers(
-    username: String!
-    password: String!
-    age: Int!
-    gender: Int!
+    username: String
+    password: String
+    firebaseId: String
   ): Users
   createWeather(
     day: String!

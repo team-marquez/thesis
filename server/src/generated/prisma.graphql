@@ -1,5 +1,5 @@
 # source: http://34.234.236.21:4466
-# timestamp: Fri Aug 24 2018 16:34:14 GMT-0400 (EDT)
+# timestamp: Tue Aug 28 2018 18:37:04 GMT-0400 (EDT)
 
 type Activity implements Node {
   id: ID!
@@ -673,14 +673,14 @@ type Query {
 
 type Restaurant implements Node {
   id: ID!
-  name: String!
-  image: String!
-  cuisine: String!
-  cost: Float!
-  description: String!
-  why_go: String!
+  name: String
+  image: String
+  cuisine: String
+  cost: Float
+  description: String
+  why_go: String
   location: String
-  source: String!
+  source: String
   website: String
   mealtime: Json
   local_tourist: Int
@@ -697,14 +697,14 @@ type RestaurantConnection {
 }
 
 input RestaurantCreateInput {
-  name: String!
-  image: String!
-  cuisine: String!
-  cost: Float!
-  description: String!
-  why_go: String!
+  name: String
+  image: String
+  cuisine: String
+  cost: Float
+  description: String
+  why_go: String
   location: String
-  source: String!
+  source: String
   website: String
   mealtime: Json
   local_tourist: Int
@@ -752,14 +752,14 @@ enum RestaurantOrderByInput {
 
 type RestaurantPreviousValues {
   id: ID!
-  name: String!
-  image: String!
-  cuisine: String!
-  cost: Float!
-  description: String!
-  why_go: String!
+  name: String
+  image: String
+  cuisine: String
+  cost: Float
+  description: String
+  why_go: String
   location: String
-  source: String!
+  source: String
   website: String
   mealtime: Json
   local_tourist: Int
@@ -1419,9 +1419,7 @@ type Users implements Node {
   id: ID!
   firebaseId: String
   username: String!
-  password: String!
-  age: Int!
-  gender: Int!
+  password: String
   history(where: TripWhereInput, orderBy: TripOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Trip!]
 }
 
@@ -1438,9 +1436,7 @@ type UsersConnection {
 input UsersCreateInput {
   firebaseId: String
   username: String!
-  password: String!
-  age: Int!
-  gender: Int!
+  password: String
   history: TripCreateManyInput
 }
 
@@ -1462,10 +1458,6 @@ enum UsersOrderByInput {
   username_DESC
   password_ASC
   password_DESC
-  age_ASC
-  age_DESC
-  gender_ASC
-  gender_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -1476,9 +1468,7 @@ type UsersPreviousValues {
   id: ID!
   firebaseId: String
   username: String!
-  password: String!
-  age: Int!
-  gender: Int!
+  password: String
 }
 
 type UsersSubscriptionPayload {
@@ -1524,8 +1514,6 @@ input UsersUpdateInput {
   firebaseId: String
   username: String
   password: String
-  age: Int
-  gender: Int
   history: TripUpdateManyInput
 }
 
@@ -1698,50 +1686,6 @@ input UsersWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
-  age: Int
-
-  """All values that are not equal to given value."""
-  age_not: Int
-
-  """All values that are contained in given list."""
-  age_in: [Int!]
-
-  """All values that are not contained in given list."""
-  age_not_in: [Int!]
-
-  """All values less than the given value."""
-  age_lt: Int
-
-  """All values less than or equal the given value."""
-  age_lte: Int
-
-  """All values greater than the given value."""
-  age_gt: Int
-
-  """All values greater than or equal the given value."""
-  age_gte: Int
-  gender: Int
-
-  """All values that are not equal to given value."""
-  gender_not: Int
-
-  """All values that are contained in given list."""
-  gender_in: [Int!]
-
-  """All values that are not contained in given list."""
-  gender_not_in: [Int!]
-
-  """All values less than the given value."""
-  gender_lt: Int
-
-  """All values less than or equal the given value."""
-  gender_lte: Int
-
-  """All values greater than the given value."""
-  gender_gt: Int
-
-  """All values greater than or equal the given value."""
-  gender_gte: Int
   history_every: TripWhereInput
   history_some: TripWhereInput
   history_none: TripWhereInput
