@@ -1,7 +1,7 @@
 const cheerio = require('cheerio')
 const axios = require('axios')
 const Nightmare = require('nightmare')
-// const models = require('./server/temp_db/models.js')
+const models = require('./server/temp_db/models.js')
 // let nightmare = new Nightmare()
 
 const { Prisma } = require('prisma-binding')
@@ -344,9 +344,9 @@ const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
         .split('|')[1]
       item.cost = 0
       $(element)
-        .find('listing__header ul li')
+        .find('.listing__header ul li')
         .each((index, el) => {
-          if ($(el).hasClass('.xs-text-red')) item.cost++
+          if ($(el).hasClass('xs-text-red')) item.cost++
         })
       item.review = ''
       $(element)
@@ -404,9 +404,9 @@ let timeOutMuseums = website => {
           .find('.image_wrapper img')
           .attr('src')
         $(element)
-          .find('listing__header ul li')
+          .find('.listing__header ul li')
           .each((index, el) => {
-            if ($(el).hasClass('.xs-text-red')) item.cost++
+            if ($(el).hasClass('xs-text-red')) item.cost++
           })
         item.review = ''
         $(element)
@@ -496,9 +496,9 @@ let timeOutComedy = attractionName => {
         item.borough = ''
         item.cost = 0
         $(element)
-          .find('listing__header ul li')
+          .find('.listing__header ul li')
           .each((index, el) => {
-            if ($(el).hasClass('.xs-text-red')) item.cost++
+            if ($(el).hasClass('xs-text-red')) item.cost++
           })
         item.review = ''
         $(element)
@@ -555,9 +555,9 @@ let timeOutSports = website => {
           .attr('src')
         item.cost = 0
         $(element)
-          .find('listing__header ul li')
+          .find('.listing__header ul li')
           .each((index, el) => {
-            if ($(el).hasClass('.xs-text-red')) item.cost++
+            if ($(el).hasClass('xs-text-red')) item.cost++
           })
         item.review = ''
         $(element)
@@ -595,8 +595,8 @@ let timeOutSports = website => {
         // data.push(item)
         //SEND TO DATABASE HERE
         //HERE
-
         
+        console.log(item)
       })
       return item
 
@@ -622,9 +622,9 @@ let attractionSinglePage = website => {
         .attr('src')
       item.cost = 0
       $(element)
-        .find('listing__header ul li')
+        .find('.listing__header ul li')
         .each((index, el) => {
-          if ($(el).hasClass('.xs-text-red')) item.cost++
+          if ($(el).hasClass('xs-text-red')) item.cost++
         })
       item.review = ''
       $(element)
@@ -703,36 +703,30 @@ let manualScrape = async () => {
     'https://www.timeout.com/newyork/shopping/macys-herald-square-midtown-west-ny',
 
   ]
-  await actSites.forEach(async site => {
-    await attractionSinglePage(site)
-  })
-  await museumSites.forEach(async site => {
-    await timeOutMuseums(site)
-    //write .then(data)
-  })
-  await shoppingSites.forEach(async site => {
-    await timeOutShopping(site)
-    //write .then(data)
-  })
-  await timeOutSports('https://www.timeout.com/newyork/sport-fitness/yankee-stadium')
+  // await actSites.forEach(async site => {
+  //   await attractionSinglePage(site)
+  // })
+  // await museumSites.forEach(async site => {
+  //   await timeOutMuseums(site)
+  //   //write .then(data)
+  // })
+  // await shoppingSites.forEach(async site => {
+  //   await timeOutShopping(site)
+  //   //write .then(data)
+  // })
+  // timeOutSports('https://www.timeout.com/newyork/sport-fitness/yankee-stadium').then(data => console.log(data))
   //write .then(data)
-
 }
 
 //uncomment checker to run manualScrape
-// let checker = manualScrape()
-
-
+// manualScrape()
 
 // attractionSinglePage('https://www.timeout.com/newyork/attractions/brooklyn-bridge-new-york-ny').then(data => {
 //   console.log(data)
 // })
 // timeOutShopping('https://www.timeout.com/newyork/shopping/chelsea-market-new-york-ny').then(data => console.log(data))
 
-timeOutMuseums('https://www.timeout.com/newyork/museums/guggenheim-new-york')
-
-
-
+// timeOutMuseums('https://www.timeout.com/newyork/museums/guggenheim-new-york')
 
 //////uncomment below function to run the scrapes
 // let timeOutCheck = timeOutListScrape(listURL)
