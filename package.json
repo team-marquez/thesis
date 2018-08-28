@@ -61,6 +61,8 @@
     "react-beautiful-dnd": "^9.0.0",
     "react-date-range": "^0.9.4",
     "react-dom": "16.4.2",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
     "react-semantic-ui-range": "^0.6.2",
     "recombee-api-client": "^2.1.0",
