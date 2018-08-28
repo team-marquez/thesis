@@ -29,17 +29,15 @@ const getItems = (count, array) =>
             </div>
             <br />
             <div className='kambanAct' >
-              {activity.cost === null || 0
-                ? "Free"
-                : activity.cost === 1
-                  ? "$"
-                  : activity.cost === 2
-                    ? "$$"
-                    : activity.cost === 3
-                      ? "$$$"
-                      : activity.cost === 4
-                        ? "$$$$"
-                        : null}
+              {activity.cost === 1
+                ? "$"
+                : activity.cost === 2
+                  ? "$$"
+                  : activity.cost === 3
+                    ? "$$$"
+                    : activity.cost === 4
+                      ? "$$$$"
+                      : 'Free'}
             </div>
             <Image className='kambanImage' src={activity.image}/>
           </div>{" "}
@@ -124,8 +122,11 @@ class Kamban extends React.Component {
       for (let j = 0; j < day.length; j++) {
         cost += day[j].cost
         if (j === 0) breakfast.push(day[j].cost)
+        if (j === 1) breakfast[0] = breakfast[0] + day[j].cost
         if (j === 2) lunch.push(day[j].cost)
+        if (j === 3) lunch[0] = lunch[0] + day[j].cost
         if (j === 4) dinner.push(day[j].cost)
+        if (j === 5) dinner[0] = dinner[0] + day[j].cost
       }
       costOfDays.push(cost)
     }
