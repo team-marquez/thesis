@@ -13,6 +13,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { FlexyFlipCard } from "flexy-flipcards"
 import Graphs from "./Graphs.jsx"
 import {ApolloConsumer} from "react-apollo"
+import html2canvas from 'html2canvas';
 
 
 // Generates an array of the data we get back. Shows the name, cost, and the image.
@@ -86,12 +87,7 @@ class Kamban extends React.Component {
     this.state = {
       items: getItems(this.props.days.length, this.props.days),
       open: false,
-      "item-0": false,
-      "item-1": false,
-      "item-2": false,
-      "item-3": false,
-      "item-4": false,
-      "item-5": false,
+      screenshot: false,
       totalBudget: (this.props.budget.totalBudget/100 * 4),
       dayBudget: [],
       breakfast: [],
@@ -291,7 +287,7 @@ class Kamban extends React.Component {
                                   </Button>
                                   {this.state.checkmarkColor[index] === 'grey' ? (<Icon onClick={() => this.incrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>) : (<Icon onClick={() => this.decrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>)}
                                 </div>
-                                <div>
+                                {!this.state.screenshot ? (<div>
                                   <Graphs vis={this.state[item.id]} budget={(this.state.dayBudget[index]/this.state.totalBudget)*100} breakfast={this.state.breakfast[index]} lunch={this.state.lunch[index]} dinner={this.state.dinner[index]} />
                                   <br/>
                                   <br/>
@@ -311,7 +307,7 @@ class Kamban extends React.Component {
                                   >
                                     TRIP
                                   </Button>
-                                </div>
+                                </div>) : (<div></div>)}
                               </FlexyFlipCard>
                             </div>
                           )}
@@ -323,7 +319,13 @@ class Kamban extends React.Component {
                 )
               }}
             </Droppable>
-            {this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm All Trips</Button>)}
+            {this.state.counter === this.props.days.length ? 
+            (<Button onClick={() => {
+            this.setState({screenshot: true})
+            html2canvas(document.body).then((canvas) => {
+                document.body.appendChild(canvas);
+            })
+            }} color='green' style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm All Trips</Button>)}
           </DragDropContext>
         </Grid>
       </div>)}}
