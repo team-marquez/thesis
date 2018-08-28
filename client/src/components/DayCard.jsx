@@ -167,13 +167,10 @@ class DayCard extends React.Component {
                               </div>
                             </div>
                             <div className='actLocation'>
-                              <em>{item.content.location}</em>
+                              <em>{item.content.location = item.content.location.replace(/([A-Z])/g, ' $1').trim()}</em>
                             </div>
                             <div className='actDescription'>
-                              {item.content.description.length > 450
-                                ? item.content.description.substring(0, 450) +
-                                  " ..."
-                                : item.content.description}
+                              {item.content.description.replace(/(([^\s]+\s\s*){70})(.*)/,"$1…")}
                             </div>
                           </div>
                         </div>

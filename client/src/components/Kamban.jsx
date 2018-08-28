@@ -25,7 +25,7 @@ const getItems = (count, array) =>
         <div>
           <div>
             <div className='kambanAct'>
-              {activity.name.length > 20 ? activity.name.substring(0, 30) : activity.name}
+              {activity.name.replace(/(([^\s]+\s\s*){3})(.*)/,"$1…")}
             </div>
             <br />
             <div className='kambanAct' >
@@ -326,10 +326,10 @@ class Kamban extends React.Component {
             </Droppable>
             <Modal 
               onOpen={() => {
-                setTimeout(() => {this.props.goCurrentAndHome()}, 5000)
+                setTimeout(() => {this.props.goCurrentAndHome()}, 5500)
               }}
               trigger={this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm All Trips</Button>)}>
-              <Modal.Content style={{position: 'relative', textAlign: 'center'}}>
+              <Modal.Content style={{position: 'relative', textAlign: 'center', backgroundColor: '#cceaf7'}}>
                 <Image size='medium' src='https://cdn.dribbble.com/users/398490/screenshots/2189858/airplane-for-dribbble.gif' style={{width: '100%'}}/>
                 <h2 style={{position: 'absolute', bottom: '6%', left: '37%'}}>Confirming Your Trip</h2>
               </Modal.Content>
