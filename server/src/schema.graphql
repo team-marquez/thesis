@@ -26,7 +26,7 @@ type Query {
   test(args: String): String
   weather(day: String): Weather
   food(cost: Float): [Restaurant]
-  activities(indoor_outdoor: Int): [Activity]
+  activities: [Activity]
   userPrefs(pref: Pref): String
   userRecs(id: String): Json
   firebaseUser(firebaseId: String): Users
