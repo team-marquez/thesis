@@ -4,8 +4,8 @@ module.exports = {
 		let budgetPerPerson = totalBudget / partySize
 		let budgetPerPersonPerDay = budgetPerPerson / tripDates.length
 		let FAAllocation = {
-			food: budgetPerPersonPerDay * (1 - FA),
-			activities: budgetPerPersonPerDay * FA
+			food: budgetPerPersonPerDay * (1 - (FA/100)),
+			activities: budgetPerPersonPerDay * (FA/100)
 		}
 
 		let mealAllocation = {
@@ -29,6 +29,8 @@ module.exports = {
 		}
 
 		let activitiesAsCost = costRanges(FAAllocation.activities)
+
+		console.log('items as cost: ', foodAsCost, activitiesAsCost)
 
 		for (let i = 0; i < recs.length; i++) {
 			let type = recs[i].type
@@ -66,7 +68,8 @@ module.exports = {
 				}
 			}
     }
-    
+	
+		clientPreferences.itemsAsCost = {activities: activitiesAsCost, food: foodAsCost}
 		return recs
 	}
 }
