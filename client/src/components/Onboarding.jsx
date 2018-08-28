@@ -4,7 +4,7 @@ import OnboardingOptions from './OnboardingOptions.jsx'
 
 const { onboardingActivities } = require('./helpers/onboardingActivities.js')
 
-import { Mutation } from 'react-apollo'
+import { Mutation, ApolloConsumer} from 'react-apollo'
 import gql from 'graphql-tag'
 
 const ProgressBar = () => {
@@ -16,6 +16,12 @@ const UPDATE_USERS = gql`
     updateUsers(id: $id, trips: $trips) {
       id
     }
+  }
+`
+
+let GET_ID = gql`
+  {
+    userId @client
   }
 `
 
@@ -118,17 +124,17 @@ class Onboarding extends React.Component {
       let oldProgress = this.state.progress
       this.setState({progress: ++oldProgress, selectedOption: option, optionSelected: true})
     }
-  }U
+  }
 
   render() {
     const { open } = this.props
     return (
-      <Mutation mutation={UPDATE_USERS}>
-        {(updateUsers, { data }) => (
+      <ApolloConsumer>
+        {client => (
           <div>
             <Modal open={open} size={'tiny'}>
               <Header
-                className='centerText'
+                style={{textAlign: 'center'}}
                 content={`Welcome to Let's Go To!`}
               />
               <Modal.Content style={{ fontSize: '18px' }}>
@@ -144,7 +150,7 @@ class Onboarding extends React.Component {
                   To get started, just press <em>Next</em>!
                 </p>
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   primary
                   className="onboardingButton"
@@ -167,7 +173,7 @@ class Onboarding extends React.Component {
                   selectOption={this.handleOptionSelect}
                 />
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   color="green"
                   onClick={this.showSecond}
@@ -188,7 +194,7 @@ class Onboarding extends React.Component {
                   selectOption={this.handleOptionSelect}
                   />
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   color="green"
                   onClick={this.showThird}
@@ -209,7 +215,7 @@ class Onboarding extends React.Component {
                   selectOption={this.handleOptionSelect}
                   />
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   color="green"
                   onClick={this.showFourth}
@@ -230,7 +236,7 @@ class Onboarding extends React.Component {
                   selectOption={this.handleOptionSelect}
                   />
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   color="green"
                   onClick={this.showFifth}
@@ -251,7 +257,7 @@ class Onboarding extends React.Component {
                   selectOption={this.handleOptionSelect}
                   />
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   color="green"
                   onClick={this.showSixth}
@@ -272,7 +278,7 @@ class Onboarding extends React.Component {
                   selectOption={this.handleOptionSelect}
                   />
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   color="green"
                   onClick={this.closeSixth}
@@ -292,14 +298,18 @@ class Onboarding extends React.Component {
 
                 <p>Please select the city you would Like To Go To!</p>
               </Modal.Content>
-              <Modal.Actions className='centerText'>
+              <Modal.Actions style={{textAlign: 'center'}}>
                 <Button
                   primary
-                  onClick={e => {
+                  onClick={async (e) => {
+                    let {data} = await client.query({query: GET_ID})
+                    let {userId} = data
+                    console.log(`userid ${userId}`)
+                    console.log(`trips ${JSON.stringify(this.state.chosenActivities, null, 2)}`)                
                     e.preventDefault()
-                    updateUsers({
+                    await client.mutate({mutation: UPDATE_USERS,
                       variables: {
-                        id: 'cjl5f4vh800ak0846azmgib7b',
+                        id: userId,
                         trips: this.state.chosenActivities
                       }
                     })
@@ -313,7 +323,7 @@ class Onboarding extends React.Component {
             </Modal>
           </div>
         )}
-      </Mutation>
+      </ApolloConsumer>
     )
   }
 }

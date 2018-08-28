@@ -4,9 +4,9 @@ const axios = require("axios");
 const { Prisma } = require("prisma-binding");
 
 const prisma = new Prisma({
-  typeDefs: "./server/src/generated/prisma.graphql",
-  endpoint: "http://localhost:4466/"
-});
+  typeDefs: './server/src/generated/prisma.graphql',
+  endpoint: 'http://34.234.236.21:4466'
+})
 
 //Zagat not functioning
 const breakfastScrape = website => {

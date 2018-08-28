@@ -183,22 +183,13 @@ class Kamban extends React.Component {
       <ApolloConsumer>
       {(client) => {
       return (
-      <div className='mainPage'>
+      <div>
         <div>
           <Segment
             clearing
             style={{ backgroundImage: "linear-gradient(lightCyan, white)" }}
           >
-            {this.props.user === "Welcome User" ? (
-              <Header as="h2" icon="user circle" floated="right" />
-            ) : (
-              <Header
-                as="h2"
-                icon="user circle"
-                onClick={this.props.home}
-                floated="right"
-              />
-            )}
+            <Header as="h2" icon="user circle" floated="right" />
           </Segment>
         </div>
 
@@ -229,17 +220,17 @@ class Kamban extends React.Component {
                         className='gridBorder'
                         key={index}
                         style={{
-                          backgroundColor:
+                          backgroundImage:
                             this.props.temp[index].rain_chance === 0
-                              ? "rgba(58, 160, 175, 0.11)"
-                              : "rgba(108, 101, 80, 0.18)"
+                              ? "linear-gradient(rgba(255,255,255,0.4) 100%,rgba(255,255,255) 0%), url(https://i.amz.mshcdn.com/CEj-0M6jJbdMpl7mfz0F99jLfNw=/fit-in/1200x9600/http%3A%2F%2Fmashable.com%2Fwp-content%2Fuploads%2F2013%2F04%2Fbeach-waves.gif)"
+                              : "linear-gradient(rgba(255,255,255,0.6) 0%,rgba(255,255,255,255.6) 100%), url(http://bestanimations.com/Nature/Water/rain/rain-nature-animated-gif-32.gif)"
                         }}
                       >
                         <div>
                           <div className='weatherIcon'>
                             {this.props.temp[index].rain_chance === 0
-                                ? <Icon className='sunny' name='sun' size='large'/>
-                                : <Icon className='rainy' name="rain" size='large'/>}
+                                ? <Icon name="sun" className='sunny' size='large'/>
+                                : <Icon name='rain' className='rainy' size='large'/>}
                           </div>
                           <div className='expandIcon' onClick={() => this.props.flip(item.orig, index)}>
                             <Icon className='expandIcon' name="expand arrows alternate" size='large'/>
@@ -332,7 +323,7 @@ class Kamban extends React.Component {
                 )
               }}
             </Droppable>
-            {this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px'}}>Confirm All Trips</Button>)}
+            {this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm All Trips</Button>)}
           </DragDropContext>
         </Grid>
       </div>)}}

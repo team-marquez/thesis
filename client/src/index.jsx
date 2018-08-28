@@ -7,6 +7,7 @@ import ApolloClient from 'apollo-boost'
 
 const defaults = {
   itinerary: '',
+  userId: 'anon',
 };
 
 const client = new ApolloClient({ uri: 'http://localhost:4000/graphql', clientState: {defaults} })
@@ -17,3 +18,6 @@ render(
   </ApolloProvider>,
   document.getElementById('app')
 )
+
+
+export default client
