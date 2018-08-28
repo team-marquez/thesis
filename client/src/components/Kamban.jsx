@@ -7,7 +7,8 @@ import {
   Image,
   Menu,
   Segment,
-  Sidebar
+  Sidebar,
+  Modal
 } from "semantic-ui-react"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { FlexyFlipCard } from "flexy-flipcards"
@@ -24,21 +25,19 @@ const getItems = (count, array) =>
         <div>
           <div>
             <div className='kambanAct'>
-              {activity.name.length > 20 ? activity.name.substring(0, 30) : activity.name}
+              {activity.name.replace(/(([^\s]+\s\s*){3})(.*)/,"$1…")}
             </div>
             <br />
             <div className='kambanAct' >
-              {activity.cost === null || 0
-                ? "Free"
-                : activity.cost === 1
-                  ? "$"
-                  : activity.cost === 2
-                    ? "$$"
-                    : activity.cost === 3
-                      ? "$$$"
-                      : activity.cost === 4
-                        ? "$$$$"
-                        : null}
+              {activity.cost === 1
+                ? "$"
+                : activity.cost === 2
+                  ? "$$"
+                  : activity.cost === 3
+                    ? "$$$"
+                    : activity.cost === 4
+                      ? "$$$$"
+                      : 'Free'}
             </div>
             <Image className='kambanImage' src={activity.image}/>
           </div>{" "}
@@ -123,8 +122,11 @@ class Kamban extends React.Component {
       for (let j = 0; j < day.length; j++) {
         cost += day[j].cost
         if (j === 0) breakfast.push(day[j].cost)
+        if (j === 1) breakfast[0] = breakfast[0] + day[j].cost
         if (j === 2) lunch.push(day[j].cost)
+        if (j === 3) lunch[0] = lunch[0] + day[j].cost
         if (j === 4) dinner.push(day[j].cost)
+        if (j === 5) dinner[0] = dinner[0] + day[j].cost
       }
       costOfDays.push(cost)
     }
@@ -323,7 +325,16 @@ class Kamban extends React.Component {
                 )
               }}
             </Droppable>
-            {this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm All Trips</Button>)}
+            <Modal 
+              onOpen={() => {
+                setTimeout(() => {this.props.goCurrentAndHome()}, 5500)
+              }}
+              trigger={this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm All Trips</Button>)}>
+              <Modal.Content style={{position: 'relative', textAlign: 'center', backgroundColor: '#cceaf7'}}>
+                <Image size='medium' src='https://cdn.dribbble.com/users/398490/screenshots/2189858/airplane-for-dribbble.gif' style={{width: '100%'}}/>
+                <h2 style={{position: 'absolute', bottom: '6%', left: '37%'}}>Confirming Your Trip</h2>
+              </Modal.Content>
+            </Modal>
           </DragDropContext>
         </Grid>
       </div>)}}
