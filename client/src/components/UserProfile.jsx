@@ -6,7 +6,7 @@ class UserProfile extends React.Component {
 		super(props)
 		this.state = {
 			trip: 'current',
-			pastTrips: [{img: 'https://i.imgur.com/SDrLtgc.jpg'}, {img: 'https://i.imgur.com/L9ov00i.jpg'}, {img: 'https://i.imgur.com/z6GNhq3.jpg'}]
+			pastTrips: [{img: 'https://i.imgur.com/SDrLtgc.jpg', rating: 4}, {img: 'https://i.imgur.com/L9ov00i.jpg', rating: 3}, {img: 'https://i.imgur.com/z6GNhq3.jpg', rating: 5}]
 		}
 		this.handleButtonClick = this.handleButtonClick.bind(this)
 		this.handleSidebarHide = this.handleSidebarHide.bind(this)
@@ -59,7 +59,7 @@ class UserProfile extends React.Component {
 											<div>
 												<Image className='pastTripImage' src={trip.img}></Image>
 											</div>
-											<Rating icon='heart' defaultRating={3} maxRating={5} size='large'/>
+											<Rating icon='heart' defaultRating={trip.rating} maxRating={5} size='large'/>
 										</div>
 										<hr/>
 									</Segment>
