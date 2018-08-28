@@ -7,7 +7,8 @@ import {
   Image,
   Menu,
   Segment,
-  Sidebar
+  Sidebar,
+  Modal
 } from "semantic-ui-react"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { FlexyFlipCard } from "flexy-flipcards"
@@ -323,7 +324,16 @@ class Kamban extends React.Component {
                 )
               }}
             </Droppable>
-            {this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm All Trips</Button>)}
+            <Modal 
+              onOpen={() => {
+                setTimeout(() => {this.props.goCurrentAndHome()}, 5000)
+              }}
+              trigger={this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm All Trips</Button>)}>
+              <Modal.Content style={{position: 'relative', textAlign: 'center'}}>
+                <Image size='medium' src='https://cdn.dribbble.com/users/398490/screenshots/2189858/airplane-for-dribbble.gif' style={{width: '100%'}}/>
+                <h2 style={{position: 'absolute', bottom: '6%', left: '37%'}}>Confirming Your Trip</h2>
+              </Modal.Content>
+            </Modal>
           </DragDropContext>
         </Grid>
       </div>)}}
