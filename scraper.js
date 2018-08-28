@@ -352,9 +352,9 @@ const attractionTimeOutIndividualPageScrape = (dynamicURL, attractionName) => {
         .split('|')[1]
       item.cost = 0
       $(element)
-        .find('listing__header ul li')
+        .find('.listing__header ul li')
         .each((index, el) => {
-          if ($(el).hasClass('.xs-text-red')) item.cost++
+          if ($(el).hasClass('xs-text-red')) item.cost++
         })
       item.review = ''
       $(element)
@@ -504,9 +504,9 @@ let timeOutComedy = attractionName => {
         item.borough = ''
         item.cost = 0
         $(element)
-          .find('listing__header ul li')
+          .find('.listing__header ul li')
           .each((index, el) => {
-            if ($(el).hasClass('.xs-text-red')) item.cost++
+            if ($(el).hasClass('xs-text-red')) item.cost++
           })
         item.review = ''
         $(element)
@@ -626,9 +626,9 @@ let attractionSinglePage = website => {
         .attr('src')
       item.cost = 0
       $(element)
-        .find('listing__header ul li')
+        .find('.listing__header ul li')
         .each((index, el) => {
-          if ($(el).hasClass('.xs-text-red')) item.cost++
+          if ($(el).hasClass('xs-text-red')) item.cost++
         })
       item.review = ''
       $(element)
