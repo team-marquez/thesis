@@ -69,6 +69,7 @@ class Register extends React.Component {
                   size="mini"
                   icon="world"
                   onClick={ async () => {
+                    this.props.openOnboarding()
                     let temp = await this.props.createWithEmail()
                     
                     let {data} = await createUsers({
@@ -81,7 +82,6 @@ class Register extends React.Component {
 
                     // client.writeData({data: {userId: }})
                     //why does this work???
-                    this.props.openOnboarding()
                   }}
                 />
                 <br />
@@ -91,6 +91,7 @@ class Register extends React.Component {
                   <i
                     className="google plus square icon huge"
                     onClick={ async () => {
+                      this.props.openOnboarding()
                       await this.props.loginWithGoogle()
 
                       await createUsers({
@@ -98,7 +99,6 @@ class Register extends React.Component {
                           firebaseId: this.props.userId
                         }},"{id}")
 
-                      this.props.openOnboarding()
                     }}
                   />
                 </a>
@@ -106,6 +106,7 @@ class Register extends React.Component {
                   <i
                     className="facebook square icon huge"
                     onClick={ async () => {
+                      this.props.openOnboarding()
                       await this.props.loginWithFacebook()
 
                       await createUsers({
@@ -114,7 +115,6 @@ class Register extends React.Component {
                         }
                       })
 
-                      this.props.openOnboarding()
                     }}
                   />
                 </a>
