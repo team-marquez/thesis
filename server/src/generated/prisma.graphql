@@ -1,19 +1,19 @@
 # source: http://34.234.236.21:4466
-# timestamp: Tue Aug 28 2018 18:37:04 GMT-0400 (EDT)
+# timestamp: Wed Aug 29 2018 14:21:19 GMT-0400 (EDT)
 
 type Activity implements Node {
   id: ID!
-  name: String!
-  description: String!
+  name: String
+  description: String
   cost: Float
-  image: String!
+  image: String
   location: String
-  source: String!
+  source: String
   website: String
   local_tourist: Int
   indoor_outdoor: Int
-  concepts: Json!
-  categories: Json!
+  concepts: Json
+  categories: Json
   child_friendly: Boolean
 }
 
@@ -28,17 +28,17 @@ type ActivityConnection {
 }
 
 input ActivityCreateInput {
-  name: String!
-  description: String!
+  name: String
+  description: String
   cost: Float
-  image: String!
+  image: String
   location: String
-  source: String!
+  source: String
   website: String
   local_tourist: Int
   indoor_outdoor: Int
-  concepts: Json!
-  categories: Json!
+  concepts: Json
+  categories: Json
   child_friendly: Boolean
 }
 
@@ -91,17 +91,17 @@ enum ActivityOrderByInput {
 
 type ActivityPreviousValues {
   id: ID!
-  name: String!
-  description: String!
+  name: String
+  description: String
   cost: Float
-  image: String!
+  image: String
   location: String
-  source: String!
+  source: String
   website: String
   local_tourist: Int
   indoor_outdoor: Int
-  concepts: Json!
-  categories: Json!
+  concepts: Json
+  categories: Json
   child_friendly: Boolean
 }
 
