@@ -14,10 +14,25 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { FlexyFlipCard } from "flexy-flipcards"
 import Graphs from "./Graphs.jsx"
 import {ApolloConsumer} from "react-apollo"
-
+import client from '../index.jsx'
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf'
+import gql from 'graphql-tag'
 
+const UPDATE_USERS = gql`
+  mutation UpdateUsers($id: String!, $trips: Json!) {
+    updateUsers(id: $id, trips: $trips) {
+      id
+    }
+  }
+`
+
+// let {data} = await createUsers({
+//   variables: {
+//     id: this.props.email,
+//     trips: this.state.items.map(elem => elem.orig.id),
+//   }
+// }, "{id}")
 
 // Generates an array of the data we get back. Shows the name, cost, and the image.
 const getItems = (count, array) =>
@@ -109,10 +124,31 @@ class Kamban extends React.Component {
     this.incrementCounter = this.incrementCounter.bind(this)
     this.decrementCounter = this.decrementCounter.bind(this)
     this.takeScreenshot = this.takeScreenshot.bind(this)
+    this.updateUsers = this.updateUsers.bind(this)
   }
 
   componentDidMount () {
     this.getBudgets()
+  }
+
+  updateUsers(){
+    (async (client, array) => {
+    let trips = []
+    let GET_ID = gql`
+  {
+    userId @client
+  }
+  `
+    let {data} = await client.query({query: GET_ID})
+    let {userId} = data
+    if (userId === 'anon') return
+    array.map(elem => elem.orig.map(internal => trips.push(internal.id)))
+    console.log(trips)
+    client.mutate({mutation: UPDATE_USERS, variables: {
+      id: userId,
+      trips: trips
+    }})
+  })(client, this.state.items)
   }
 
   takeScreenshot(){
@@ -349,7 +385,7 @@ class Kamban extends React.Component {
               onOpen={() => {
                 setTimeout(() => {this.props.goCurrentAndHome()}, 5500)
               }}
-              trigger={this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm All Trips</Button>)}>
+              trigger={this.state.counter === this.props.days.length ? (<Button color='green' onFocus={this.updateUsers} style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm All Trips</Button>)}>
               <Modal.Content style={{position: 'relative', textAlign: 'center', backgroundColor: '#cceaf7'}}>
                 <Image size='medium' src='https://cdn.dribbble.com/users/398490/screenshots/2189858/airplane-for-dribbble.gif' style={{width: '100%'}}/>
                 <h2 style={{position: 'absolute', bottom: '6%', left: '37%'}}>Confirming Your Trip</h2>
