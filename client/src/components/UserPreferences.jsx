@@ -86,6 +86,7 @@ class UserPreferences extends React.Component {
               <Modal.Content>
                 <div className='centerPrefs'>
                   <DateRange
+                    minDate={moment(new Date())}
                     maxDate={moment(this.state.maxDate)}
                     onChange={changes => {
                       this.setState({
