@@ -71,6 +71,9 @@ const resolvers = {
     food: (a, { cost }, c, d) => {
       return c.db.query.restaurants({ where: { cost: cost } }, d)
     },
+    activities: (a, args, c, d) => {
+      return c.db.query.activities({}, d)
+    },
     weather: (a, { date }, c, d) => {
       return c.db.query.weather({ where: { day: date } }, d)
     },

@@ -7,12 +7,16 @@ import {
   Image,
   Menu,
   Segment,
-  Sidebar
+  Sidebar,
+  Modal
 } from "semantic-ui-react"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { FlexyFlipCard } from "flexy-flipcards"
 import Graphs from "./Graphs.jsx"
 import {ApolloConsumer} from "react-apollo"
+
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf'
 
 
 // Generates an array of the data we get back. Shows the name, cost, and the image.
@@ -24,21 +28,19 @@ const getItems = (count, array) =>
         <div>
           <div>
             <div className='kambanAct'>
-              {activity.name.length > 20 ? activity.name.substring(0, 30) : activity.name}
+              {activity.name.replace(/(([^\s]+\s\s*){3})(.*)/,"$1…")}
             </div>
             <br />
             <div className='kambanAct' >
-              {activity.cost === null || 0
-                ? "Free"
-                : activity.cost === 1
-                  ? "$"
-                  : activity.cost === 2
-                    ? "$$"
-                    : activity.cost === 3
-                      ? "$$$"
-                      : activity.cost === 4
-                        ? "$$$$"
-                        : null}
+              {activity.cost === 1
+                ? "$"
+                : activity.cost === 2
+                  ? "$$"
+                  : activity.cost === 3
+                    ? "$$$"
+                    : activity.cost === 4
+                      ? "$$$$"
+                      : 'Free'}
             </div>
             <Image className='kambanImage' src={activity.image}/>
           </div>{" "}
@@ -98,17 +100,30 @@ class Kamban extends React.Component {
       lunch: [],
       dinner: [],
       counter: 0,
-      checkmarkColor: ['grey', 'grey', 'grey', 'grey']
+      checkmarkColor: ['grey', 'grey', 'grey', 'grey'],
+      screenshot: false
     }
     this.onDragEnd = this.onDragEnd.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.getBudgets = this.getBudgets.bind(this)
     this.incrementCounter = this.incrementCounter.bind(this)
     this.decrementCounter = this.decrementCounter.bind(this)
+    this.takeScreenshot = this.takeScreenshot.bind(this)
   }
 
   componentDidMount () {
     this.getBudgets()
+  }
+
+  takeScreenshot(){
+    this.setState({screenshot: true})
+    html2canvas(document.querySelector("#carter")).then((canvas) => {
+      var imgData = canvas.toDataURL("image/jpeg", 1.0);
+      var pdf = new jsPDF("l", "mm", "a4");
+      pdf.addImage(imgData, 'JPEG', 0,0, 300, 200);
+      pdf.save("download.pdf");
+      this.setState({screenshot: false})
+    })
   }
 
   getBudgets () {
@@ -123,8 +138,11 @@ class Kamban extends React.Component {
       for (let j = 0; j < day.length; j++) {
         cost += day[j].cost
         if (j === 0) breakfast.push(day[j].cost)
+        if (j === 1) breakfast[0] = breakfast[0] + day[j].cost
         if (j === 2) lunch.push(day[j].cost)
+        if (j === 3) lunch[0] = lunch[0] + day[j].cost
         if (j === 4) dinner.push(day[j].cost)
+        if (j === 5) dinner[0] = dinner[0] + day[j].cost
       }
       costOfDays.push(cost)
     }
@@ -292,7 +310,7 @@ class Kamban extends React.Component {
                                   {this.state.checkmarkColor[index] === 'grey' ? (<Icon onClick={() => this.incrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>) : (<Icon onClick={() => this.decrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>)}
                                 </div>
                                 <div>
-                                  <Graphs vis={this.state[item.id]} budget={(this.state.dayBudget[index]/this.state.totalBudget)*100} breakfast={this.state.breakfast[index]} lunch={this.state.lunch[index]} dinner={this.state.dinner[index]} />
+                                  {this.state.screenshot = true ? <div><Graphs vis={this.state[item.id]} budget={(this.state.dayBudget[index]/this.state.totalBudget)*100} breakfast={this.state.breakfast[index]} lunch={this.state.lunch[index]} dinner={this.state.dinner[index]} />
                                   <br/>
                                   <br/>
                                   <hr></hr>
@@ -310,7 +328,7 @@ class Kamban extends React.Component {
                                     ref="flipper"
                                   >
                                     TRIP
-                                  </Button>
+                                  </Button></div> : <div></div>}
                                 </div>
                               </FlexyFlipCard>
                             </div>
@@ -323,7 +341,16 @@ class Kamban extends React.Component {
                 )
               }}
             </Droppable>
-            {this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm All Trips</Button>)}
+            <Modal 
+              onOpen={() => {
+                setTimeout(() => {this.props.goCurrentAndHome()}, 5500)
+              }}
+              trigger={this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm All Trips</Button>)}>
+              <Modal.Content style={{position: 'relative', textAlign: 'center', backgroundColor: '#cceaf7'}}>
+                <Image size='medium' src='https://cdn.dribbble.com/users/398490/screenshots/2189858/airplane-for-dribbble.gif' style={{width: '100%'}}/>
+                <h2 style={{position: 'absolute', bottom: '6%', left: '37%'}}>Confirming Your Trip</h2>
+              </Modal.Content>
+            </Modal>
           </DragDropContext>
         </Grid>
       </div>)}}

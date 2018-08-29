@@ -42,6 +42,7 @@ class Register extends React.Component {
               size="tiny"
             >
               <Header style={{ textAlign: 'center' }}>Sign Up</Header>
+              <br />
               <div style={{ textAlign: 'center' }}>
                 <Input iconPosition="left" placeholder="Email" size="mini">
                   <Icon name="at" />

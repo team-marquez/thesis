@@ -41,6 +41,7 @@ class App extends React.Component {
     this.locationChange = this.locationChange.bind(this)
     this.changeToCurrent = this.changeToCurrent.bind(this)
     this.changeToPast = this.changeToPast.bind(this)
+    this.goCurrentAndHome = this.goCurrentAndHome.bind(this)
   }
 
   // Set random background image from our helper splashImage file.
@@ -68,6 +69,14 @@ class App extends React.Component {
     this.setState({
       home: false,
       trip: 'current'
+    })
+  }
+
+  goCurrentAndHome () {
+    this.setState({
+      home: true,
+      trip: 'current',
+      pickedTrip: false
     })
   }
 
@@ -219,7 +228,7 @@ class App extends React.Component {
                   </div>
                 ) : (
                   <div className='allDaysComp'>
-                    <AllDays home={this.goHome} user={this.state.user}/>
+                    <AllDays home={this.goHome} user={this.state.user} goCurrentAndHome={this.goCurrentAndHome}/>
                   </div>
                 )}
               </div>
