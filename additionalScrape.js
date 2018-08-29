@@ -105,8 +105,8 @@ let viatorSites = [
   'https://www.viator.com/tours/New-York-City/Circle-Line-Complete-Manhattan-Island-Cruise/d687-2800FIC'
 ];
 
-viatorSites.forEach((site) => {
-  viatorActs(website).then((data) => {
-    //save data to the database
+viatorSites.forEach( async (site) => {
+  await viatorActs(site).then((data) => {
+    console.log(data)
   })
 })
