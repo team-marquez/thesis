@@ -138,11 +138,11 @@ class Kamban extends React.Component {
       for (let j = 0; j < day.length; j++) {
         cost += day[j].cost
         if (j === 0) breakfast.push(day[j].cost)
-        if (j === 1) breakfast[0] = breakfast[0] + day[j].cost
+        if (j === 1) breakfast[i] = breakfast[i] + day[j].cost
         if (j === 2) lunch.push(day[j].cost)
-        if (j === 3) lunch[0] = lunch[0] + day[j].cost
+        if (j === 3) lunch[i] = lunch[i] + day[j].cost
         if (j === 4) dinner.push(day[j].cost)
-        if (j === 5) dinner[0] = dinner[0] + day[j].cost
+        if (j === 5) dinner[i] = dinner[i] + day[j].cost
       }
       costOfDays.push(cost)
     }
