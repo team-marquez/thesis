@@ -3,13 +3,16 @@ module.exports = {
     
     let arrayMax = clientPreferences.pref.tripDates.length * 3
     let LTAllocation = {
-      local: Math.ceil(1 - clientPreferences.pref.LT) * arrayMax,
-      tourist: Math.ceil(clientPreferences.pref.LT) * arrayMax
+      local: Math.ceil(1 - (clientPreferences.pref.LT/100)) * arrayMax,
+      tourist: Math.ceil(clientPreferences.pref.LT/100) * arrayMax
     }
     let IOAllocation = {
-      indoor: Math.ceil(1 - clientPreferences.pref.IO) * arrayMax,
-      outdoor: Math.ceil(clientPreferences.pref.IO) * arrayMax
+      indoor: Math.ceil(1 - (clientPreferences.pref.IO/100)) * arrayMax,
+      outdoor: Math.ceil(clientPreferences.pref.IO/100) * arrayMax
     }
+
+    console.log('top of assembly', clientPreferences)
+    // console.log('Allocations: ', LTAllocation, IOAllocation)
 
     // //dummy section for single page tests
     // if(!clientPreferences.rainArray) {
@@ -54,6 +57,7 @@ module.exports = {
           // console.log('some info on rests: ', recs[j].mealtime, recs[j].local_tourist, currentLT, tripOptions[mealType].length)
 
           if (recs[j].mealtime.includes(mealType) && recs[j].local_tourist === currentLT) {
+            if (recs[j].cost > clientPreferences.itemsAsCost.food[mealType]) continue
             tripOptions[mealType].push(recs[j])
 
             //finish function if max size reached
@@ -115,6 +119,7 @@ module.exports = {
 
         
         if (recs[j].type[0] === 'activity' && recs[j].local_tourist === currentLT && recs[j].indoor_outdoor === currentIO) {
+          if (recs[j].cost > clientPreferences.itemsAsCost.activities) continue
           // console.log('inside Activity creation: ', recs[j])
 
           // console.log('some acts info: ', currentLT, currentIO, tripOptions[actTime].length)
@@ -189,13 +194,13 @@ module.exports = {
       // }
     }
 
-    fillMeals2('breakfast')
-    fillMeals2('lunch')
-    fillMeals2('dinner')
+    fillMeals('breakfast')
+    fillMeals('lunch')
+    fillMeals('dinner')
 
-    fillActs2('morning')
-    fillActs2('afternoon')
-    fillActs2('evening')
+    fillActs('morning')
+    fillActs('afternoon')
+    fillActs('evening')
 
     //put together rainy activities, if needed
     clientPreferences.weather.forEach(element => {
@@ -233,6 +238,7 @@ module.exports = {
     // return tripOptions
 
     //new output.
+    console.log('end of assembly: ', trueTripOptions.itinerary[0])
     console.log('end of assembly: ', trueTripOptions)
     return trueTripOptions
   }
