@@ -13,17 +13,17 @@ type Trip {
 
 type Activity {
   id: ID! @unique
-  name: String!
-  description: String!
+  name: String
+  description: String
   cost: Float
-  image: String!
+  image: String
   location: String
-  source: String!
+  source: String
   website: String
   local_tourist: Int
   indoor_outdoor: Int
-  concepts: Json!
-  categories: Json!
+  concepts: Json
+  categories: Json
   child_friendly: Boolean
 }
 
