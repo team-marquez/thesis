@@ -244,7 +244,7 @@ class Four extends React.Component {
                               <em>{item.content.location = item.content.location.replace(/([A-Z])/g, ' $1').trim()}</em>
                             </div>
                             <div className='actDescription'>
-                              {item.content.description.replace(/(([^\s]+\s\s*){70})(.*)/,"$1…")}
+                              {item.content.description.split(' ').length > 65 ? item.content.description.split(' ').slice(0, 65).join(' ') + '...' : item.content.description}
                             </div>
                           </div>
                         </div>
