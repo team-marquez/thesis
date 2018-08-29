@@ -37,7 +37,7 @@ class Cont extends React.Component {
       day: day,
       index: index
     })
-    let temp = JSON.parse(this.props.changeable.itinerary)
+    let temp = this.props.changeable.itinerary
     console.log(temp[index])
   }
 
@@ -47,16 +47,19 @@ class Cont extends React.Component {
         day={this.state.day}
         flip={this.flip}
         index={this.state.index}
-        itinerary={JSON.parse(this.props.changeable.itinerary)}
+        itinerary={this.props.changeable.itinerary}
       />
     ) : (
       <div />
     )
   }
-
+  
   render() {
-    let { weather, budget } = JSON.parse(this.props.static.userPrefs)
-    let itinerary = JSON.parse(this.props.changeable.itinerary)
+    let { weather, budget } = this.props.static.userPrefs
+    let itinerary = this.props.changeable.itinerary
+    console.log('UserPrefs', this.props.static.userPrefs)
+    console.log('Itinerary', this.props.changeable.itinerary)
+    
     return this.state.dayCardUp ? (
       this.genDayCard()
     ) : (

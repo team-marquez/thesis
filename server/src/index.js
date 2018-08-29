@@ -100,8 +100,6 @@ const resolvers = {
         console.log('Created Recombee user')
         return creation
       })
-
-      return creation
     },
     updateUsers: (_, { id, trips }, context, info) => {
       console.log('Updated trips for user', id)

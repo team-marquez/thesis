@@ -240,6 +240,8 @@ class UserPreferences extends React.Component {
                           data: { itinerary: itin.itinerary }
                         })
 
+                        console.log('Data', itin)
+
                         this.handleModal()
                       }}
                     />
