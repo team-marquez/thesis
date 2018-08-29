@@ -317,6 +317,7 @@ class Kamban extends React.Component {
                                   <Button
                                     basic 
                                     color='rgba(58, 160, 175, 0.11)'
+                                    style = {{float: 'left'}}
                                     onFocus={() => {
                                       console.log(item.id)
                                       setTimeout(() => {
@@ -326,9 +327,12 @@ class Kamban extends React.Component {
                                       }, 500)
                                     }}
                                     ref="flipper"
-                                  >
+                                    >
                                     TRIP
-                                  </Button></div> : <div></div>}
+                                  </Button>
+                                  {this.state.checkmarkColor[index] === 'grey' ? (<Icon onClick={() => this.incrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>) : (<Icon onClick={() => this.decrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>)}
+                                  </div> : <div></div>}
+                                    
                                 </div>
                               </FlexyFlipCard>
                             </div>
