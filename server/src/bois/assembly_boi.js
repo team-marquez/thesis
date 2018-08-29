@@ -154,7 +154,7 @@ module.exports = {
           continue
         }
 
-        if (recs[j].type[0] === 'activity' && recs[j].indoor_outdoor === 'indoor') {
+        if (recs[j].type[0] === 'activity' && recs[j].indoor_outdoor === 0) {
           tripOptions.rainyActs.push(recs[j])
 
           if (tripOptions.rainyActs.length === arrayMax) break
@@ -194,17 +194,49 @@ module.exports = {
       // }
     }
 
+    const deDupeArray = (itemToDedupe, itemToCompareAgainst) => {
+      for (let i = 0; i < itemToDedupe.length; i++) {
+        for (let r = 0; r < itemToCompareAgainst.length; r++) {
+
+          if (itemToDedupe[i] === undefined) continue
+          if (itemToCompareAgainst[r] === undefined) continue
+          if (itemToDedupe[i].name === itemToCompareAgainst[r].name) {
+            // console.log('removing an item: ', itemToDedupe[i].name, itemToCompareAgainst[r].name)
+            itemToDedupe.splice(i, 1)
+            // console.log('new length: ', itemToDedupe.length)
+            i--
+          }
+        }
+      }
+    }
+
     fillMeals('breakfast')
     fillMeals('lunch')
     fillMeals('dinner')
 
+    // console.log('lunch')
+    deDupeArray(tripOptions.lunch, tripOptions.breakfast)
+    // console.log('dinner 1')
+    deDupeArray(tripOptions.dinner, tripOptions.lunch)
+    // console.log('dinner 2')
+    deDupeArray(tripOptions.dinner, tripOptions.breakfast)
+
+    // console.log('here are the meals: ', tripOptions.breakfast, tripOptions.lunch, tripOptions.dinner)
+    
     fillActs('morning')
     fillActs('afternoon')
     fillActs('evening')
-
+    // console.log('afternoon')
+    deDupeArray(tripOptions.afternoon, tripOptions.morning)
+    // console.log('evening 1')
+    deDupeArray(tripOptions.evening, tripOptions.afternoon)
+    // console.log('evening 2')
+    deDupeArray(tripOptions.evening, tripOptions.morning)
+    
+    // console.log('here are the acts: ', tripOptions.morning, tripOptions.afternoon, tripOptions.evening)
     //put together rainy activities, if needed
     clientPreferences.weather.forEach(element => {
-      if (element.rain === 1) {
+      if (element.rain === 1 && tripOptions.rainyActs.length === 0) {
         fillRain()
       }
     })
@@ -238,7 +270,7 @@ module.exports = {
     // return tripOptions
 
     //new output.
-    console.log('end of assembly: ', trueTripOptions.itinerary[0])
+    // console.log('end of assembly: ', trueTripOptions.itinerary[0])
     console.log('end of assembly: ', trueTripOptions)
     return trueTripOptions
   }
