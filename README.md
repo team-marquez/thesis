@@ -1,7 +1,7 @@
-Happy Path
+Meili
 ===========
 
-Happy Path is an application that gives a user a trip itinerary based on their preferences.  
+Meili is an application that gives a user a trip itinerary based on their preferences.  
 
 Team
 ===========
@@ -9,7 +9,7 @@ Team
     - Scrum Master: Erik Lin
     - Team Members: Guillermo Adrian, Martin Glyer
 
-View Happy Path
+View Meili
 ================
 - Link
 
@@ -47,7 +47,7 @@ Built With
 Screenshots
 -----------
 
-![MainPage](https://i.imgur.com/mxfhFIz.jpg)
+![MainPage](https://media.giphy.com/media/5nh7GYfHhfE88ELHv7/giphy.gif)
 
 ![Trip Page](https://i.imgur.com/Mn525OY.jpg)
 
