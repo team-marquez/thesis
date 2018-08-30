@@ -68,6 +68,9 @@ const resolvers = {
     userRecs: (_, { id }, context, info) => {
       return recommendation.getRecs(id)
     },
+    userTrips: (_, { id }, context, info) => {
+      return context.db.query.users({ where: { id: id } }, info)
+    },
     food: (a, { cost }, c, d) => {
       return c.db.query.restaurants({ where: { cost: cost } }, d)
     },
@@ -133,25 +136,6 @@ const resolvers = {
 
       return recommendation.updateRecs(id, trips)
     },
-<<<<<<< HEAD
-    // updatePast: (_, { id, trips }, context, info) => {
-    //   context.db.mutation.updateUsers(
-    //     {
-    //       data: {
-    //         past: {
-    //           create: {
-    //             trips: trips
-    //           }
-    //         }
-    //       },
-    //       where: {
-    //         id: id
-    //       }
-    //     },
-    //     info
-    //   )
-    // }
-=======
     updatePast: (_, { id, trips }, context, info) => {
       console.log('Updated? past!')
       return context.db.mutation.updateUsers(
@@ -170,7 +154,6 @@ const resolvers = {
         info
       )
     }
->>>>>>> 18704694035fb9ffa280218534b295cf08d10c5b
   }
 }
 

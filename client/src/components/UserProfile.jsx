@@ -11,6 +11,7 @@ import {
 } from "semantic-ui-react"
 import client from "../index.jsx"
 import gql from "graphql-tag"
+
 class UserProfile extends React.Component {
   constructor(props) {
     super(props)
