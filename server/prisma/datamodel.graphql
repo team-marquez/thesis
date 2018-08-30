@@ -3,7 +3,13 @@ type Users {
   firebaseId: String @unique
   username: String
   password: String
-  history: [Trip!] @relation(name: "UserHistory", onDelete: CASCADE)
+  history: [Trip!]! @relation(name: "UserHistory", onDelete: CASCADE)
+  past: [Past!]! @relation(name: "PastTrips", onDelete: CASCADE)
+}
+
+type Past {
+  id: ID! @unique
+  trips: Json!
 }
 
 type Trip {
@@ -12,7 +18,7 @@ type Trip {
 }
 
 type Activity {
-  id: ID @unique
+  id: ID! @unique
   name: String
   description: String
   cost: Float

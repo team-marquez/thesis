@@ -9,7 +9,7 @@
 
 .splashImage {
 	min-width: 100vw;
-	filter: grayscale(75%);
+	/* filter: grayscale(75%); */
 }
 
 .cityName {
