@@ -132,6 +132,23 @@ const resolvers = {
       })
 
       return recommendation.updateRecs(id, trips)
+    },
+    updatePast: (_, { id, trips }, context, info) => {
+      context.db.mutation.updateUsers(
+        {
+          data: {
+            past: {
+              create: {
+                trips: trips
+              }
+            }
+          },
+          where: {
+            id: id
+          }
+        },
+        info
+      )
     }
   }
 }
