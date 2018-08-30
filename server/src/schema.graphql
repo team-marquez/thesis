@@ -1,0 +1,63 @@
+# import Users from './generated/prisma.graphql'
+# import Activity from './generated/prisma.graphql'
+# import Restaurant from './generated/prisma.graphql'
+# import Ratings from './generated/prisma.graphql'
+# import Weather from './generated/prisma.graphql'
+
+input Pref {
+  totalBudget: Int!
+  partySize: Int!
+  tripDates: Dates!
+  LT: Int!
+  IO: Int!
+  FA: Int!
+  kidFriendly: Boolean !
+  userId: String
+}
+
+input Dates{
+  startDate: String!
+  endDate: String!
+}
+
+type Query {
+  users: [Users!]!
+  echo(args: String): String
+  test(args: String): String
+  weather(day: String): Weather
+  food(cost: Float): [Restaurant]
+  activities: [Activity]
+  userPrefs(pref: Pref): String
+  userRecs(id: String): Json
+  firebaseUser(firebaseId: String): Users
+}
+
+type Mutation {
+  createUsers(
+    username: String
+    password: String
+    firebaseId: String
+  ): Users
+  createWeather(
+    day: String!
+    avg_temp: Float!
+    min_temp: Float!
+    max_temp: Float!
+    precipitation: Boolean
+  ): Weather
+  createRestaurant(
+    name: String!
+    image: String!
+    cuisine: String!
+    cost: Float!
+    description: String!
+    why_go: String!
+    location: String
+    source: String!
+    website: String
+  ): Restaurant
+  updateUsers(
+    id: String!
+    trips: Json
+  ): Users
+}
