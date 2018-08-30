@@ -46,15 +46,15 @@ prisma.query
 const resolvers = {
   Query: {
     userPrefs: async (_, pref, context, info) => {
-      let {userId} = pref.pref;
-      if (userId !== 'anon'){
+      let { userId } = pref.pref
+      if (userId !== 'anon') {
         console.log('logged in paths')
         try {
-        var recs = await recommendation.getRecs(userId)
-        recs = shuffle(recs.concat(restaurants), {copy: true})
-      } catch (e){
-        console.error(e)
-      }
+          var recs = await recommendation.getRecs(userId)
+          recs = shuffle(recs.concat(restaurants), { copy: true })
+        } catch (e) {
+          console.error(e)
+        }
       } else {
         console.log('anon paths')
         var recs = restaurants.concat(activities)
@@ -132,7 +132,24 @@ const resolvers = {
       })
 
       return recommendation.updateRecs(id, trips)
-    }
+    },
+    // updatePast: (_, { id, trips }, context, info) => {
+    //   context.db.mutation.updateUsers(
+    //     {
+    //       data: {
+    //         past: {
+    //           create: {
+    //             trips: trips
+    //           }
+    //         }
+    //       },
+    //       where: {
+    //         id: id
+    //       }
+    //     },
+    //     info
+    //   )
+    // }
   }
 }
 

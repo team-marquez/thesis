@@ -1,11 +1,12 @@
-import React from "react";
-import { Button, Modal, Header, Icon, Progress } from "semantic-ui-react";
-import OnboardingOptions from "./OnboardingOptions.jsx";
+import React from 'react'
 
-import onboardingActivities from "./helpers/onboardingActivities.js";
+import OnboardingOptions from './OnboardingOptions.jsx'
 
-import { Mutation, ApolloConsumer } from "react-apollo";
-import gql from "graphql-tag";
+import { Button, Modal, Header, Icon, Progress } from 'semantic-ui-react'
+import { ApolloConsumer} from 'react-apollo'
+import gql from 'graphql-tag'
+
+import onboardingActivities from './helpers/onboardingActivities.js'
 
 const ProgressBar = () => {
   <Progress value="2" total="6" progress="ratio" indicating />;

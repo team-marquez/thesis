@@ -6,7 +6,6 @@ import Adapter from 'enzyme-adapter-react-16';
 import App from '../../client/src/components/App.jsx';
 import LoginButton from "../../client/src/components/LoginButton.jsx";
 import LocationModal from "../../client/src/components/LocationModal.jsx";
-import Footer from "../../client/src/components/Footer.jsx";
 import Onboarding from '../../client/src/components/Onboarding.jsx'
 
 configure({ adapter: new Adapter() });
@@ -28,9 +27,6 @@ describe('App', () => {
   });
   it('should render the LocationModal Component', () => {
     expect(wrapper.containsMatchingElement(<LocationModal />)).toEqual(true);
-  });
-  it('should render the Footer Component', () => {
-    expect(wrapper.containsMatchingElement(<Footer />)).toEqual(true);
   });
   it('should render the Onboarding Component', () => {
     expect(wrapper.containsMatchingElement(<Onboarding />)).toEqual(true);

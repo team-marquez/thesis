@@ -1,7 +1,9 @@
 import React from 'react'
-import gql from 'graphql-tag'
-import { Mutation, ApolloConsumer } from 'react-apollo'
+
 // import client from '../index.jsx'
+
+import gql from 'graphql-tag'
+import { Mutation } from 'react-apollo'
 import { Modal, Input, Icon, Header, Button } from 'semantic-ui-react'
 
 const CREATE_USERS = gql`

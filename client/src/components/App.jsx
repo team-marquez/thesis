@@ -1,14 +1,14 @@
 import React from 'react'
-import { Button, Icon, Sidebar, Menu, Breadcrumb, Header, Segment } from 'semantic-ui-react'
 
 import Account from './Account.jsx'
-import Footer from './Footer.jsx'
 import AllDays from './AllDays.jsx'
 import UserProfile from './UserProfile.jsx'
 import Onboarding from './Onboarding.jsx'
 import UserPreferences from './UserPreferences.jsx'
 import firebase from './firebase.js'
 import { images } from './helpers/splashImages.js'
+
+import { Sidebar, Menu, Breadcrumb } from 'semantic-ui-react'
 
 class App extends React.Component {
   constructor(props) {

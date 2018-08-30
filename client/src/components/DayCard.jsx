@@ -1,4 +1,5 @@
 import React from "react"
+
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { Image, Button, Icon } from "semantic-ui-react"
 import { ApolloConsumer, compose, graphql } from "react-apollo"

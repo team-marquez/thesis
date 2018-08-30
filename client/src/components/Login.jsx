@@ -1,4 +1,5 @@
 import React from 'react'
+
 import gql from 'graphql-tag'
 import { ApolloConsumer } from 'react-apollo'
 import { Modal, Input, Icon, Header, Button } from 'semantic-ui-react'
