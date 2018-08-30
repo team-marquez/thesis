@@ -2,15 +2,12 @@ import React from "react"
 import {
   Button,
   Header,
-  Icon,
-  Image,
-  Menu,
   Segment,
-  Sidebar,
   Rating
 } from "semantic-ui-react"
 import client from "../index.jsx"
 import gql from "graphql-tag"
+import jsPDF from "jspdf"
 
 class UserProfile extends React.Component {
   constructor(props) {
@@ -24,8 +21,7 @@ class UserProfile extends React.Component {
 			],
 			image: null,
     }
-    this.handleButtonClick = this.handleButtonClick.bind(this)
-    this.handleSidebarHide = this.handleSidebarHide.bind(this)
+    this.downloadPDF = this.downloadPDF.bind(this)
   }
   componentWillMount() {
     client
@@ -39,16 +35,15 @@ class UserProfile extends React.Component {
       .then(({data}) => this.setState({image: data.image}))
   }
 
-  handleButtonClick() {
-    this.setState({
-      visible: !this.state.visible
-    })
-  }
-
-  handleSidebarHide() {
-    this.setState({
-      visible: false
-    })
+  downloadPDF () {
+    let pdf = new jsPDF("l", "mm", "a4");
+    let img = new Image;
+    img.onload = function() {
+      pdf.addImage(this, 'JPEG', 0, 0, 300, 200);
+      pdf.save("test.pdf");
+    };
+    img.crossOrigin = "";
+    img.src = this.state.image  
   }
 
   render() {
@@ -69,12 +64,10 @@ class UserProfile extends React.Component {
                 Current Trip
               </Header>
               <div className="userProBox">
-							<Image
-                        size="large"
-                        src={this.state.image}
-                      />
+                <img src={this.state.image} style={{width: '100%'}} alt="Current Trip"></img>
                 <br />
               </div>
+              <Button onClick={this.downloadPDF} content='Download' basic color='olive' icon='download' labelPosition='left' style={{display: 'inherit', margin: '5px auto 0px'}}/>
             </Segment>
           ) : (
             <div>
@@ -89,7 +82,7 @@ class UserProfile extends React.Component {
                   <Segment basic>
                     <div className="pastTripBox">
                       <div>
-                        <Image className="pastTripImage" src={trip.img} />
+                        {/* <img src={trip.img}></img> */}
                       </div>
                       <Rating
                         icon="heart"
