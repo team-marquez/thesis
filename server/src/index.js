@@ -12,7 +12,7 @@ const fs = require('fs')
 const recombee = require('recombee-api-client')
 const rqs = recombee.requests
 
-const client = new recombee.ApiClient('hack-reactor', '__key__')
+const client = new recombee.ApiClient('hack-reactor', 'KiTAOmy8RdNPzSZgspvDzVxivkFcsTxXtRA284YbtlyLUZvdoyq1UjVN2sFZhnCD')
 const prisma = new Prisma({
   typeDefs: path.join(__dirname, 'generated/prisma.graphql'),
   endpoint: 'http://34.234.236.21:4466'
@@ -47,7 +47,7 @@ const resolvers = {
   Query: {
     userPrefs: async (_, pref, context, info) => {
       let {userId} = pref.pref;
-      if (userId !== 'anon'){
+      if (userId === 'we fixed the bois'){ //fix
         console.log('logged in paths')
         try {
         var recs = await recommendation.getRecs(userId)
@@ -134,7 +134,8 @@ const resolvers = {
       return recommendation.updateRecs(id, trips)
     },
     updatePast: (_, { id, trips }, context, info) => {
-      context.db.mutation.updateUsers(
+      console.log('Updated? past!')
+      return context.db.mutation.updateUsers(
         {
           data: {
             past: {

@@ -27,6 +27,19 @@ const UPDATE_USERS = gql`
     }
   }
 `
+const UPDATE_PAST = gql`
+  mutation UpdatePast($id: String!, $trips: Json!) {
+    updatePast(id: $id, trips: $trips) {
+      id
+    }
+  }
+`
+
+let GET_ID = gql`
+{
+  userId @client
+}
+`
 
 // let {data} = await createUsers({
 //   variables: {
@@ -134,11 +147,7 @@ class Kamban extends React.Component {
 
   updateUsers() {
       let trips = []
-      let GET_ID = gql`
-        {
-          userId @client
-        }
-      `
+
       client.query({ query: GET_ID })
       .then(({data}) => {
         let { userId } = data
@@ -156,6 +165,7 @@ class Kamban extends React.Component {
   }
 
   takeScreenshot() {
+    //dont look
     this.setState({ screenshot: true })
     return html2canvas(document.querySelector("#carter")).then(async canvas => {
       await canvas.toBlob(async picture => {
@@ -165,7 +175,21 @@ class Kamban extends React.Component {
         console.log(image)
         let {data} = await axios
           .post("http://localhost:8080/img", image)
-        client.writeData({data: {image:data}})
+        client.writeData({data: {image: data}})
+        let URL = data;
+        client.query({query: GET_ID}).then(({data}) => {
+          let { userId } = data
+          let trips = []
+          this.state.items.map(elem => elem.orig.map(internal => trips.push({id: internal.id})))
+          if (userId === "anon") return
+          client.mutate({mutation: UPDATE_PAST,
+          variables: {
+            id: userId,
+            trips: [{itinerary: trips, image: URL}]
+          }
+          })
+        })
+
           // .then((data) => {
           //   console.log('hello?', data)
           // }).catch()
