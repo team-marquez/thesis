@@ -1,14 +1,43 @@
 import React from "react"
 
-import Graphs from "./Graphs.jsx"
-
 import { Grid, Button, Header, Icon, Image, Segment, Modal } from "semantic-ui-react"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { FlexyFlipCard } from "flexy-flipcards"
-import {ApolloConsumer} from "react-apollo"
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf'
+import Graphs from "./Graphs.jsx"
+import { ApolloConsumer } from "react-apollo"
+import client from "../index.jsx"
+import html2canvas from "html2canvas"
+import jsPDF from "jspdf"
+import gql from "graphql-tag"
+import axios from "axios"
 
+const UPDATE_USERS = gql`
+  mutation UpdateUsers($id: String!, $trips: Json!) {
+    updateUsers(id: $id, trips: $trips) {
+      id
+    }
+  }
+`
+const UPDATE_PAST = gql`
+  mutation UpdatePast($id: String!, $trips: Json!) {
+    updatePast(id: $id, trips: $trips) {
+      id
+    }
+  }
+`
+
+let GET_ID = gql`
+{
+  userId @client
+}
+`
+
+// let {data} = await createUsers({
+//   variables: {
+//     id: this.props.email,
+//     trips: this.state.items.map(elem => elem.orig.id),
+//   }
+// }, "{id}")
 
 // Generates an array of the data we get back. Shows the name, cost, and the image.
 const getItems = (count, array) =>
@@ -18,11 +47,11 @@ const getItems = (count, array) =>
       return (
         <div>
           <div>
-            <div className='kambanAct'>
-              {activity.name.replace(/(([^\s]+\s\s*){3})(.*)/,"$1…")}
+            <div className="kambanAct">
+              {activity.name.replace(/(([^\s]+\s\s*){3})(.*)/, "$1…")}
             </div>
             <br />
-            <div className='kambanAct' >
+            <div className="kambanAct">
               {activity.cost === 1
                 ? "$"
                 : activity.cost === 2
@@ -31,9 +60,9 @@ const getItems = (count, array) =>
                     ? "$$$"
                     : activity.cost === 4
                       ? "$$$$"
-                      : 'Free'}
+                      : "Free"}
             </div>
-            <Image className='kambanImage' src={activity.image}/>
+            <Image className="kambanImage" src={activity.image} />
           </div>{" "}
           <br />
         </div>
@@ -57,7 +86,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
   userSelect: "none",
   padding: "10px",
-  margin: '-11px 0px 0px',
+  margin: "-11px 0px 0px",
 
   // change background colour if dragging
   background: isDragging ? "lightgreen" : "rgba(0,0,0,0.0)",
@@ -69,7 +98,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? "rgba(0,0,0,0.0)" : "rgba(0,0,0,0.0)",
   display: "flex",
-  padding: '20px 0px',
+  padding: "20px 0px",
   overflow: "auto"
 })
 
@@ -85,13 +114,13 @@ class Kamban extends React.Component {
       "item-3": false,
       "item-4": false,
       "item-5": false,
-      totalBudget: (this.props.budget.totalBudget/100 * 4),
+      totalBudget: (this.props.budget.totalBudget / 100) * 4,
       dayBudget: [],
       breakfast: [],
       lunch: [],
       dinner: [],
       counter: 0,
-      checkmarkColor: ['grey', 'grey', 'grey', 'grey'],
+      checkmarkColor: ["grey", "grey", "grey", "grey"],
       screenshot: false
     }
     this.onDragEnd = this.onDragEnd.bind(this)
@@ -100,24 +129,70 @@ class Kamban extends React.Component {
     this.incrementCounter = this.incrementCounter.bind(this)
     this.decrementCounter = this.decrementCounter.bind(this)
     this.takeScreenshot = this.takeScreenshot.bind(this)
+    this.updateUsers = this.updateUsers.bind(this)
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.getBudgets()
   }
 
-  takeScreenshot(){
-    this.setState({screenshot: true})
-    html2canvas(document.querySelector("#carter")).then((canvas) => {
-      var imgData = canvas.toDataURL("image/jpeg", 1.0);
-      var pdf = new jsPDF("l", "mm", "a4");
-      pdf.addImage(imgData, 'JPEG', 0,0, 300, 200);
-      pdf.save("download.pdf");
-      this.setState({screenshot: false})
+  updateUsers() {
+      let trips = []
+
+      client.query({ query: GET_ID })
+      .then(({data}) => {
+        let { userId } = data
+        if (userId === "anon") return
+        this.state.items.map(elem => elem.orig.map(internal => trips.push({id: internal.id})))
+        console.log("mutating")
+        client.mutate({
+          mutation: UPDATE_USERS,
+          variables: {
+            id: userId,
+            trips: trips
+          }
+        })
+      })
+  }
+
+  takeScreenshot() {
+    //dont look
+    this.setState({ screenshot: true })
+    return html2canvas(document.querySelector("#carter")).then(async canvas => {
+      await canvas.toBlob(async picture => {
+        let image = new FormData()
+        console.log(picture)
+        image.append("files", picture)
+        console.log(image)
+        let {data} = await axios
+          .post("http://localhost:8080/img", image)
+        client.writeData({data: {image: data}})
+        let URL = data;
+        client.query({query: GET_ID}).then(({data}) => {
+          let { userId } = data
+          let trips = []
+          this.state.items.map(elem => elem.orig.map(internal => trips.push({id: internal.id})))
+          if (userId === "anon") return
+          client.mutate({mutation: UPDATE_PAST,
+          variables: {
+            id: userId,
+            trips: [{itinerary: trips, image: URL}]
+          }
+          })
+        })
+
+          // .then((data) => {
+          //   console.log('hello?', data)
+          // }).catch()
+      })
+      // var pdf = new jsPDF("l", "mm", "a4");
+      // pdf.addImage(imgData, 'JPEG', 0,0, 300, 200);
+      // pdf.save("download.pdf");
+      // this.setState({screenshot: false})
     })
   }
 
-  getBudgets () {
+  getBudgets() {
     let _days = this.props.days
     let costOfDays = []
     let breakfast = []
@@ -166,21 +241,20 @@ class Kamban extends React.Component {
     this.setState({ vis: !this.state.vis })
   }
 
-
-  incrementCounter (index) {
+  incrementCounter(index) {
     let count = this.state.counter + 1
     let color = this.state.checkmarkColor
-    color[index] = 'green'
+    color[index] = "green"
     this.setState({
       counter: count,
       checkmarkColor: color
     })
   }
 
-  decrementCounter (index) {
+  decrementCounter(index) {
     let count = this.state.counter - 1
-    let color =  this.state.checkmarkColor
-    color[index] = 'grey'
+    let color = this.state.checkmarkColor
+    color[index] = "grey"
     this.setState({
       counter: count,
       checkmarkColor: color
@@ -190,165 +264,325 @@ class Kamban extends React.Component {
   render() {
     return (
       <ApolloConsumer>
-      {(client) => {
-      return (
-      <div>
-        <div>
-          <Segment
-            clearing
-            style={{ backgroundImage: "linear-gradient(lightCyan, white)" }}
-          >
-            <Header as="h2" icon="user circle" floated="right" />
-          </Segment>
-        </div>
+        {client => {
+          return (
+            <div id="carter">
+              <div>
+                <Segment
+                  clearing
+                  style={{
+                    backgroundImage: "linear-gradient(lightCyan, white)"
+                  }}
+                >
+                  <Header as="h2" icon="user circle" floated="right" />
+                </Segment>
+              </div>
 
-        <Grid style={{ display: "inline-block" }}>
-          <DragDropContext
-            onDragEnd={result => {
-              this.onDragEnd(result)
-              let temp = JSON.stringify(
-                this.state.items.map(elem => elem.orig)
-              )
-              client.writeData({ data: { itinerary :  temp} })
-            }}
-          >
-            <Droppable
-              droppableId="droppable"
-              type="app"
-              direction="horizontal"
-            >
-              {(provided, snapshot) => {
-                return (
-                  <div
-                    ref={provided.innerRef}
-                    style={getListStyle(snapshot.isDraggingOver)}
-                    {...provided.droppableProps}
+              <Grid style={{ display: "inline-block" }}>
+                <DragDropContext
+                  onDragEnd={result => {
+                    this.onDragEnd(result)
+                    let temp = JSON.stringify(
+                      this.state.items.map(elem => elem.orig)
+                    )
+                    client.writeData({ data: { itinerary: temp } })
+                  }}
+                >
+                  <Droppable
+                    droppableId="droppable"
+                    type="app"
+                    direction="horizontal"
                   >
-                    {this.state.items.map((item, index) => (
-                      <div
-                        className='gridBorder'
-                        key={index}
+                    {(provided, snapshot) => {
+                      return (
+                        <div
+                          ref={provided.innerRef}
+                          style={getListStyle(snapshot.isDraggingOver)}
+                          {...provided.droppableProps}
+                        >
+                          {this.state.items.map((item, index) => (
+                            <div
+                              className="gridBorder"
+                              key={index}
+                              style={{
+                                backgroundImage:
+                                  this.props.temp[index].rain_chance === 0
+                                    ? "linear-gradient(rgba(255,255,255,0.4) 100%,rgba(255,255,255) 0%), url(https://i.amz.mshcdn.com/CEj-0M6jJbdMpl7mfz0F99jLfNw=/fit-in/1200x9600/http%3A%2F%2Fmashable.com%2Fwp-content%2Fuploads%2F2013%2F04%2Fbeach-waves.gif)"
+                                    : "linear-gradient(rgba(255,255,255,0.6) 0%,rgba(255,255,255,255.6) 100%), url(http://bestanimations.com/Nature/Water/rain/rain-nature-animated-gif-32.gif)"
+                              }}
+                            >
+                              <div>
+                                <div className="weatherIcon">
+                                  {this.props.temp[index].rain_chance === 0 ? (
+                                    <Icon
+                                      name="sun"
+                                      className="sunny"
+                                      size="large"
+                                    />
+                                  ) : (
+                                    <Icon
+                                      name="rain"
+                                      className="rainy"
+                                      size="large"
+                                    />
+                                  )}
+                                </div>
+                                <div
+                                  className="expandIcon"
+                                  onClick={() =>
+                                    this.props.flip(item.orig, index)
+                                  }
+                                >
+                                  <Icon
+                                    className="expandIcon"
+                                    name="expand arrows alternate"
+                                    size="large"
+                                  />
+                                </div>
+                                <div>
+                                  {`${this.props.temp[index].max_temp
+                                    .toString()
+                                    .substr(0, 2)}° Max || ${this.props.temp[
+                                    index
+                                  ].min_temp
+                                    .toString()
+                                    .substr(0, 2)}° Min`}
+                                </div>
+                                <div>
+                                  {this.props.temp[index].rain_chance === 0
+                                    ? "Little to No chance of rain"
+                                    : "High chance of rain"}
+                                </div>
+                                <hr />
+                              </div>
+                              <br />
+
+                              <Draggable
+                                key={item.id}
+                                draggableId={item.id}
+                                index={index}
+                              >
+                                {(provided, snapshot) => (
+                                  <div
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    style={getItemStyle(
+                                      snapshot.isDragging,
+                                      provided.draggableProps.style
+                                    )}
+                                  >
+                                    <FlexyFlipCard
+                                      frontBackgroundColor="rgba(0,0,0,0.0)"
+                                      backBackgroundColor="rgba(0,0,0,0.0)"
+                                    >
+                                      <div>
+                                        <div>{item.content}</div>
+                                        <hr />
+                                        <Button
+                                          style={{ float: "left" }}
+                                          basic
+                                          color="rgba(58, 160, 175, 0.11)"
+                                          onFocus={() => {
+                                            let newstate = {}
+                                            newstate[item.id] = !this.state[
+                                              item.id
+                                            ]
+                                            this.setState(newstate)
+                                          }}
+                                          ref="flipper"
+                                        >
+                                          STATS
+                                        </Button>
+                                        {this.state.checkmarkColor[index] ===
+                                        "grey" ? (
+                                          <Icon
+                                            onClick={() =>
+                                              this.incrementCounter(index)
+                                            }
+                                            style={{
+                                              marginTop: "7px",
+                                              float: "right"
+                                            }}
+                                            name="check"
+                                            size="large"
+                                            color={
+                                              this.state.checkmarkColor[index]
+                                            }
+                                          />
+                                        ) : (
+                                          <Icon
+                                            onClick={() =>
+                                              this.decrementCounter(index)
+                                            }
+                                            style={{
+                                              marginTop: "7px",
+                                              float: "right"
+                                            }}
+                                            name="check"
+                                            size="large"
+                                            color={
+                                              this.state.checkmarkColor[index]
+                                            }
+                                          />
+                                        )}
+                                      </div>
+                                      <div>
+                                        {
+                                          (this.state.screenshot = true ? (
+                                            <div>
+                                              <Graphs
+                                                vis={this.state[item.id]}
+                                                budget={
+                                                  (this.state.dayBudget[index] /
+                                                    this.state.totalBudget) *
+                                                  100
+                                                }
+                                                breakfast={
+                                                  this.state.breakfast[index]
+                                                }
+                                                lunch={this.state.lunch[index]}
+                                                dinner={
+                                                  this.state.dinner[index]
+                                                }
+                                              />
+                                              <br />
+                                              <br />
+                                              <hr />
+                                              <Button
+                                                basic
+                                                color="rgba(58, 160, 175, 0.11)"
+                                                style={{ float: "left" }}
+                                                onFocus={() => {
+                                                  console.log(item.id)
+                                                  setTimeout(() => {
+                                                    let newstate = {}
+                                                    newstate[item.id] = !this
+                                                      .state[item.id]
+                                                    this.setState(newstate)
+                                                  }, 500)
+                                                }}
+                                                ref="flipper"
+                                              >
+                                                TRIP
+                                              </Button>
+                                              {this.state.checkmarkColor[
+                                                index
+                                              ] === "grey" ? (
+                                                <Icon
+                                                  onClick={() =>
+                                                    this.incrementCounter(index)
+                                                  }
+                                                  style={{
+                                                    marginTop: "7px",
+                                                    float: "right"
+                                                  }}
+                                                  name="check"
+                                                  size="large"
+                                                  color={
+                                                    this.state.checkmarkColor[
+                                                      index
+                                                    ]
+                                                  }
+                                                />
+                                              ) : (
+                                                <Icon
+                                                  onClick={() =>
+                                                    this.decrementCounter(index)
+                                                  }
+                                                  style={{
+                                                    marginTop: "7px",
+                                                    float: "right"
+                                                  }}
+                                                  name="check"
+                                                  size="large"
+                                                  color={
+                                                    this.state.checkmarkColor[
+                                                      index
+                                                    ]
+                                                  }
+                                                />
+                                              )}
+                                            </div>
+                                          ) : (
+                                            <div />
+                                          ))
+                                        }
+                                      </div>
+                                    </FlexyFlipCard>
+                                  </div>
+                                )}
+                              </Draggable>
+                            </div>
+                          ))}
+                          {provided.placeholder}
+                        </div>
+                      )
+                    }}
+                  </Droppable>
+                  <Modal
+                    onOpen={async () => {
+                      await this.takeScreenshot()
+                      setTimeout(() => {
+                        this.props.goCurrentAndHome()
+                      }, 5500)
+                    }}
+                    trigger={
+                      this.state.counter === this.props.days.length ? (
+                        <Button
+                          color="green"
+                          onFocus={this.updateUsers}
+                          style={{
+                            width: "90%",
+                            marginTop: "-8px",
+                            marginBottom: "2%"
+                          }}
+                        >
+                          Confirm Trip
+                        </Button>
+                      ) : (
+                        <Button
+                          color="red"
+                          disabled
+                          style={{
+                            width: "90%",
+                            marginTop: "-8px",
+                            marginBottom: "2%"
+                          }}
+                        >
+                          Confirm All Trips
+                        </Button>
+                      )
+                    }
+                  >
+                    <Modal.Content
+                      style={{
+                        position: "relative",
+                        textAlign: "center",
+                        backgroundColor: "#cceaf7"
+                      }}
+                    >
+                      <Image
+                        size="medium"
+                        src="https://cdn.dribbble.com/users/398490/screenshots/2189858/airplane-for-dribbble.gif"
+                        style={{ width: "100%" }}
+                      />
+                      <h2
                         style={{
-                          backgroundImage:
-                            this.props.temp[index].rain_chance === 0
-                              ? "linear-gradient(rgba(255,255,255,0.4) 100%,rgba(255,255,255) 0%), url(https://i.amz.mshcdn.com/CEj-0M6jJbdMpl7mfz0F99jLfNw=/fit-in/1200x9600/http%3A%2F%2Fmashable.com%2Fwp-content%2Fuploads%2F2013%2F04%2Fbeach-waves.gif)"
-                              : "linear-gradient(rgba(255,255,255,0.6) 0%,rgba(255,255,255,255.6) 100%), url(http://bestanimations.com/Nature/Water/rain/rain-nature-animated-gif-32.gif)"
+                          position: "absolute",
+                          bottom: "6%",
+                          left: "37%"
                         }}
                       >
-                        <div>
-                          <div className='weatherIcon'>
-                            {this.props.temp[index].rain_chance === 0
-                                ? <Icon name="sun" className='sunny' size='large'/>
-                                : <Icon name='rain' className='rainy' size='large'/>}
-                          </div>
-                          <div className='expandIcon' onClick={() => this.props.flip(item.orig, index)}>
-                            <Icon className='expandIcon' name="expand arrows alternate" size='large'/>
-                          </div>
-                          <div>
-                            {`${this.props.temp[index].max_temp
-                              .toString()
-                              .substr(0, 2)}° Max || ${this.props.temp[
-                              index
-                            ].min_temp
-                              .toString()
-                              .substr(0, 2)}° Min`}
-                          </div>
-                          <div>
-                            {this.props.temp[index].rain_chance === 0
-                              ? "Little to No chance of rain"
-                              : "High chance of rain"}
-                          </div>
-                          <hr />
-                        </div>
-                        <br />
-
-                        <Draggable
-                          key={item.id}
-                          draggableId={item.id}
-                          index={index}
-                        >
-                          {(provided, snapshot) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              style={getItemStyle(
-                                snapshot.isDragging,
-                                provided.draggableProps.style
-                              )}
-                            >
-                           
-                              <FlexyFlipCard
-                                frontBackgroundColor="rgba(0,0,0,0.0)"
-                                backBackgroundColor="rgba(0,0,0,0.0)"
-                              >
-                                <div>
-                                  <div>{item.content}</div>
-                                  <hr></hr>
-                                  <Button
-                                    style={{float: 'left'}}
-                                    basic 
-                                    color='rgba(58, 160, 175, 0.11)'
-                                    onFocus={() => {
-                                      let newstate = {}
-                                      newstate[item.id] = !this.state[item.id]
-                                      this.setState(newstate)
-                                    }}
-                                    ref="flipper"
-                                  >
-                                    STATS
-                                  </Button>
-                                  {this.state.checkmarkColor[index] === 'grey' ? (<Icon onClick={() => this.incrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>) : (<Icon onClick={() => this.decrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>)}
-                                </div>
-                                <div>
-                                  {this.state.screenshot = true ? <div><Graphs vis={this.state[item.id]} budget={(this.state.dayBudget[index]/this.state.totalBudget)*100} breakfast={this.state.breakfast[index]} lunch={this.state.lunch[index]} dinner={this.state.dinner[index]} />
-                                  <br/>
-                                  <br/>
-                                  <hr></hr>
-                                  <Button
-                                    basic 
-                                    color='rgba(58, 160, 175, 0.11)'
-                                    style = {{float: 'left'}}
-                                    onFocus={() => {
-                                      console.log(item.id)
-                                      setTimeout(() => {
-                                        let newstate = {}
-                                        newstate[item.id] = !this.state[item.id]
-                                        this.setState(newstate)
-                                      }, 500)
-                                    }}
-                                    ref="flipper"
-                                    >
-                                    TRIP
-                                  </Button>
-                                  {this.state.checkmarkColor[index] === 'grey' ? (<Icon onClick={() => this.incrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>) : (<Icon onClick={() => this.decrementCounter(index)} style={{marginTop: '7px', float: 'right'}} name='check' size='large' color={this.state.checkmarkColor[index]}/>)}
-                                  </div> : <div></div>}
-                                    
-                                </div>
-                              </FlexyFlipCard>
-                            </div>
-                          )}
-                        </Draggable>
-                      </div>
-                    ))}
-                    {provided.placeholder}
-                  </div>
-                )
-              }}
-            </Droppable>
-            <Modal 
-              onOpen={() => {
-                setTimeout(() => {this.props.goCurrentAndHome()}, 5500)
-              }}
-              trigger={this.state.counter === this.props.days.length ? (<Button color='green' style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm Trip</Button>) : (<Button color='red' disabled style={{width: '90%', marginTop: '-8px', marginBottom: '2%'}}>Confirm All Trips</Button>)}>
-              <Modal.Content style={{position: 'relative', textAlign: 'center', backgroundColor: '#cceaf7'}}>
-                <Image size='medium' src='https://cdn.dribbble.com/users/398490/screenshots/2189858/airplane-for-dribbble.gif' style={{width: '100%'}}/>
-                <h2 style={{position: 'absolute', bottom: '6%', left: '37%'}}>Confirming Your Trip</h2>
-              </Modal.Content>
-            </Modal>
-          </DragDropContext>
-        </Grid>
-      </div>)}}
+                        Confirming Your Trip
+                      </h2>
+                    </Modal.Content>
+                  </Modal>
+                </DragDropContext>
+              </Grid>
+            </div>
+          )
+        }}
       </ApolloConsumer>
     )
   }

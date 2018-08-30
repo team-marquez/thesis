@@ -1,7 +1,7 @@
 type Users {
   id: ID! @unique
   firebaseId: String @unique
-  username: String!
+  username: String
   password: String
   history: [Trip!]! @relation(name: "UserHistory", onDelete: CASCADE)
   past: [Past!]! @relation(name: "PastTrips", onDelete: CASCADE)

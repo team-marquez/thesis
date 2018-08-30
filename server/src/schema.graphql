@@ -60,4 +60,8 @@ type Mutation {
     id: String!
     trips: Json
   ): Users
+  updatePast(
+    id: String!
+    trips: Json!
+  ): Users
 }
