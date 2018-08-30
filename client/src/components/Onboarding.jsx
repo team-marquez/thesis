@@ -1,11 +1,12 @@
 import React from 'react'
-import { Button, Modal, Header, Icon, Progress } from 'semantic-ui-react'
+
 import OnboardingOptions from './OnboardingOptions.jsx'
 
-const { onboardingActivities } = require('./helpers/onboardingActivities.js')
-
-import { Mutation, ApolloConsumer} from 'react-apollo'
+import { Button, Modal, Header, Icon, Progress } from 'semantic-ui-react'
+import { ApolloConsumer} from 'react-apollo'
 import gql from 'graphql-tag'
+
+const { onboardingActivities } = require('./helpers/onboardingActivities.js')
 
 const ProgressBar = () => {
   ;<Progress value="2" total="6" progress="ratio" indicating />

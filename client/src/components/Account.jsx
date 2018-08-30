@@ -1,11 +1,13 @@
 import React from 'react'
 
-import { Button, Image, Popup } from 'semantic-ui-react'
 import firebase from './firebase.js'
 import Login from './Login.jsx'
 import client from '../index.jsx'
-import gql from 'graphql-tag'
 import Register from './Register.jsx'
+
+import { Button, Image, Popup } from 'semantic-ui-react'
+import gql from 'graphql-tag'
+
 
 const FIREBASE_USER = gql`
   query FirebaseUser($firebaseId: String) {

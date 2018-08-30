@@ -1,18 +1,10 @@
 import React from 'react'
+
 import moment from 'moment'
 import { Slider } from 'react-semantic-ui-range'
-import {
-  Modal,
-  Input,
-  Label,
-  Checkbox,
-  Button,
-  Icon
-} from 'semantic-ui-react'
-import { format, addDays } from 'date-fns'
+import { Modal, Input, Label, Checkbox, Button, Icon } from 'semantic-ui-react'
 import { DateRange } from 'react-date-range'
 import gql from 'graphql-tag'
-import { Query } from 'react-apollo'
 import { ApolloConsumer } from 'react-apollo'
 
 let PREF_QUERY = gql`
