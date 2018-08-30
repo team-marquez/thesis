@@ -22,12 +22,9 @@ app.use(parser.json());
 
 
 app.post("/img", (req, res) => {
-  try{
+  
   var {files} = req.files;
   console.log(files.mv())
-  } catch{
-    throw new Error('no image')
-  }
   let filename =
     Math.random()
       .toString(36)

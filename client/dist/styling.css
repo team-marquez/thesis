@@ -290,13 +290,13 @@
 .userProBox {
 	text-align: center;
 	border: 2px solid black;
-	height: 300px;
+	height: 100%;
 	width: 100%;
 }
 
 .pastTripBox {
 	text-align: center;
-	height: 500px;
+	height: 100%;
 	width: 100%
 }
 
