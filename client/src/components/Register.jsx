@@ -94,11 +94,12 @@ class Register extends React.Component {
                     className="google plus square icon huge"
                     onClick={ async () => {
                       this.props.openOnboarding()
-                      await this.props.loginWithGoogle()
+                      let id = await this.props.loginWithGoogle()
 
                       await createUsers({
                         variables: {
-                          firebaseId: this.props.userId
+                          username: String(Math.random()),
+                          firebaseId: id
                         }},"{id}")
 
                     }}
@@ -109,11 +110,12 @@ class Register extends React.Component {
                     className="facebook square icon huge"
                     onClick={ async () => {
                       this.props.openOnboarding()
-                      await this.props.loginWithFacebook()
+                      let id = await this.props.loginWithFacebook()
 
                       await createUsers({
                         variables: {
-                          firebaseId: this.props.userId
+                          username: String(Math.random()),
+                          firebaseId: id
                         }
                       })
 

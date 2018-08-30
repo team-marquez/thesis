@@ -12,7 +12,7 @@ const fs = require('fs')
 const recombee = require('recombee-api-client')
 const rqs = recombee.requests
 
-const client = new recombee.ApiClient('hack-reactor', '__key__')
+const client = new recombee.ApiClient('hack-reactor', 'KiTAOmy8RdNPzSZgspvDzVxivkFcsTxXtRA284YbtlyLUZvdoyq1UjVN2sFZhnCD')
 const prisma = new Prisma({
   typeDefs: path.join(__dirname, 'generated/prisma.graphql'),
   endpoint: 'http://34.234.236.21:4466'
@@ -46,15 +46,15 @@ prisma.query
 const resolvers = {
   Query: {
     userPrefs: async (_, pref, context, info) => {
-      let { userId } = pref.pref
-      if (userId !== 'anon') {
+      let {userId} = pref.pref;
+      if (userId === 'we fixed the bois'){ //fix
         console.log('logged in paths')
         try {
-          var recs = await recommendation.getRecs(userId)
-          recs = shuffle(recs.concat(restaurants), { copy: true })
-        } catch (e) {
-          console.error(e)
-        }
+        var recs = await recommendation.getRecs(userId)
+        recs = shuffle(recs.concat(restaurants), {copy: true})
+      } catch (e){
+        console.error(e)
+      }
       } else {
         console.log('anon paths')
         var recs = restaurants.concat(activities)
@@ -133,6 +133,7 @@ const resolvers = {
 
       return recommendation.updateRecs(id, trips)
     },
+<<<<<<< HEAD
     // updatePast: (_, { id, trips }, context, info) => {
     //   context.db.mutation.updateUsers(
     //     {
@@ -150,6 +151,26 @@ const resolvers = {
     //     info
     //   )
     // }
+=======
+    updatePast: (_, { id, trips }, context, info) => {
+      console.log('Updated? past!')
+      return context.db.mutation.updateUsers(
+        {
+          data: {
+            past: {
+              create: {
+                trips: trips
+              }
+            }
+          },
+          where: {
+            id: id
+          }
+        },
+        info
+      )
+    }
+>>>>>>> 18704694035fb9ffa280218534b295cf08d10c5b
   }
 }
 
