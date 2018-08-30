@@ -4,6 +4,12 @@ type Users {
   username: String!
   password: String
   history: [Trip!]! @relation(name: "UserHistory", onDelete: CASCADE)
+  past: [Past!]! @relation(name: "PastTrips", onDelete: CASCADE)
+}
+
+type Past {
+  id: ID! @unique
+  trips: Json!
 }
 
 type Trip {
