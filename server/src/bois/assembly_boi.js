@@ -1,7 +1,11 @@
 module.exports = {
   assemblyBoi: (recs, clientPreferences) => {
     
+    //max option length for any activity/rest is 3 times the length of the trip
     let arrayMax = clientPreferences.pref.tripDates.length * 3
+
+    //LT/IO is passed to the server as an int 0-100.
+    //this turns it into a percent of total activities that should be that type
     let LTAllocation = {
       local: Math.ceil(1 - (clientPreferences.pref.LT/100)) * arrayMax,
       tourist: Math.ceil(clientPreferences.pref.LT/100) * arrayMax
@@ -11,16 +15,6 @@ module.exports = {
       outdoor: Math.ceil(clientPreferences.pref.IO/100) * arrayMax
     }
 
-    console.log('top of assembly', clientPreferences)
-    // console.log('Allocations: ', LTAllocation, IOAllocation)
-
-    // //dummy section for single page tests
-    // if(!clientPreferences.rainArray) {
-    //   clientPreferences.rainArray = [0, 0, 1]
-    //   clientPreferences.temperatureArray = [78, 82, 65]
-    //   clientPreferences.pref.tripDates = ['2018-10-01', '2018-10-02', '2018-10-03']
-    // }
-    // //end dummy section
     
     let tripOptions = {
       breakfast: [],
@@ -34,13 +28,14 @@ module.exports = {
       rainyActs: []
     }
     
-    //fill Meal will only work in mvp+, when we have both local and tourist rests
+
     fillMeals = (mealType) => {
       let currentLT = LTAllocation.local > LTAllocation.tourist ? 0 : 1
       let localCount = 0
       let touristCount = 0
       let hist = {}
 
+      //randomizes our itteration thru the recs
       for (let i = 0; i < recs.length; i++) {
         let j = Math.floor(Math.random() * recs.length)
         
@@ -54,9 +49,10 @@ module.exports = {
         let type = recs[j].type
         if (type[0] === 'restaurant') {
 
-          // console.log('some info on rests: ', recs[j].mealtime, recs[j].local_tourist, currentLT, tripOptions[mealType].length)
-
+          //selects item only if they searve that meal, and match the current Local_Tourist
           if (recs[j].mealtime.includes(mealType) && recs[j].local_tourist === currentLT) {
+
+            //filter for cost
             if (recs[j].cost > clientPreferences.itemsAsCost.food[mealType]) continue
             tripOptions[mealType].push(recs[j])
 
@@ -76,27 +72,6 @@ module.exports = {
       }
     }
     
-    fillMeals2 = (mealType) => {
-      let hist = {}
-      for (let i = 0; i < recs.length; i++) {
-        let j = Math.floor(Math.random() * recs.length)
-        if (hist.hasOwnProperty(j)) continue
-        if (recs[j].type[0] === 'restaurant') {
-          tripOptions[mealType].push(recs[j])
-          if (tripOptions[mealType].length === arrayMax) break
-        }
-        hist[j] = null
-      }
-
-
-      // for (let meal in recs) {
-      //   if (recs[meal].type[0] === 'restaurant') {
-      //     tripOptions[mealType].push(recs[meal])
-      //     if (tripOptions[mealType].length === arrayMax) break
-      //   }
-      // }
-    }
-    
     fillActs = (actTime) => {
       let currentLT = LTAllocation.local > LTAllocation.tourist ? 0 : 1
       let currentIO = IOAllocation.indoor > IOAllocation.outdoor ? 0 : 1
@@ -105,6 +80,7 @@ module.exports = {
       let indoorCount = 0
       let outdoorCount = 0
       
+      //randomizes our itteration thru the recs
       let hist = {}
       for (let i = 0; i < recs.length; i++) {
 
@@ -115,14 +91,13 @@ module.exports = {
           continue
         } else hist[j] = null
 
-        // console.log('type, lt, clt, io, cio', recs[j].type[0], recs[j].local_tourist, currentLT, recs[j].indoor_outdoor, currentIO)
 
-        
+        //continue if rec item is an activity that matches bost local/tourist and indoor/outdoor
         if (recs[j].type[0] === 'activity' && recs[j].local_tourist === currentLT && recs[j].indoor_outdoor === currentIO) {
-          if (recs[j].cost > clientPreferences.itemsAsCost.activities) continue
-          // console.log('inside Activity creation: ', recs[j])
 
-          // console.log('some acts info: ', currentLT, currentIO, tripOptions[actTime].length)
+          //filter for cost
+          if (recs[j].cost > clientPreferences.itemsAsCost.activities) continue
+
           tripOptions[actTime].push(recs[j])
 
           //finish function if max size reached
@@ -147,6 +122,7 @@ module.exports = {
     
     fillRain = () => {
       let hist = {}
+      //randomizes our itteration thru the recs
       for (let i = 0; i < recs.length; i++) {
         let j = Math.floor(Math.random() * recs.length)
         if (hist.hasOwnProperty(j)) {
@@ -154,6 +130,7 @@ module.exports = {
           continue
         }
 
+        //only adds indoor activities
         if (recs[j].type[0] === 'activity' && recs[j].indoor_outdoor === 0) {
           tripOptions.rainyActs.push(recs[j])
 
@@ -161,37 +138,6 @@ module.exports = {
         }
         hist[j] = null
       }
-
-
-      //depreciated
-      // for (let act in recs) {
-      //   if (recs[act].type[0] === 'activity' && recs[act].indoor_outdoor === 'indoor') {
-      //     tripOptions.rainyActs.push(recs[act])
-          
-      //     if (tripOptions.rainyActs.length === arrayMax) break
-      //   }
-      // }
-    }
-    
-    fillActs2 = (actType) => {
-      let hist = {}
-      for (let i = 0; i < recs.length; i++) {
-        let j = Math.floor(Math.random() * recs.length)
-        if (hist.hasOwnProperty(j)) continue
-        if (recs[j].type[0] === 'activity') {
-          tripOptions[actType].push(recs[j])
-          if (tripOptions[actType].length === arrayMax) break
-        }
-        hist[j] = null
-      }
-
-      //depreciated
-      // for (let act in recs) {
-      //   if (recs[act].type[0] === 'activity') {
-      //     tripOptions[actType].push(recs[act])
-      //     if (tripOptions[actType].length === arrayMax) break
-      //   } 
-      // }
     }
 
     const deDupeArray = (itemToDedupe, itemToCompareAgainst) => {
@@ -201,39 +147,31 @@ module.exports = {
           if (itemToDedupe[i] === undefined) continue
           if (itemToCompareAgainst[r] === undefined) continue
           if (itemToDedupe[i].name === itemToCompareAgainst[r].name) {
-            // console.log('removing an item: ', itemToDedupe[i].name, itemToCompareAgainst[r].name)
             itemToDedupe.splice(i, 1)
-            // console.log('new length: ', itemToDedupe.length)
             i--
           }
         }
       }
     }
 
+    //This section fills the trip options for the various activities
+    //it also dedupes them so there are no repeat acts/rests
     fillMeals('breakfast')
     fillMeals('lunch')
     fillMeals('dinner')
 
-    // console.log('lunch')
     deDupeArray(tripOptions.lunch, tripOptions.breakfast)
-    // console.log('dinner 1')
     deDupeArray(tripOptions.dinner, tripOptions.lunch)
-    // console.log('dinner 2')
     deDupeArray(tripOptions.dinner, tripOptions.breakfast)
 
-    // console.log('here are the meals: ', tripOptions.breakfast, tripOptions.lunch, tripOptions.dinner)
     
     fillActs('morning')
     fillActs('afternoon')
     fillActs('evening')
-    // console.log('afternoon')
     deDupeArray(tripOptions.afternoon, tripOptions.morning)
-    // console.log('evening 1')
     deDupeArray(tripOptions.evening, tripOptions.afternoon)
-    // console.log('evening 2')
     deDupeArray(tripOptions.evening, tripOptions.morning)
     
-    // console.log('here are the acts: ', tripOptions.morning, tripOptions.afternoon, tripOptions.evening)
     //put together rainy activities, if needed
     clientPreferences.weather.forEach(element => {
       if (element.rain === 1 && tripOptions.rainyActs.length === 0) {
@@ -241,7 +179,7 @@ module.exports = {
       }
     })
 
-    //new output due to new format needed on client side. refactor post MVP
+    //new output due to new format needed on client side.
     let trueTripOptions = {
       itinerary: [],
       weather: clientPreferences.weather.slice(),
@@ -266,11 +204,7 @@ module.exports = {
 
     assembleItinerary()
 
-    //old output.  keeping for tests
-    // return tripOptions
-
-    //new output.
-    // console.log('end of assembly: ', trueTripOptions.itinerary[0])
+    //please keep this console.log so you can see what is being passed back to the client
     console.log('end of assembly: ', trueTripOptions)
     return trueTripOptions
   }
