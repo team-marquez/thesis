@@ -7,7 +7,6 @@ import Graphs from "./Graphs.jsx"
 import { ApolloConsumer } from "react-apollo"
 import client from "../index.jsx"
 import html2canvas from "html2canvas"
-import jsPDF from "jspdf"
 import gql from "graphql-tag"
 import axios from "axios"
 
@@ -429,7 +428,7 @@ class Kamban extends React.Component {
                                       </div>
                                       <div>
                                         {
-                                          (this.state.screenshot = true ? (
+                                          (this.state.screenshot === false ? (
                                             <div>
                                               <Graphs
                                                 vis={this.state[item.id]}
