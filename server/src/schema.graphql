@@ -30,6 +30,7 @@ type Query {
   userPrefs(pref: Pref): String
   userRecs(id: String): Json
   firebaseUser(firebaseId: String): Users
+  userTrips(id: String): Users
 }
 
 type Mutation {

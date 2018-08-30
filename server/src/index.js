@@ -68,6 +68,9 @@ const resolvers = {
     userRecs: (_, { id }, context, info) => {
       return recommendation.getRecs(id)
     },
+    userTrips: (_, { id }, context, info) => {
+      return context.db.query.users({ where: { id: id } }, info)
+    },
     food: (a, { cost }, c, d) => {
       return c.db.query.restaurants({ where: { cost: cost } }, d)
     },
