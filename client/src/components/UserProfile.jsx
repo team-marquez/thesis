@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Header, Icon, Image, Menu, Segment, Sidebar, Rating } from 'semantic-ui-react'
+import { Header, Image, Segment, Rating } from 'semantic-ui-react'
 
 class UserProfile extends React.Component {
   constructor(props) {

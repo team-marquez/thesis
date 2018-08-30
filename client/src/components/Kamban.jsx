@@ -1,20 +1,11 @@
 import React from "react"
-import {
-  Grid,
-  Button,
-  Header,
-  Icon,
-  Image,
-  Menu,
-  Segment,
-  Sidebar,
-  Modal
-} from "semantic-ui-react"
+
+import Graphs from "./Graphs.jsx"
+
+import { Grid, Button, Header, Icon, Image, Segment, Modal } from "semantic-ui-react"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { FlexyFlipCard } from "flexy-flipcards"
-import Graphs from "./Graphs.jsx"
 import {ApolloConsumer} from "react-apollo"
-
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf'
 
