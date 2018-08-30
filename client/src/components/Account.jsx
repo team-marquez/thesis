@@ -80,7 +80,18 @@ class Account extends React.Component {
     })
   }
 
-  handleUserId(id) {}
+  handleUserId(uid) {
+      if (!uid || uid === 'anon') return
+      client.query(
+        {
+          query: FIREBASE_USER,
+          variables: { firebaseId: uid }
+        },
+        "{id}"
+      ).then(({data}) =>  client.writeData({ data: { userId: data.firebaseUser.id } }))
+      .catch(e => console.error('no such id, ',e))
+
+  }
 
   // Firebase Auth with Google, not saving sessions.
   loginWithGoogle() {
@@ -89,12 +100,12 @@ class Account extends React.Component {
       .auth()
       .signInWithPopup(provider)
       .then(results => {
-        console.log(results)
+        console.log(results.uid)
         this.props.changeUser(
           results.additionalUserInfo.profile.given_name,
           results.additionalUserInfo.profile.picture
         )
-        this.handleUserId(results.additionalUserInfo.profile.id)
+        this.handleUserId(results.uid)
         this.props.handleLogin()
 
         this.closePopup()
@@ -205,7 +216,7 @@ class Account extends React.Component {
                   },
                   "{id}"
                 )
-                .then(({data}) =>
+                .then(({ data }) =>
                   client.writeData({ data: { userId: data.firebaseUser.id } })
                 )
             })
