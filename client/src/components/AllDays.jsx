@@ -55,13 +55,13 @@ class Cont extends React.Component {
   }
 
   render() {
-    let { weather, budget } = JSON.parse(this.props.static.userPrefs)
+    let { weather, budget, tripDates } = JSON.parse(this.props.static.userPrefs)
     let itinerary = JSON.parse(this.props.changeable.itinerary)
     console.log(itinerary)
     return this.state.dayCardUp ? (
       this.genDayCard()
     ) : (
-      <Kamban days={itinerary} budget={budget} flip={this.flip} temp={weather} home={this.props.home} goCurrentAndHome={this.props.goCurrentAndHome}/>
+      <Kamban tripDates={tripDates} days={itinerary} budget={budget} flip={this.flip} temp={weather} home={this.props.home} goCurrentAndHome={this.props.goCurrentAndHome}/>
     )
   }
 }

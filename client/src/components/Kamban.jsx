@@ -311,6 +311,7 @@ class Kamban extends React.Component {
                               }}
                             >
                               <div>
+                                <div>{this.props.tripDates[index]}</div>
                                 <div className="weatherIcon">
                                   {this.props.temp[index].rain_chance === 0 ? (
                                     <Icon
