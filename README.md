@@ -41,6 +41,6 @@ Meili is an application that creates a trip itinerary for users based on their p
 ## Screenshots
 ![MainPage](ezgif.com-video-to-gif.gif)
 
-![Trip Page](SvsFrlf.jpg)
+![TripPage](SvsFrlf.jpg)
 
-![Day Page](1sKLKWS.png)
+![DayPage](1sKLKWS.png)
