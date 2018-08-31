@@ -40,7 +40,7 @@ class UserProfile extends React.Component {
     let img = new Image;
     img.onload = function() {
       pdf.addImage(this, 'JPEG', 0, 0, 300, 200);
-      pdf.save("test.pdf");
+      pdf.save("current-trip.pdf");
     };
     img.crossOrigin = "";
     img.src = this.state.image  
