@@ -9,7 +9,6 @@ import client from "../index.jsx"
 import gql from "graphql-tag"
 import jsPDF from "jspdf"
 
-
 class UserProfile extends React.Component {
   constructor(props) {
     super(props)
