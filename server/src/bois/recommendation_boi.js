@@ -9,8 +9,8 @@ const prisma = new Prisma({
 })
 
 const client = new recombee.ApiClient(
-  "hack-reactor",
-  "__key__"
+  'testing-server',
+  '__key__'
 )
 
 module.exports = {

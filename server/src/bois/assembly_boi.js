@@ -203,9 +203,23 @@ module.exports = {
     }
 
     assembleItinerary()
-
     //please keep this console.log so you can see what is being passed back to the client
-    console.log('end of assembly: ', trueTripOptions)
+    trueTripOptions.itinerary.forEach((week) => {
+      week.forEach((elem,index) => {
+        if (elem === undefined || elem === null) {
+           week[index] =  {
+            image: "https://images.emojiterra.com/twitter/v11/svg/1f4a4.svg",
+            name: "Free Time!",
+            cost: 0,
+            location: "Wherever you want!",
+            description: "",
+            link: "http://www.reddit.com"
+          };
+        }
+      })
+    })
+
+    console.log('end of assembly: ', trueTripOptions.itinerary)
     return trueTripOptions
   }
 }
