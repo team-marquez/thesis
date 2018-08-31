@@ -10,8 +10,8 @@ Meili is an application that creates a trip itinerary for users based on their p
 ## Table of Contents
 1. [Team](#team)
 1. [Features](#features)
-1. [Recommendation System](#recommendation system)
-1. [Built With](#built with)
+1. [Recommendation System](#recommendationsystem)
+1. [Built With](#builtwith)
 1. [Screenshots](#screenshots)
 
 ## Features
