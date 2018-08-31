@@ -39,7 +39,7 @@ Meili is an application that creates a trip itinerary for users based on their p
 * [PostgreSQL](https://www.postgresql.org/)
 
 ## Screenshots
-![MainPage](https://media.giphy.com/media/5nh7GYfHhfE88ELHv7/giphy.gif)
+![MainPage](ezgif.com-video-to-gif.gif)
 
 ![Trip Page](https://i.imgur.com/Mn525OY.jpg)
 
