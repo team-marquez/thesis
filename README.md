@@ -1,52 +1,44 @@
-Meili
-===========
+# Meili
 
-Meili is an application that gives a user a trip itinerary based on their preferences.  
+Meili is an application that creates a trip itinerary for users based on their preferences.
 
-Team
-===========
-    - Project Owner: Roman Gorelik
-    - Scrum Master: Erik Lin
-    - Team Members: Guillermo Adrian, Martin Glyer
+## Team
+- __Project Owner__: Roman Gorelik
+- __Scrum Master__: Erik Lin
+- __Team Members__: Guillermo Adrian, Martin Glyer
 
-View Meili
-================
-- Link
+## Table of Contents
+1. [Team](#team)
+1. [Features](#features)
+1. [Recommendation System](#recommendation system)
+1. [Built With](#built with)
+1. [Screenshots](#screenshots)
 
-
-Features
-============== 
+## Features
 - Google and Facebook sign up and log in.
-- Dynamic splash page allowing the user to seamlessly transition around the page.
-- Drag and Drop your activities or your days with minimal effort.
-- View up to date graphs representing your spending budget.
-- View your past and current trips in your user profile page.
-- Quick on boarding process to allow us to give the user better recommendations.
-- Changing recommendations based on weather prediction.
+- Dynamic splash page allowing users to seamlessly transition around the page.
+- Drag and drop activities or days.
+- View up to date graphs representing user spending budget.
+- View past and current trips in user profile, with ability to download PDF of the current trip.
+- Quick onboarding process to allow better user recommendations.
+- Recommendations change based on weather prediction.
 
-Built With
-----------
+## Recommendation System
+- Leveraged IBM Watson NLP to categorize activities.
+- Implemented Recombee, a lazy variant of rule-based recommmendation systems, to give user recommendations.
+- Created weather prediction model using Prophet for weather-based recommendations.
 
-* [HTML5](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
-* [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+## Built With
 * [React](https://reactjs.org/)
 * [C3/D3](https://c3js.org)
 * [Semantic UI](http://react.semantic-ui.com/)
-* [Flexy Flipcards](https://github.com/slashlaw/Flexy-Flip-Cards)
-* [React Date Range](https://github.com/Adphorus/react-date-range)
-* [React Beautiful DnD](https://github.com/atlassian/react-beautiful-dnd)
 * [Express](https://expressjs.com/)
 * [GraphQL](https://graphql.org/)
 * [Apollo](https://www.apollographql.com/)
 * [Prisma](https://www.prisma.io/)
-* [Postgres](https://www.postgresql.org/)
-* [Mocha](https://mochajs.org/)
-* [Chai](http://www.chaijs.com/)
-* [Enzyme](https://github.com/airbnb/enzyme)
+* [PostgreSQL](https://www.postgresql.org/)
 
-Screenshots
------------
-
+## Screenshots
 ![MainPage](https://media.giphy.com/media/5nh7GYfHhfE88ELHv7/giphy.gif)
 
 ![Trip Page](https://i.imgur.com/Mn525OY.jpg)
