@@ -237,7 +237,7 @@ class App extends React.Component {
                 <UserProfile home={this.goHome} user={this.state.user} image={this.state.image} trip={this.state.trip}/>
                 <Account
                   styled={{height: '6%', width: '4%', position: 'absolute', top: '0.4%', left: '94%', cursor:'pointer'}}
-                  styled2={{height: '0.27%', width: '4%', position: 'absolute', top: '5px', left: '94%', cursor:'pointer'}}
+                  styled2={{height: '60px', width: '4%', position: 'fixed', top: '5px', left: '94%', cursor:'pointer'}}
                   trip={this.state.trip}
                   user={this.state.user}
                   image={this.state.image}
