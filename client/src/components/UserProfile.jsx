@@ -140,7 +140,7 @@ class UserProfile extends React.Component {
                         return (
                           <Segment basic>
                             <div className="pastTripBox">
-                              <div><img src={trip}></img></div>
+                              <div><img style={{width: '100%'}} src={trip}></img></div>
                               <Rating
                                 icon="heart"
                                 defaultRating={3}
