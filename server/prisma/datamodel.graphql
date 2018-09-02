@@ -1,0 +1,82 @@
+type Users {
+  id: ID! @unique
+  firebaseId: String @unique
+  username: String
+  password: String
+  history: [Trip!]! @relation(name: "UserHistory", onDelete: CASCADE)
+  past: [Past!]! @relation(name: "PastTrips", onDelete: CASCADE)
+}
+
+type Past {
+  id: ID! @unique
+  trips: Json!
+}
+
+type Trip {
+  id: ID! @unique
+  details: Activity @relation(name: "Act", onDelete: CASCADE)
+}
+
+type Activity {
+  id: ID! @unique
+  name: String
+  description: String
+  cost: Float
+  image: String
+  location: String
+  source: String
+  website: String
+  local_tourist: Int
+  indoor_outdoor: Int
+  concepts: Json
+  categories: Json
+  child_friendly: Boolean
+}
+
+type Restaurant {
+  id: ID! @unique
+  name: String @unique
+  image: String
+  cuisine: String
+  cost: Float
+  description: String
+  why_go: String
+  location: String
+  source: String
+  website: String
+  mealtime: Json
+  local_tourist: Int
+}
+
+type Weather {
+  id: ID! @unique
+  day: String! @unique
+  avg_temp: Float!
+  min_temp: Float!
+  max_temp: Float!
+  snow: Float
+  rain: Float
+}
+
+# mutation {
+#   updateUsers(
+#     data: {
+#       history: {
+#         create: { details: { connect: { id: "tripId" } } }
+#       }
+#     }
+#     where: { id: "userId" }
+#   ) {
+#     id
+#   }
+# }
+
+# query {
+#   users(where: { id: "userId" }) {
+#     history {
+#       details {
+#         name
+#       }
+#     }
+#   }
+# }

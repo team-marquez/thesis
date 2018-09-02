@@ -1,3 +1,9 @@
 client/dist/bundle.js
-
 node_modules
+discovery.js
+package-lock.json
+server/prisma/docker-compose.yml
+client/src/components/firebase.js
+server/temp_db
+scraping/
+data.json
